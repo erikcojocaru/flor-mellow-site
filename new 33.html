@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <title>Flor Mellow – Buchete de flori din bezele moi</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Flor Mellow – buchete de flori din bezele moi. Dulciuri artizanale, fără zahăr și fără gluten, făcute în Cluj.">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f7f2ee">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Protecție suplimentară contra dark-mode forțat (Samsung Internet, iOS) -->
+  <style>
+    @media (prefers-color-scheme: dark) {
+      html, body {
+        background: #f7f2ee !important;
+        color: #333 !important;
+      }
+    }
+  </style>
+
+  <style>
+    :root {
+      --bg: #f7f2ee;
+      --bg-soft: #fdf7f4;
+      --card-bg: #ffffff;
+      --primary: #f39ab5;
+      --primary-dark: #e27a9b;
+      --text: #333333;
+      --text-soft: #666666;
+      --border-soft: #f0e2da;
+      --shadow-soft: 0 18px 40px rgba(0,0,0,0.08);
+      --radius-lg: 22px;
+      --radius-xl: 30px;
+      --section-padding: 72px;
+      --transition-fast: 0.22s ease-out;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    html {
+      color-scheme: light;
+      background-color: var(--bg);
+    }
+
+    body {
+      font-family: "DM Sans", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* HEADER */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(16px);
+      background: rgba(247,242,238,0.92);
+      border-bottom: 1px solid rgba(255,255,255,0.8);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 74px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-main {
+      font-family: "Fraunces", serif;
+      font-size: 20px;
+      letter-spacing: 0.06em;
+    }
+
+    .logo-sub {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #9b8c82;
+      margin-top: 2px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 26px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    nav a {
+      position: relative;
+      padding-bottom: 3px;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 1px;
+      background: var(--primary-dark);
+      transition: width var(--transition-fast);
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      padding: 9px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,0.04);
+      background: #ffffff;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+      cursor: pointer;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 38px rgba(0,0,0,0.09);
+    }
+
+    /* HERO */
+
+    .hero {
+      padding: 48px 0 70px;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 40px;
+      align-items: center;
+    }
+
+    .hero-copy h1 {
+      font-family: "Fraunces", serif;
+      font-size: clamp(2.5rem, 3.4vw, 3.4rem);
+      line-height: 1.05;
+      margin-bottom: 16px;
+    }
+
+    .hero-copy h1 span {
+      color: var(--primary-dark);
+    }
+
+    .hero-subtitle {
+      font-size: 0.98rem;
+      color: var(--text-soft);
+      max-width: 420px;
+      margin-bottom: 18px;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 26px;
+      font-size: 12px;
+    }
+
+    .tag-pill {
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.9);
+      border: 1px solid rgba(0,0,0,0.03);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 22px;
+    }
+
+    .btn-primary {
+      padding: 12px 22px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #ffffff;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 16px 40px rgba(243,154,181,0.45);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 20px 54px rgba(243,154,181,0.55);
+    }
+
+    .btn-ghost {
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,0.08);
+      background: rgba(255,255,255,0.85);
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    .hero-note {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+
+    .hero-media {
+      position: relative;
+    }
+
+    .hero-card {
+      background: radial-gradient(circle at 10% 0%, #fff7fb, #ffe5ef);
+      border-radius: var(--radius-xl);
+      padding: 18px;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.5s ease-out, box-shadow 0.5s ease-out;
+    }
+
+    .hero-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.18);
+    }
+
+    .hero-card img {
+      border-radius: 22px;
+      object-fit: cover;
+      width: 100%;
+      max-height: 420px;
+    }
+
+    .hero-floating {
+      position: absolute;
+      bottom: 14px;
+      left: 18px;
+      padding: 10px 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.92);
+      font-size: 0.78rem;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.1);
+    }
+
+    .hero-floating strong {
+      display: block;
+      font-size: 0.82rem;
+    }
+
+    .hero-badge {
+      position: absolute;
+      top: -18px;
+      right: -18px;
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: #ffffff;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.74rem;
+      text-align: center;
+      padding: 18px;
+    }
+
+    .hero-badge span {
+      display: block;
+      font-weight: 600;
+      color: var(--primary-dark);
+    }
+
+    /* SECTIONS */
+
+    section {
+      padding: var(--section-padding) 0;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .section-kicker {
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      color: var(--primary-dark);
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-family: "Fraunces", serif;
+      font-size: 1.9rem;
+    }
+
+    .section-subtitle {
+      margin-top: 8px;
+      font-size: 0.95rem;
+      color: var(--text-soft);
+      max-width: 460px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* WHY */
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .why-card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 18px 18px 20px;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 0.9rem;
+    }
+
+    .why-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: var(--bg-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 4px;
+    }
+
+    .why-card h3 {
+      font-size: 1rem;
+      margin-bottom: 2px;
+    }
+
+    .why-card p {
+      color: var(--text-soft);
+      font-size: 0.88rem;
+    }
+
+    /* PRODUCTS */
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .product-card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 12px 12px 16px;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 22px 48px rgba(0,0,0,0.15);
+    }
+
+    .product-img-wrap {
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--bg-soft);
+      aspect-ratio: 1 / 1;
+    }
+
+    .product-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .product-content {
+      padding-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .product-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .product-name {
+      font-weight: 600;
+      font-size: 0.98rem;
+    }
+
+    .size-pill {
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--text-soft);
+    }
+
+    .product-desc {
+      font-size: 0.85rem;
+      color: var(--text-soft);
+    }
+
+    .product-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 6px;
+    }
+
+    .product-price {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .product-btn {
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: none;
+      background: rgba(243,154,181,0.08);
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    /* ABOUT / HOW */
+
+    .two-column {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 40px;
+      align-items: center;
+    }
+
+    .text-block h3 {
+      font-family: "Fraunces", serif;
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+    }
+
+    .text-block p {
+      font-size: 0.94rem;
+      color: var(--text-soft);
+      margin-bottom: 10px;
+    }
+
+    .steps {
+      display: grid;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .step {
+      display: flex;
+      gap: 10px;
+      font-size: 0.9rem;
+    }
+
+    .step-number {
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      background: var(--card-bg);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--primary-dark);
+    }
+
+    .about-photo {
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      background: var(--bg-soft);
+    }
+
+    .about-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* REVIEWS */
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .review-card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 16px 16px 18px;
+      box-shadow: var(--shadow-soft);
+      font-size: 0.88rem;
+      color: var(--text-soft);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .review-stars {
+      color: #f5a623;
+      font-size: 0.83rem;
+    }
+
+    .review-name {
+      font-size: 0.83rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    /* CTA & FOOTER */
+
+    .cta {
+      text-align: center;
+      background: radial-gradient(circle at top left, #ffeaf2, #f7f2ee);
+      border-radius: 34px;
+      padding: 34px 22px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .cta h3 {
+      font-family: "Fraunces", serif;
+      font-size: 1.6rem;
+      margin-bottom: 10px;
+    }
+
+    .cta p {
+      font-size: 0.95rem;
+      color: var(--text-soft);
+      margin-bottom: 18px;
+    }
+
+    .btn-whatsapp {
+      padding: 11px 16px;
+      border-radius: 999px;
+      border: none;
+      background: #25d366;
+      color: #ffffff;
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .cta small {
+      display: block;
+      margin-top: 6px;
+      font-size: 0.78rem;
+      color: var(--text-soft);
+    }
+
+    footer {
+      padding: 26px 0 22px;
+      border-top: 1px solid rgba(0,0,0,0.04);
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    /* SCROLL REVEAL */
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ---------- MODAL ---------- */
+
+    .modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.45);
+      display: none;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px 20px;
+      z-index: 2000;
+      overflow-y: auto; /* scroll pe pagină, nu în interiorul cardului */
+    }
+
+    .modal-content {
+      background: #fff;
+      border-radius: 22px;
+      max-width: 480px;
+      width: 90%;
+      margin: auto;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.2);
+      overflow: hidden;
+    }
+
+    .modal-media {
+      position: relative;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .modal-media img {
+      width: 100%;
+      max-height: 45vh;
+      object-fit: cover;
+      display: block;
+    }
+
+    .modal-body {
+      padding: 18px 20px 24px;
+      font-size: 0.92rem;
+      color: #666;
+    }
+
+    .modal-body h3 {
+      font-family: "Fraunces", serif;
+      font-size: 1.4rem;
+      margin-bottom: 6px;
+      color: #333;
+    }
+
+    .modal-price {
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--primary-dark);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(6px);
+      border: none;
+      font-size: 18px;
+      padding: 6px 10px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .modal-actions {
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .modal-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(0,0,0,0.45);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .modal-nav.prev { left: 10px; }
+    .modal-nav.next { right: 10px; }
+
+    .modal-dots {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+    }
+
+    .modal-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.4);
+    }
+
+    .modal-dot.active {
+      background: #fff;
+    }
+
+    /* MOBILE / RESPONSIVE */
+
+    @media (max-width: 640px) {
+      header .nav { height: 64px; }
+      nav ul { display: none; }
+
+      .hero-inner {
+        gap: 28px;
+        grid-template-columns: minmax(0,1fr);
+      }
+
+      .hero-copy {
+        text-align: center;
+      }
+
+      .hero-tags,
+      .hero-actions,
+      .hero-note {
+        justify-content: center;
+        text-align: center;
+      }
+
+      .why-grid,
+      .reviews-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      /* produse – carusel orizontal pe mobil */
+      .product-grid {
+        display: flex;
+        overflow-x: auto;
+        gap: 16px;
+        padding: 6px 8px 18px;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .product-card {
+        min-width: 80%;
+        max-width: 400px;
+        margin: 0 auto 4px;
+        scroll-snap-align: start;
+      }
+
+      .modal {
+        padding: 30px 16px;
+      }
+
+      .modal-content {
+        max-width: 380px;
+        width: 86%;
+        max-height: 80vh;
+        border-radius: 20px;
+      }
+
+      .cta { border-radius: 22px; }
+    }
+
+    @media (max-width: 960px) {
+      :root { --section-padding: 60px; }
+      .hero-inner, .two-column {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .hero-card {
+        max-width: 420px;
+        margin: 0 auto;
+      }
+    }
+
+    @media (max-width: 840px) {
+      .why-grid,
+      .reviews-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header id="top">
+  <div class="container nav">
+    <div class="logo">
+      <div>
+        <div class="logo-main">Flor Mellow</div>
+        <div class="logo-sub">BUCHETE DE FLORI DIN BEZELE MOI</div>
+      </div>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#top">Acasă</a></li>
+        <li><a href="#bouquets">Buchete</a></li>
+        <li><a href="#about">Povestea noastră</a></li>
+        <li><a href="#how">Cum comanzi</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <button class="nav-cta" onclick="openWhatsApp('Bună, aș vrea să comand un buchet Flor Mellow. Putem discuta detaliile?')">
+      💬 WhatsApp
+    </button>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-copy">
+        <h1>Buchete comestibile din <span>bezele moi</span>, pentru momente care chiar se gustă.</h1>
+        <p class="hero-subtitle">
+          Fără zahăr, fără gluten, făcute manual în Cluj. Un buchet pe care îl admiri, apoi îl mănânci împreună cu cei dragi.
+        </p>
+        <div class="hero-tags">
+          <span class="tag-pill">✨ Artizanat, nu producție de masă</span>
+          <span class="tag-pill">🍓 Culori și arome naturale</span>
+          <span class="tag-pill">🎁 Cadouri memorabile</span>
+        </div>
+        <div class="hero-actions">
+          <button class="btn-primary" onclick="document.getElementById('bouquets').scrollIntoView({behavior:'smooth'})">
+            Vezi buchetele →
+          </button>
+          <button class="btn-ghost" onclick="openWhatsApp('Bună, vreau să discutăm despre un buchet personalizat Flor Mellow.')">
+            Comandă pe WhatsApp
+          </button>
+        </div>
+        <p class="hero-note">
+          Pregătire în aceeași zi pentru Cluj-Napoca (în funcție de sloturile disponibile).
+        </p>
+      </div>
+
+      <div class="hero-media">
+        <div class="hero-card">
+          <img src="https://images.pexels.com/photos/1028725/pexels-photo-1028725.jpeg?auto=compress&cs=tinysrgb&w=1600&q=80" alt="Buchet pastel de flori">
+          <div class="hero-floating">
+            <strong>“Nu doar flori, ci un desert care arată ca un buchet.”</strong>
+            <span>– Flor Mellow Atelier</span>
+          </div>
+          <div class="hero-badge">
+            <span>100% comestibil<br>din bezele moi</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section class="reveal">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-kicker">De ce Flor Mellow</div>
+        <h2 class="section-title">Buchete pe care nu le arunci – le mănânci.</h2>
+        <p class="section-subtitle">
+          Fiecare floare este șprițată manual din mousse de bezea, petală cu petală, apoi aranjată ca un buchet floral.
+        </p>
+      </div>
+
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-icon">🌿</div>
+          <h3>Fără zahăr & fără gluten</h3>
+          <p>Pentru cei care vor desert fără vinovăție. Potrivite și pentru copii, și pentru adulți.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">🎨</div>
+          <h3>Artă făcută manual</h3>
+          <p>Fiecare buchet este unic. Nu există două identice – exact ca în florăriile artizanale.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">📍</div>
+          <h3>Făcute în Cluj-Napoca</h3>
+          <p>Pregătite proaspăt în ziua evenimentului și livrate cu grijă până la ușa ta.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOUQUETS -->
+  <section id="bouquets" class="reveal">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-kicker">Best sellers</div>
+        <h2 class="section-title">Alege buchetul Flor Mellow.</h2>
+        <p class="section-subtitle">
+          Pornește de la mărime, apoi personalizăm culorile, mesajul și stilul împreună, pe WhatsApp.
+        </p>
+      </div>
+
+      <div class="product-grid">
+        <!-- 1 -->
+        <article class="product-card"
+          data-title="Petite Hug"
+          data-price="de la 150 RON"
+          data-desc="Buchet mic, cu 6–8 flori din bezea, în nuanțe pastel. Perfect pentru un gest delicat sau „m-am gândit la tine”."
+          data-img="https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg?auto=compress&cs=tinysrgb&w=1200&q=80">
+          <div class="product-img-wrap">
+            <img src="https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg?auto=compress&cs=tinysrgb&w=1200&q=80" alt="Petite Hug buchet mic">
+          </div>
+          <div class="product-content">
+            <div class="product-header-row">
+              <div class="product-name">Petite Hug</div>
+              <div class="size-pill">S</div>
+            </div>
+            <p class="product-desc">Buchet mic, pastel, pentru un „mulțumesc” sau o surpriză rapidă.</p>
+            <div class="product-meta">
+              <div class="product-price">de la 150 RON</div>
+              <button class="product-btn" type="button">Detalii</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- 2 -->
+        <article class="product-card"
+          data-title="Everyday Magic"
+          data-price="de la 200 RON"
+          data-desc="Buchet mediu, 10–14 flori din bezea. Mărimea ideală pentru zile de naștere, vizite în familie sau cadouri de birou."
+          data-img="https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg?auto=compress&cs=tinysrgb&w=1200&q=80">
+          <div class="product-img-wrap">
+            <img src="https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg?auto=compress&cs=tinysrgb&w=1200&q=80" alt="Everyday Magic buchet mediu">
+          </div>
+          <div class="product-content">
+            <div class="product-header-row">
+              <div class="product-name">Everyday Magic</div>
+              <div class="size-pill">M</div>
+            </div>
+            <p class="product-desc">Buchet mediu pentru aproape orice ocazie – nici prea mic, nici exagerat.</p>
+            <div class="product-meta">
+              <div class="product-price">de la 200 RON</div>
+              <button class="product-btn" type="button">Detalii</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- 3 -->
+        <article class="product-card"
+          data-title="Pastel Dream"
+          data-price="de la 260 RON"
+          data-desc="Buchet mare, aerat, care devine punctul central al mesei. Nuanțe pastel, detalii bogate, perfect pentru aniversări."
+          data-img="https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg?auto=compress&cs=tinysrgb&w=1200&q=80">
+          <div class="product-img-wrap">
+            <img src="https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg?auto=compress&cs=tinysrgb&w=1200&q=80" alt="Pastel Dream buchet mare">
+          </div>
+          <div class="product-content">
+            <div class="product-header-row">
+              <div class="product-name">Pastel Dream</div>
+              <div class="size-pill">L</div>
+            </div>
+            <p class="product-desc">Buchet mare, gândit să fie fotografiat și ținut minte.</p>
+            <div class="product-meta">
+              <div class="product-price">de la 260 RON</div>
+              <button class="product-btn" type="button">Detalii</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- 4 -->
+        <article class="product-card"
+          data-title="Grand Gesture"
+          data-price="de la 350 RON"
+          data-desc="Cel mai mare buchet, pentru momentele în care vrei efectul „wow” imediat ce intri pe ușă."
+          data-img="https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg?auto=compress&cs=tinysrgb&w=1200&q=80">
+          <div class="product-img-wrap">
+            <img src="https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg?auto=compress&cs=tinysrgb&w=1200&q=80" alt="Grand Gesture buchet XL">
+          </div>
+          <div class="product-content">
+            <div class="product-header-row">
+              <div class="product-name">Grand Gesture</div>
+              <div class="size-pill">XL</div>
+            </div>
+            <p class="product-desc">Buchet XL pentru cereri în căsătorie, aniversări mari sau surprize serioase.</p>
+            <div class="product-meta">
+              <div class="product-price">de la 350 RON</div>
+              <button class="product-btn" type="button">Detalii</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- 5 -->
+        <article class="product-card"
+          data-title="Mellow Box"
+          data-price="de la 260 RON"
+          data-desc="Aranjament în cutie rotundă sau hatbox, plin cu flori din bezea. Ușor de așezat pe masă, perfect pentru localuri sau acasă."
+          data-img="https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg?auto=compress&cs=tinysrgb&w=1200&q=80">
+          <div class="product-img-wrap">
+            <img src="https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg?auto=compress&cs=tinysrgb&w=1200&q=80" alt="Mellow Box aranjament în cutie">
+          </div>
+          <div class="product-content">
+            <div class="product-header-row">
+              <div class="product-name">Mellow Box</div>
+              <div class="size-pill">Box</div>
+            </div>
+            <p class="product-desc">Cutie elegantă plină cu flori comestibile. Arată ca un buchet, se mănâncă ca un desert.</p>
+            <div class="product-meta">
+              <div class="product-price">de la 260 RON</div>
+              <button class="product-btn" type="button">Detalii</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- 6 -->
+        <article class="product-card"
+          data-title="Bubbles & Blooms"
+          data-price="de la 420 RON"
+          data-desc="Buchet Flor Mellow + sticlă de prosecco sau șampanie. Set complet pentru seri speciale."
+          data-img="https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg?auto=compress&cs=tinysrgb&w=1200&q=80">
+          <div class="product-img-wrap">
+            <img src="https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg?auto=compress&cs=tinysrgb&w=1200&q=80" alt="Bubbles & Blooms set">
+          </div>
+          <div class="product-content">
+            <div class="product-header-row">
+              <div class="product-name">Bubbles & Blooms</div>
+              <div class="size-pill">Set</div>
+            </div>
+            <p class="product-desc">Combinație între buchet comestibil și ceva de pus în pahare.</p>
+            <div class="product-meta">
+              <div class="product-price">de la 420 RON</div>
+              <button class="product-btn" type="button">Detalii</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- 7 -->
+        <article class="product-card"
+          data-title="Mellow Tasting Tray"
+          data-price="de la 190 RON"
+          data-desc="Selecție de flori individuale din bezea, aranjate într-o cutie plată. Toată lumea alege ce floare vrea."
+          data-img="https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg?auto=compress&cs=tinysrgb&w=1200&q=80">
+          <div class="product-img-wrap">
+            <img src="https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg?auto=compress&cs=tinysrgb&w=1200&q=80" alt="Mellow Tasting Tray cutie de degustare">
+          </div>
+          <div class="product-content">
+            <div class="product-header-row">
+              <div class="product-name">Mellow Tasting Tray</div>
+              <div class="size-pill">Box</div>
+            </div>
+            <p class="product-desc">Perfect pentru birou, familie sau cine vrea să guste „câte un pic din toate”.</p>
+            <div class="product-meta">
+              <div class="product-price">de la 190 RON</div>
+              <button class="product-btn" type="button">Detalii</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- 8 -->
+        <article class="product-card"
+          data-title="Seasonal Story"
+          data-price="de la 260 RON"
+          data-desc="Buchet inspirat de anotimp – tonuri de toamnă, alb de iarnă sau pasteluri de primăvară. Designul se schimbă des."
+          data-img="https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg?auto=compress&cs=tinysrgb&w=1200&q=80">
+          <div class="product-img-wrap">
+            <img src="https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg?auto=compress&cs=tinysrgb&w=1200&q=80" alt="Seasonal Story buchet de sezon">
+          </div>
+          <div class="product-content">
+            <div class="product-header-row">
+              <div class="product-name">Seasonal Story</div>
+              <div class="size-pill">Limited</div>
+            </div>
+            <p class="product-desc">Buchet de sezon – când se termină, nu mai revine la fel.</p>
+            <div class="product-meta">
+              <div class="product-price">de la 260 RON</div>
+              <button class="product-btn" type="button">Detalii</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- 9 -->
+        <article class="product-card"
+          data-title="Mini Mellow Box"
+          data-price="de la 130 RON"
+          data-desc="Cutie mică cu câteva flori preferate. Ideală pentru colegi, profesori sau vecini dragi."
+          data-img="https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg?auto=compress&cs=tinysrgb&w=1200&q=80">
+          <div class="product-img-wrap">
+            <img src="https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg?auto=compress&cs=tinysrgb&w=1200&q=80" alt="Mini Mellow Box">
+          </div>
+          <div class="product-content">
+            <div class="product-header-row">
+              <div class="product-name">Mini Mellow Box</div>
+              <div class="size-pill">S / Box</div>
+            </div>
+            <p class="product-desc">O doză mică de „wow” pentru momente mici, dar importante.</p>
+            <div class="product-meta">
+              <div class="product-price">de la 130 RON</div>
+              <button class="product-btn" type="button">Detalii</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="reveal">
+    <div class="container two-column">
+      <div class="text-block">
+        <div class="section-kicker">Povestea noastră</div>
+        <h3>De la flori clasice la deserturi în formă de buchet.</h3>
+        <p>
+          Flor Mellow a pornit de la o întrebare simplă: dacă buchetul nu ar mai fi doar decor, ci și desertul principal? În loc să îl arunci după câteva zile, îl pui în mijlocul mesei și împărțiți fiecare floare.
+        </p>
+        <p>
+          Fiecare petală este șprițată manual din bezea, apoi îmbinată în buchete, cutii și aranjamente de sezon. Ne inspirăm din estetica florăriilor, dar o traducem în dulciuri comestibile.
+        </p>
+        <p>
+          Totul se face în loturi mici, în Cluj-Napoca, cu rețete fără zahăr și fără gluten, ca să poată spune „da” la desert cât mai mulți invitați.
+        </p>
+      </div>
+      <div class="about-photo">
+        <img src="https://images.pexels.com/photos/1028725/pexels-photo-1028725.jpeg?auto=compress&cs=tinysrgb&w=1600&q=80" alt="Flor Mellow lifestyle">
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW TO ORDER -->
+  <section id="how" class="reveal">
+    <div class="container two-column">
+      <div class="about-photo">
+        <img src="https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg?auto=compress&cs=tinysrgb&w=1200&q=80" alt="Detaliu flori din bezea">
+      </div>
+      <div class="text-block">
+        <div class="section-kicker">Cum comanzi</div>
+        <h3>3 pași, fără formular complicat.</h3>
+        <p>Majoritatea comenzilor încep pe Instagram sau WhatsApp și se clarifică în câteva mesaje.</p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <div>
+              <strong>Alegi mărimea și stilul.</strong><br>
+              Ne spui dacă vrei S, M, L, XL, cutie sau set cu prosecco/șampanie și trimiți o poză de inspirație din feed.
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <div>
+              <strong>Stabilim culorile & mesajul.</strong><br>
+              Adaptăm paleta la eveniment, includem un mesaj scris de mână și confirmăm bugetul.
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <div>
+              <strong>Pregătire proaspătă & livrare.</strong><br>
+              Pregătim buchetul în ziua stabilită și îl livrăm în Cluj-Napoca sau îl preiei personal.
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:16px;">
+          <button class="btn-primary" onclick="openWhatsApp('Bună, aș vrea să comand un buchet Flor Mellow. Putem stabili detaliile?')">
+            Deschide conversație pe WhatsApp →
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="reveal">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-kicker">Feedback</div>
+        <h2 class="section-title">Ce au spus cei care au primit un buchet Flor Mellow.</h2>
+      </div>
+      <div class="reviews-grid">
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          „Toți au crezut că sunt flori adevărate până când am început să le mâncăm. Sărbătorita a rămas fără cuvinte.”
+          <div class="review-name">Ana • Cluj-Napoca</div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          „Perfect pentru echipa de la birou – arată frumos pe masă și dispare până la finalul zilei. N-am mai avut nevoie de tort.”
+          <div class="review-name">Mihai • comandă corporate</div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          „Voiam ceva diferit de florile clasice. Asta a fost premium, jucăuș și foarte Instagram-abil.”
+          <div class="review-name">Ioana • aniversare</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="contact" class="reveal">
+    <div class="container">
+      <div class="cta">
+        <h3>Vrei să planificăm buchetul tău?</h3>
+        <p>Trimite-ne un mesaj cu data, ocazia și o poză preferată din Instagram. Îți propunem un buchet comestibil gândit special pentru momentul tău.</p>
+        <button class="btn-whatsapp" onclick="openWhatsApp('Bună, vreau să planificăm un buchet Flor Mellow pentru următorul meu eveniment.')">
+          💬 Deschide WhatsApp cu Flor Mellow
+        </button>
+        <small>Preferi Instagram? Ne găsești la <strong>@flor_mellow_atelier</strong>.</small>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <div>© <span id="year"></span> Flor Mellow – Buchete de flori din bezele moi.</div>
+    <div>
+      <a href="https://www.instagram.com/flor_mellow_atelier" target="_blank" rel="noopener">Instagram</a>
+      <span> • </span>
+      <a href="tel:+40XXXXXXXXX">Sună</a>
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL PRODUSE -->
+<div class="modal" id="productModal">
+  <div class="modal-content">
+    <div class="modal-media">
+      <img id="modalImg" src="" alt="Detaliu buchet">
+      <button class="modal-close" type="button" onclick="closeModal()">×</button>
+      <button class="modal-nav prev" type="button" onclick="prevModalImage()">‹</button>
+      <button class="modal-nav next" type="button" onclick="nextModalImage()">›</button>
+      <div class="modal-dots" id="modalDots"></div>
+    </div>
+    <div class="modal-body">
+      <h3 id="modalTitle"></h3>
+      <div class="modal-price" id="modalPrice"></div>
+      <p id="modalDesc"></p>
+      <div class="modal-actions">
+        <button class="btn-whatsapp" type="button" id="modalWhatsAppBtn">
+          💬 Comandă acest buchet pe WhatsApp
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const WA_NUMBER = "40XXXXXXXXX"; // ← înlocuiești cu numărul tău, fără + (ex: 4074...)
+
+  function openWhatsApp(message) {
+    const text = encodeURIComponent(message);
+    window.open(`https://wa.me/${WA_NUMBER}?text=` + text, "_blank");
+  }
+
+  // Scroll reveal (cu fallback dacă browserul e vechi)
+  const reveals = document.querySelectorAll('.reveal');
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    reveals.forEach(el => observer.observe(el));
+  } else {
+    reveals.forEach(el => el.classList.add('visible'));
+  }
+
+  // Year in footer
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Modal + slider
+  const modal = document.getElementById('productModal');
+  const modalImg = document.getElementById('modalImg');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalPrice = document.getElementById('modalPrice');
+  const modalDesc = document.getElementById('modalDesc');
+  const modalWhatsAppBtn = document.getElementById('modalWhatsAppBtn');
+  const modalDots = document.getElementById('modalDots');
+
+  let modalImages = [];
+  let modalImageIndex = 0;
+
+  function renderModalImage() {
+    if (!modalImages.length) return;
+    modalImg.src = modalImages[modalImageIndex];
+
+    modalDots.innerHTML = '';
+    if (modalImages.length > 1) {
+      modalImages.forEach((_, idx) => {
+        const dot = document.createElement('span');
+        dot.className = 'modal-dot' + (idx === modalImageIndex ? ' active' : '');
+        dot.onclick = () => goToModalImage(idx);
+        modalDots.appendChild(dot);
+      });
+    }
+  }
+
+  function goToModalImage(i) {
+    modalImageIndex = i;
+    renderModalImage();
+  }
+
+  function prevModalImage() {
+    if (modalImages.length < 2) return;
+    modalImageIndex = (modalImageIndex - 1 + modalImages.length) % modalImages.length;
+    renderModalImage();
+  }
+
+  function nextModalImage() {
+    if (modalImages.length < 2) return;
+    modalImageIndex = (modalImageIndex + 1) % modalImages.length;
+    renderModalImage();
+  }
+
+  function openModalFromCard(card) {
+    const title = card.dataset.title || card.querySelector('.product-name')?.textContent || "Buchet Flor Mellow";
+    const price = card.dataset.price || card.querySelector('.product-price')?.textContent || "";
+    const desc  = card.dataset.desc  || card.querySelector('.product-desc')?.textContent || "";
+    const imagesAttr = card.dataset.images;  // url1|url2|url3
+    const fallbackImg = card.dataset.img || card.querySelector('img')?.src || "";
+
+    if (imagesAttr) {
+      modalImages = imagesAttr.split('|').map(s => s.trim()).filter(Boolean);
+    } else {
+      modalImages = [fallbackImg];
+    }
+    modalImageIndex = 0;
+
+    modalTitle.textContent = title;
+    modalPrice.textContent = price;
+    modalDesc.textContent = desc;
+
+    modalWhatsAppBtn.onclick = () => {
+      openWhatsApp(`Bună, mă interesează produsul „${title}” (${price}). Putem discuta detaliile?`);
+    };
+
+    renderModalImage();
+    modal.style.display = "flex";
+  }
+
+  function closeModal() {
+    modal.style.display = "none";
+  }
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  const productCards = document.querySelectorAll('.product-card');
+  productCards.forEach(card => {
+    card.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openModalFromCard(card);
+    });
+    const btn = card.querySelector('.product-btn');
+    if (btn) {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openModalFromCard(card);
+      });
+    }
+  });
+</script>
+
+</body>
+</html>
