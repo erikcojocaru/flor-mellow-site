@@ -96,10 +96,11 @@
         display: flex;
         align-items: center;
       }
-
+      
       .logo-img {
-        height: 40px;
         display: block;
+        height: 52px;
+        width: auto;
       }
 
       @media (max-width: 640px) {
@@ -1539,6 +1540,12 @@
         const heroDotsWrap = document.querySelector('.hero-dots');
         if (heroImg && heroImg.dataset.heroImages) {
           const heroImages = heroImg.dataset.heroImages.split('|').map(s => s.trim()).filter(Boolean);
+          // TEXTE CORESPONDENTE fiecărei poze din heroImages:
+const heroQuotes = [
+  '„Nu doar flori, ci un desert care arată ca un buchet.”',
+  '„Bezele moi, culori pastel și un buchet care se mănâncă până la ultima floare.”',
+  '„Desertul care arată ca un buchet și rămâne în poze și în amintiri.”'
+];
           if (heroImages.length > 0) {
             let heroIndex = 0;
             const FADE_DELAY = 350;
@@ -1577,6 +1584,11 @@
               heroImg.style.opacity = 0.2;
               setTimeout(() => {
                 heroImg.src = nextSrc;
+                // schimbăm textul din balon în funcție de index
+    const quoteEl = document.querySelector('.hero-floating strong');
+    if (quoteEl && heroQuotes[heroIndex]) {
+      quoteEl.textContent = heroQuotes[heroIndex];
+    }
                 heroImg.onload = () => {
                   heroImg.style.opacity = 1;
                 };
@@ -1645,4 +1657,5 @@
     </script>
   </body>
 </html>
+
 
