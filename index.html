@@ -34,7 +34,8 @@
         --radius-lg: 22px;
         --radius-xl: 30px;
         --section-padding: 72px;
-        --transition-fast: 0.22s ease-out --whatsapp: #25d366
+        --transition-fast: 0.22s ease-out;
+        --whatsapp: #25d366;
       }
 
       * {
@@ -73,13 +74,12 @@
       }
 
       header {
-        position: sticky;
-        top: 0;
-        z-index: 20;
-        backdrop-filter: blur(16px);
-        background: rgba(247, 242, 238, .92);
-        border-bottom: 1px solid rgba(255, 255, 255, .8)
-      }
+  position: sticky;
+  top: 0;
+  z-index: 25;
+  backdrop-filter: blur(14px);
+  background: rgba(247, 242, 238, 0.92);
+}
 
       .nav {
         display: flex;
@@ -155,24 +155,28 @@
         gap: 14px
       }
 
-      .social-links {
-        display: flex;
-        gap: 8px
-      }
+     .social-links {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
 
-      .social-icon {
-        width: 28px;
-        height: 28px;
-        border-radius: 999px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: .78rem;
-        font-weight: 600;
-        color: #fff;
-        text-transform: uppercase;
-        box-shadow: 0 8px 18px rgba(0, 0, 0, .12)
-      }
+.social-icon {
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text);
+  font-size: 18px;
+  opacity: 0.8;
+  transition: opacity .2s ease-out, transform .2s ease-out;
+}
+
+.social-icon:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+}
 
       .social-instagram {
         background: radial-gradient(circle at 30% 30%, #fdf497 0, #fd5949 45%, #d6249f 65%, #285aeb 100%)
@@ -1014,9 +1018,16 @@
         </nav>
         <div class="nav-right">
           <div class="social-links">
-            <a href="https://www.instagram.com/flor_mellow_atelier" target="_blank" rel="noopener" class="social-icon social-instagram" aria-label="Instagram">IG</a>
-            <a href="https://www.instagram.com/flor_mellow_atelier?igsh=MXY4aWtkdWdzN3pm" target="_blank" rel="noopener" class="social-icon social-facebook" aria-label="Facebook">f</a>
-          </div>
+  <a href="https://www.instagram.com/flor_mellow_atelier" 
+     target="_blank" 
+     rel="noopener" 
+     class="social-icon">📸</a>
+
+  <a href="https://facebook.com" 
+     target="_blank" 
+     rel="noopener" 
+     class="social-icon">🌐</a>
+</div>
           <button class="btn-whatsapp btn-whatsapp-header" onclick='openWhatsApp("Bună, aș vrea să comand un buchet Flor Mellow. Putem discuta detaliile?")'>WhatsApp</button>
         </div>
       </div>
@@ -1320,10 +1331,11 @@
         <div class="footer-left">© <span id="year"></span>Flor Mellow – Buchete de flori din bezele moi. </div>
         <div class="footer-right">
           <div class="footer-social">
-            <a href="https://www.instagram.com/flor_mellow_atelier" target="_blank" class="footer-icon footer-instagram">IG</a>
-            <a href="https://facebook.com" target="_blank" class="footer-icon footer-facebook">f</a>
-            <a href="https://wa.me/40738841225" target="_blank" class="footer-icon footer-whatsapp">WA</a>
-          </div>
+  <a href="https://www.instagram.com/flor_mellow_atelier" target="_blank" class="social-icon" style="font-size:20px;">📸</a>
+  <a href="https://facebook.com" target="_blank" class="social-icon" style="font-size:20px;">🌐</a>
+  <a href="https://wa.me/40738841225" target="_blank" class="social-icon" style="font-size:20px;">🟢</a>
+</div>
+
         </div>
       </div>
     </footer>
@@ -1542,3 +1554,4 @@
     </script>
   </body>
 </html>
+
