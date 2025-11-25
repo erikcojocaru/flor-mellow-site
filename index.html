@@ -468,6 +468,35 @@
         margin-right: auto;
       }
 
+      /* Secțiunea DE CE FLOR MELLOW */
+#why {
+  padding-top: 52px;
+  padding-bottom: 52px;
+}
+
+#why .section-title {
+  font-family: "DM Sans", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.6rem, 4.5vw, 2.1rem);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  max-width: 18ch;
+  margin: 0 auto 12px;
+}
+
+#why .section-subtitle {
+  max-width: 26rem;
+}
+
+/* versiune mobil – mai compactă */
+@media (max-width: 640px) {
+  #why {
+    padding-top: 40px;
+    padding-bottom: 44px;
+  }
+}
+
+      
       .why-grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1111,7 +1140,7 @@
         </div>
       </section>
       <!-- WHY -->
-      <section class="reveal">
+      <section id="why" class="reveal">
         <div class="container">
           <div class="section-header">
             <div class="section-kicker">De ce Flor Mellow</div>
@@ -1662,6 +1691,7 @@ const heroQuotes = [
     </script>
   </body>
 </html>
+
 
 
 
