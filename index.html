@@ -264,8 +264,9 @@
       border-radius: 22px;
       object-fit: cover;
       width: 100%;
+      height: 420px; /* inaltime fixa */
       max-height: 420px;
-      transition: opacity 0.6s ease-in-out;
+      transition: opacity 0.9s ease-in-out;
     }
 
     .hero-floating {
@@ -775,6 +776,10 @@
       .hero-note {
         justify-content: center;
         text-align: center;
+      }
+
+      .hero-media {
+         order: -1; /* pe mobil, poza urcă deasupra textului */
       }
 
       .why-grid,
@@ -1416,7 +1421,7 @@
   });
 /* --- Slideshow HERO + ABOUT --- */
 (function() {
-  // HERO
+    // HERO
   const heroImg = document.querySelector('.hero-card img');
   if (heroImg && heroImg.dataset.heroImages) {
     const heroImages = heroImg.dataset.heroImages
@@ -1428,20 +1433,27 @@
 
     function nextHero() {
       if (heroImages.length < 2) return;
+
       heroIndex = (heroIndex + 1) % heroImages.length;
-      heroImg.style.opacity = 0;
       const nextSrc = heroImages[heroIndex];
 
-      // schimbăm sursa după un mic delay pentru fade-out
+      // fade out
+      heroImg.style.opacity = 0;
+
+      // schimbăm poza după ce aproape a terminat fade-out-ul
       setTimeout(() => {
         heroImg.src = nextSrc;
+
         heroImg.onload = () => {
+          // fade in
           heroImg.style.opacity = 1;
         };
-      }, 250);
+      }, 450); // puțin mai lung pentru o tranziție mai fină
     }
 
-    setInterval(nextHero, 5000); // la 5 secunde
+    // pornim cu opacitate 1
+    heroImg.style.opacity = 1;
+    setInterval(nextHero, 5500); // la ~5.5 secunde
   }
 
   // ABOUT (Povestea noastră)
@@ -1475,6 +1487,7 @@
 
 </body>
 </html>
+
 
 
 
