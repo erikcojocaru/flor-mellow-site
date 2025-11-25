@@ -149,7 +149,7 @@
     /* HERO */
 
     .hero {
-      padding: 48px 0 70px;
+      padding: 32px 0 56px;
     }
 
     .hero-inner {
@@ -759,6 +759,33 @@
     /* MOBILE / RESPONSIVE */
 
     @media (max-width: 640px) {
+      /* --- FIX hero pentru mobile --- */
+
+      .hero {
+        padding: 20px 0 40px;
+      }
+    
+      .hero-card {
+        padding: 10px;
+      }
+    
+      .hero-card img {
+        height: 300px !important;
+        max-height: 300px !important;
+        object-fit: cover;
+      }
+    
+      .hero-badge {
+        transform: scale(0.85);
+        top: -12px;
+        right: -12px;
+      }
+    
+      .hero-floating {
+        font-size: 0.75rem;
+        padding: 8px 10px;
+        bottom: 10px;
+      }
       header .nav { height: 64px; }
       nav ul { display: none; }
 
@@ -1438,7 +1465,7 @@
       const nextSrc = heroImages[heroIndex];
 
       // fade out
-      heroImg.style.opacity = 0;
+      heroImg.style.opacity = 0.2;
 
       // schimbăm poza după ce aproape a terminat fade-out-ul
       setTimeout(() => {
@@ -1448,12 +1475,10 @@
           // fade in
           heroImg.style.opacity = 1;
         };
-      }, 450); // puțin mai lung pentru o tranziție mai fină
+      }, 350); // puțin mai lung pentru o tranziție mai fină
     }
 
-    // pornim cu opacitate 1
-    heroImg.style.opacity = 1;
-    setInterval(nextHero, 5500); // la ~5.5 secunde
+    setInterval(nextHero, 7000); // la ~5.5 secunde
   }
 
   // ABOUT (Povestea noastră)
@@ -1487,6 +1512,7 @@
 
 </body>
 </html>
+
 
 
 
