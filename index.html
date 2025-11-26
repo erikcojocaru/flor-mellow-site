@@ -92,7 +92,7 @@
         height: 74px;
       }
 
-      .logo {
+      . {
         display: flex;
         align-items: center;
       }
@@ -100,7 +100,7 @@
       /* dimensiune logo default (desktop) */
 .logo img {
   display: block;
-  height: 64px;   /* înainte era mai mic – acum îl facem mai prezent */
+  height: 40px;   /* înainte era mai mic – acum îl facem mai prezent */
   width: auto;
 }
 
@@ -109,6 +109,24 @@
           height: 40px;
         }
 
+        .nav {
+    height: 68px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+
+  .logo img {
+    height: 34px;        /* mai mare, dar nu sufocă headerul */
+  }
+
+  .nav-right {
+    gap: 10px;
+  }
+
+  .social-links {
+    gap: 10px;
+  }
+        
         .nav-right {
           gap: 8px;
         }
@@ -262,14 +280,14 @@
         align-items: center;
       }
 
-     .hero-copy h1 {
-  text-transform: uppercase;
-  font-family: "DM Sans", sans-serif !important;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  font-size: clamp(1.6rem, 6vw, 2.2rem);
-  line-height: 1.25;
+    .hero-copy h1 {
+  font-family: Fraunces, serif;
+  font-size: clamp(2.4rem, 3.1vw, 3.2rem);
+  line-height: 1.12;
+  letter-spacing: 0.02em;
+  margin-bottom: 16px;
 }
+
 .hero-copy h1 span {
   color: var(--primary-dark);
 }
@@ -435,12 +453,13 @@
 
       /* SECTIONS */
       section {
-        padding: var(--section-padding) 0;
+        padding: 52px 0;
       }
 
       .section-header {
         text-align: center;
-        margin-bottom: 32px;
+        margin-bottom: 22px;
+        margin-top: 10px;
       }
 
       .section-kicker {
@@ -501,6 +520,7 @@
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 20px;
+        margin-top: 10px;
       }
 
       .why-card {
@@ -956,9 +976,11 @@
           grid-template-columns: minmax(0, 1fr);
         }
 
-        .hero-copy {
-          text-align: center;
-        }
+        .hero-copy h1 {
+    font-size: 1.9rem;
+    line-height: 1.25;
+    letter-spacing: 0.01em;
+  }
 
         .hero-actions,
         .hero-note,
@@ -1060,9 +1082,10 @@
   <body>
     <header id="top">
       <div class="container nav">
-        <div class="logo">
-          <img src="logo.PNG" alt="Flor Mellow – Buchete de flori din bezele moi" class="logo-img">
-        </div>
+        <a href="#top">
+          <img src="logo.PNG"
+               alt="Flor Mellow – Buchete de flori din bezele moi">
+        </a>
         <nav>
           <ul>
             <li>
@@ -1108,7 +1131,10 @@
       <section class="hero">
         <div class="container hero-inner">
           <div class="hero-copy">
-            <h1>Buchete comestibile din <span>bezele moi</span>, pentru momente care chiar se gustă. </h1>
+            <h1>
+  BUCHETE COMESTIBILE DIN <span>BEZELE MOI</span><br>
+  PENTRU MOMENTE CARE CHIAR SE GUSTĂ.
+</h1>
             <p class="hero-subtitle"> Fără zahăr, fără gluten, făcute manual în Cluj. Un buchet pe care îl admiri, apoi îl mănânci împreună cu cei dragi. </p>
             <div class="hero-tags">
               <span class="tag-pill">✨ Artizanat, nu producție de masă</span>
@@ -1691,6 +1717,7 @@ const heroQuotes = [
     </script>
   </body>
 </html>
+
 
 
 
