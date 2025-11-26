@@ -11,15 +11,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-    <!-- Font Awesome pentru iconițe standard -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- Forțăm light mode chiar dacă user-ul are dark -->
     <style>
       @media (prefers-color-scheme: dark) {
-        body,
-        html {
+        html, body {
           background: #f7f2ee !important;
           color: #333 !important;
         }
@@ -96,13 +93,7 @@
         height: 74px;
       }
 
-      .logo {
-        display: flex;
-        align-items: center;
-      }
-
-      /* dimensiune logo default (desktop) */
-      .logo img {
+      .logo-img {
         display: block;
         height: 56px;
       }
@@ -113,10 +104,6 @@
         gap: 26px;
         font-size: 14px;
         font-weight: 500;
-      }
-
-      nav li {
-        list-style: none;
       }
 
       nav a {
@@ -164,17 +151,23 @@
         transform: translateY(-2px);
       }
 
-      .social-ig svg {
-        fill: #e1306c;
+      .social-icon svg {
+        width: 20px;
+        height: 20px;
+        display: block;
+        fill: #555;
+        opacity: 0.85;
+        transition: transform 0.2s ease-out, opacity 0.2s ease-out, fill 0.2s ease-out;
       }
 
-      .social-fb svg {
-        fill: #1877f2;
+      .social-icon:hover svg {
+        transform: translateY(-1px);
+        opacity: 1;
       }
 
-      .social-wa svg {
-        fill: #25d366;
-      }
+      .social-ig svg { fill: #e1306c; }
+      .social-fb svg { fill: #1877f2; }
+      .social-wa svg { fill: #25d366; }
 
       .btn-whatsapp-header {
         padding: 8px 16px;
@@ -385,7 +378,7 @@
         background: var(--primary-dark);
       }
 
-      /* SECTIONS */
+      /* SECTIONS GENERALE */
       section {
         padding: 48px 0;
       }
@@ -421,10 +414,24 @@
         margin-right: auto;
       }
 
+      .scroll-hint {
+        display: none;
+        font-size: 0.78rem;
+        color: var(--text-soft);
+        margin-top: 6px;
+      }
+
       /* Secțiunea DE CE FLOR MELLOW */
       #why {
-        padding-top: 52px;
-        padding-bottom: 52px;
+        background: var(--bg-soft);
+        border-radius: 26px;
+        margin: 0 12px 40px;
+        padding-top: 32px;
+        padding-bottom: 32px;
+      }
+
+      #why .section-header {
+        margin-top: 0;
       }
 
       #why .section-title {
@@ -433,8 +440,8 @@
         font-size: clamp(1.6rem, 4.5vw, 2.1rem);
         line-height: 1.25;
         letter-spacing: -0.01em;
-        max-width: 18ch;
-        margin: 0 auto 12px;
+        max-width: 20ch;
+        margin: 0 auto 10px;
       }
 
       #why .section-subtitle {
@@ -629,7 +636,9 @@
       .about-photo img {
         width: 100%;
         height: 100%;
+        max-height: 420px;
         object-fit: cover;
+        object-position: center;
         transition: opacity 0.8s ease-in-out;
       }
 
@@ -650,17 +659,31 @@
         display: flex;
         flex-direction: column;
         gap: 6px;
+        position: relative;
+        text-align: left;
+      }
+
+      .review-card::before {
+        content: "„";
+        position: absolute;
+        top: 10px;
+        left: 14px;
+        font-size: 2.2rem;
+        line-height: 1;
+        color: rgba(0, 0, 0, 0.06);
       }
 
       .review-stars {
         color: #f5a623;
         font-size: 0.83rem;
+        margin-bottom: 4px;
       }
 
       .review-name {
         font-size: 0.83rem;
         font-weight: 500;
         color: var(--text);
+        margin-top: 6px;
       }
 
       /* CTA / CONTACT */
@@ -739,14 +762,6 @@
       .footer-right .social-icon svg {
         width: 22px;
         height: 22px;
-      }
-
-      @media (max-width: 640px) {
-        .footer-inner {
-          flex-direction: column;
-          gap: 12px;
-          text-align: center;
-        }
       }
 
       /* SCROLL REVEAL */
@@ -855,13 +870,8 @@
         cursor: pointer;
       }
 
-      .modal-nav.prev {
-        left: 10px;
-      }
-
-      .modal-nav.next {
-        right: 10px;
-      }
+      .modal-nav.prev { left: 10px; }
+      .modal-nav.next { right: 10px; }
 
       .modal-dots {
         position: absolute;
@@ -884,9 +894,32 @@
       }
 
       /* RESPONSIVE */
+      @media (max-width: 960px) {
+        :root {
+          --section-padding: 60px;
+        }
+
+        .hero-inner,
+        .two-column {
+          grid-template-columns: minmax(0, 1fr);
+        }
+
+        .hero-card {
+          max-width: 420px;
+          margin: 0 auto;
+        }
+      }
+
+      @media (max-width: 840px) {
+        .reviews-grid,
+        .why-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
       @media (max-width: 640px) {
-        .logo img {
-          height: 44px;
+        .logo-img {
+          height: 38px;
         }
 
         .nav {
@@ -896,16 +929,15 @@
         }
 
         nav ul {
-          display: none; /* ascundem meniul text pe mobil */
+          display: none;
+        }
+
+        .nav-right {
+          gap: 10px;
         }
 
         .social-links {
-          display: none; /* ascundem iconițele social din header pe mobil, rămân doar în footer */
-        }
-
-        .btn-whatsapp-header {
-          padding: 6px 12px;
-          font-size: 0.8rem;
+          display: none; /* în header, le ascundem pe mobil ca să nu aglomereze */
         }
 
         .hero {
@@ -959,8 +991,9 @@
         }
 
         #why {
-          padding-top: 40px;
-          padding-bottom: 44px;
+          margin: 8px 10px 32px;
+          padding-top: 24px;
+          padding-bottom: 26px;
         }
 
         .reviews-grid,
@@ -984,8 +1017,8 @@
           scroll-snap-align: start;
         }
 
-        .two-column {
-          grid-template-columns: minmax(0, 1fr);
+        .scroll-hint {
+          display: block;
         }
 
         .modal {
@@ -1002,28 +1035,11 @@
         .cta {
           border-radius: 22px;
         }
-      }
 
-      @media (max-width: 960px) {
-        :root {
-          --section-padding: 60px;
-        }
-
-        .hero-inner,
-        .two-column {
-          grid-template-columns: minmax(0, 1fr);
-        }
-
-        .hero-card {
-          max-width: 420px;
-          margin: 0 auto;
-        }
-      }
-
-      @media (max-width: 840px) {
-        .reviews-grid,
-        .why-grid {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
+        .footer-inner {
+          flex-direction: column;
+          gap: 12px;
+          text-align: center;
         }
       }
     </style>
@@ -1033,11 +1049,9 @@
     <!-- HEADER -->
     <header id="top">
       <div class="container nav">
-        <div class="logo">
-          <a href="#top">
-            <img src="logo.PNG" alt="Flor Mellow – Buchete de flori din bezele moi">
-          </a>
-        </div>
+        <a href="#top">
+          <img src="logo.PNG" alt="Flor Mellow – Buchete de flori din bezele moi" class="logo-img">
+        </a>
 
         <nav>
           <ul>
@@ -1054,13 +1068,15 @@
             <!-- Instagram -->
             <a href="https://www.instagram.com/flor_mellow_atelier"
                target="_blank" rel="noopener"
-               class="social-icon" aria-label="Instagram">
+               class="social-icon"
+               aria-label="Instagram">
               <i class="fa-brands fa-instagram"></i>
             </a>
             <!-- Facebook -->
             <a href="https://www.facebook.com/share/1DEzKHV3NC/?mibextid=wwXIfr"
                target="_blank" rel="noopener"
-               class="social-icon" aria-label="Facebook">
+               class="social-icon"
+               aria-label="Facebook">
               <i class="fa-brands fa-facebook-f"></i>
             </a>
           </div>
@@ -1083,13 +1099,16 @@
               PENTRU MOMENTE CARE CHIAR SE GUSTĂ.
             </h1>
             <p class="hero-subtitle">
-              Fără zahăr, fără gluten, făcute manual în Cluj. Un buchet pe care îl admiri, apoi îl mănânci împreună cu cei dragi.
+              Fără zahăr, fără gluten, făcute manual în Cluj.
+              Un buchet pe care îl admiri, apoi îl mănânci împreună cu cei dragi.
             </p>
+
             <div class="hero-tags">
               <span class="tag-pill">✨ Artizanat, nu producție de masă</span>
               <span class="tag-pill">🍓 Culori și arome naturale</span>
               <span class="tag-pill">🎁 Cadouri memorabile</span>
             </div>
+
             <div class="hero-actions">
               <button class="btn-primary" type="button"
                       onclick='document.getElementById("bouquets").scrollIntoView({behavior:"smooth"})'>
@@ -1100,6 +1119,7 @@
                 Comandă pe WhatsApp
               </button>
             </div>
+
             <p class="hero-note">
               Pregătire în aceeași zi pentru Cluj-Napoca (în funcție de sloturile disponibile).
             </p>
@@ -1110,7 +1130,8 @@
               <img
                 src="Flor-Mellow/Instagram/Instagram-32.jpg"
                 alt="Buchet pastel de flori comestibile Flor Mellow"
-                data-hero-images="Flor-Mellow/Instagram/Instagram-32.jpg|Flor-Mellow/Instagram/Instagram-44.jpg|Flor-Mellow/Random/Random-8.jpeg">
+                data-hero-images="Flor-Mellow/Instagram/Instagram-32.jpg|Flor-Mellow/Instagram/Instagram-44.jpg|Flor-Mellow/Random/Random-8.jpeg"
+              >
               <div class="hero-floating">
                 <strong>„Nu doar flori, ci un desert care arată ca un buchet.”</strong>
                 <span>– Flor Mellow Atelier</span>
@@ -1131,29 +1152,36 @@
             <div class="section-kicker">De ce Flor Mellow</div>
             <h2 class="section-title">Buchete pe care nu le arunci – le mănânci.</h2>
             <p class="section-subtitle">
-              Fiecare floare este șprițată manual din mousse de bezea, petală cu petală, apoi aranjată ca un buchet floral.
+              Fiecare floare este șprițată manual din mousse de bezea, petală cu petală,
+              apoi aranjată ca un buchet floral.
             </p>
           </div>
+
           <div class="why-grid">
             <div class="why-card">
               <div class="why-icon">🌿</div>
               <h3>Fără zahăr & fără gluten</h3>
               <p>
-                Pentru cei care vor desert fără vinovăție. Potrivite și pentru copii, și pentru adulți.
+                Pentru cei care vor desert fără vinovăție.
+                Potrivite și pentru copii, și pentru adulți.
               </p>
             </div>
+
             <div class="why-card">
               <div class="why-icon">🎨</div>
               <h3>Artă făcută manual</h3>
               <p>
-                Fiecare buchet este unic. Nu există două identice – exact ca în florăriile artizanale.
+                Fiecare buchet este unic. Nu există două identice –
+                exact ca în florăriile artizanale.
               </p>
             </div>
+
             <div class="why-card">
               <div class="why-icon">📍</div>
               <h3>Făcute în Cluj-Napoca</h3>
               <p>
-                Pregătite proaspăt în ziua evenimentului și livrate cu grijă până la ușa ta.
+                Pregătite proaspăt în ziua evenimentului
+                și livrate cu grijă până la ușa ta.
               </p>
             </div>
           </div>
@@ -1167,7 +1195,11 @@
             <div class="section-kicker">Best sellers</div>
             <h2 class="section-title">Alege buchetul Flor Mellow.</h2>
             <p class="section-subtitle">
-              Pornește de la mărime, apoi personalizăm culorile, mesajul și stilul împreună, pe WhatsApp.
+              Pornește de la mărime, apoi personalizăm culorile, mesajul și stilul
+              împreună, pe WhatsApp.
+            </p>
+            <p class="scroll-hint">
+              Pe mobil poți glisa lateral pentru a vedea toate buchetele.
             </p>
           </div>
 
@@ -1283,7 +1315,8 @@
                   <div class="size-pill">Box</div>
                 </div>
                 <p class="product-desc">
-                  Cutie elegantă plină cu flori comestibile. Arată ca un buchet, se mănâncă ca un desert.
+                  Cutie elegantă plină cu flori comestibile.
+                  Arată ca un buchet, se mănâncă ca un desert.
                 </p>
                 <div class="product-meta">
                   <div class="product-price">de la 260 RON</div>
@@ -1398,20 +1431,27 @@
             <div class="section-kicker">Povestea noastră</div>
             <h3>De la flori clasice la deserturi în formă de buchet.</h3>
             <p>
-              Flor Mellow a pornit de la o întrebare simplă: dacă buchetul nu ar mai fi doar decor, ci și desertul principal? În loc să îl arunci după câteva zile, îl pui în mijlocul mesei și împărțiți fiecare floare.
+              Flor Mellow a pornit de la o întrebare simplă:
+              dacă buchetul nu ar mai fi doar decor, ci și desertul principal?
+              În loc să îl arunci după câteva zile, îl pui în mijlocul mesei
+              și împărțiți fiecare floare.
             </p>
             <p>
-              Fiecare petală este șprițată manual din bezea, apoi îmbinată în buchete, cutii și aranjamente de sezon. Ne inspirăm din estetica florăriilor, dar o traducem în dulciuri comestibile.
+              Fiecare petală este șprițată manual din bezea,
+              apoi îmbinată în buchete, cutii și aranjamente de sezon.
+              Ne inspirăm din estetica florăriilor, dar o traducem în dulciuri comestibile.
             </p>
             <p>
-              Totul se face în loturi mici, în Cluj-Napoca, cu rețete fără zahăr și fără gluten, ca să poată spune „da” la desert cât mai mulți invitați.
+              Totul se face în loturi mici, în Cluj-Napoca, cu rețete fără zahăr și fără gluten,
+              ca să poată spune „da” la desert cât mai mulți invitați.
             </p>
           </div>
           <div class="about-photo">
             <img
               src="Flor-Mellow/Random/Random-10.jpeg"
               alt="Creatoarea buchetelor Flor Mellow"
-              data-about-images="Flor-Mellow/Random/Random-10.jpeg|Flor-Mellow/Random/Random-9.jpeg|Flor-Mellow/Random/Random-11.jpeg">
+              data-about-images="Flor-Mellow/Random/Random-10.jpeg|Flor-Mellow/Random/Random-9.jpeg|Flor-Mellow/Random/Random-11.jpeg"
+            >
           </div>
         </div>
       </section>
@@ -1426,31 +1466,39 @@
             <div class="section-kicker">Cum comanzi</div>
             <h3>3 pași, fără formular complicat.</h3>
             <p>
-              Majoritatea comenzilor încep pe Instagram sau WhatsApp și se clarifică în câteva mesaje.
+              Majoritatea comenzilor încep pe Instagram sau WhatsApp
+              și se clarifică în câteva mesaje.
             </p>
+
             <div class="steps">
               <div class="step">
                 <div class="step-number">1</div>
                 <div>
                   <strong>Alegi mărimea și stilul.</strong><br>
-                  Ne spui dacă vrei S, M, L, XL, cutie sau set cu prosecco/șampanie și trimiți o poză de inspirație din feed.
+                  Ne spui dacă vrei S, M, L, XL, cutie sau set cu prosecco/șampanie
+                  și trimiți o poză de inspirație din feed.
                 </div>
               </div>
+
               <div class="step">
                 <div class="step-number">2</div>
                 <div>
                   <strong>Stabilim culorile & mesajul.</strong><br>
-                  Adaptăm paleta la eveniment, includem un mesaj scris de mână și confirmăm bugetul.
+                  Adaptăm paleta la eveniment, includem un mesaj scris de mână
+                  și confirmăm bugetul.
                 </div>
               </div>
+
               <div class="step">
                 <div class="step-number">3</div>
                 <div>
                   <strong>Pregătire proaspătă & livrare.</strong><br>
-                  Pregătim buchetul în ziua stabilită și îl livrăm în Cluj-Napoca sau îl preiei personal.
+                  Pregătim buchetul în ziua stabilită și îl livrăm în Cluj-Napoca
+                  sau îl preiei personal.
                 </div>
               </div>
             </div>
+
             <div style="margin-top:16px">
               <button class="btn-primary" type="button"
                       onclick='openWhatsApp("Bună, aș vrea să comand un buchet Flor Mellow. Putem stabili detaliile?")'>
@@ -1468,20 +1516,26 @@
             <div class="section-kicker">Feedback</div>
             <h2 class="section-title">Ce au spus cei care au primit un buchet Flor Mellow.</h2>
           </div>
+
           <div class="reviews-grid">
             <div class="review-card">
               <div class="review-stars">★★★★★</div>
-              „Toți au crezut că sunt flori adevărate până când am început să le mâncăm. Sărbătorita a rămas fără cuvinte.”
+              „Toți au crezut că sunt flori adevărate până când am început să le mâncăm.
+              Sărbătorita a rămas fără cuvinte.”
               <div class="review-name">Ana • Cluj-Napoca</div>
             </div>
+
             <div class="review-card">
               <div class="review-stars">★★★★★</div>
-              „Perfect pentru echipa de la birou – arată frumos pe masă și dispare până la finalul zilei. N-am mai avut nevoie de tort.”
+              „Perfect pentru echipa de la birou – arată frumos pe masă
+              și dispare până la finalul zilei. N-am mai avut nevoie de tort.”
               <div class="review-name">Mihai • comandă corporate</div>
             </div>
+
             <div class="review-card">
               <div class="review-stars">★★★★★</div>
-              „Voiam ceva diferit de florile clasice. Asta a fost premium, jucăuș și foarte Instagram-abil.”
+              „Voiam ceva diferit de florile clasice.
+              Asta a fost premium, jucăuș și foarte Instagram-abil.”
               <div class="review-name">Ioana • aniversare</div>
             </div>
           </div>
@@ -1494,13 +1548,16 @@
           <div class="cta">
             <h3>Vrei să planificăm buchetul tău?</h3>
             <p>
-              Trimite-ne un mesaj cu data, ocazia și o poză preferată din Instagram. Îți propunem un buchet comestibil gândit special pentru momentul tău.
+              Trimite-ne un mesaj cu data, ocazia și o poză preferată din Instagram.
+              Îți propunem un buchet comestibil gândit special pentru momentul tău.
             </p>
             <button class="btn-whatsapp" type="button"
                     onclick='openWhatsApp("Bună, vreau să planificăm un buchet Flor Mellow pentru următorul meu eveniment.")'>
               Deschide WhatsApp cu Flor Mellow
             </button>
-            <small>Preferi Instagram? Ne găsești la <strong>@flor_mellow_atelier</strong>.</small>
+            <small>
+              Preferi Instagram? Ne găsești la <strong>@flor_mellow_atelier</strong>.
+            </small>
           </div>
         </div>
       </section>
@@ -1510,8 +1567,10 @@
     <footer>
       <div class="container footer-inner">
         <div class="footer-left">
-          © <span id="year"></span> Flor Mellow – Buchete de flori din bezele moi.
+          © <span id="year"></span> Flor Mellow – buchete de flori din bezele moi, făcute în Cluj-Napoca.
+          Comenzi pe WhatsApp & Instagram.
         </div>
+
         <div class="footer-right">
           <div class="social-links">
             <!-- Instagram -->
@@ -1522,6 +1581,7 @@
                 <path d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm0 2h10c1.654 0 3 1.346 3 3v10c0 1.654-1.346 3-3 3H7c-1.654 0-3-1.346-3-3V7c0-1.654 1.346-3 3-3zm5 2.5A5.506 5.506 0 0 0 6.5 12 5.506 5.506 0 0 0 12 17.5 5.506 5.506 0 0 0 17.5 12 5.506 5.506 0 0 0 12 6.5zm0 2A3.5 3.5 0 1 1 8.5 12 3.504 3.504 0 0 1 12 8.5zM18 5a1 1 0 1 0 1 1 1.001 1.001 0 0 0-1-1z" />
               </svg>
             </a>
+
             <!-- Facebook -->
             <a href="https://www.facebook.com/share/1DEzKHV3NC/?mibextid=wwXIfr"
                target="_blank" rel="noopener"
@@ -1530,6 +1590,7 @@
                 <path d="M13 3h3.5a1 1 0 0 1 1 1v3h-3a1 1 0 0 0-1 1v3h3.5a1 1 0 0 1 .98 1.196l-.7 3.5a1 1 0 0 1-.98.804H13v4a1 1 0 0 1-1 1h-3a1 1 0 0 1-1-1v-4H5a1 1 0 0 1-1-1v-3.5a1 1 0 0 1 1-1h3V8a5 5 0 0 1 5-5z" />
               </svg>
             </a>
+
             <!-- WhatsApp -->
             <a href="https://wa.me/40738841225"
                target="_blank" rel="noopener"
@@ -1644,11 +1705,13 @@
         const desc = card.dataset.desc || card.querySelector(".product-desc")?.textContent || "";
         const imagesAttr = card.dataset.images;
         const fallbackImg = card.dataset.img || card.querySelector("img")?.src || "";
+
         if (imagesAttr) {
           modalImages = imagesAttr.split("|").map((s) => s.trim()).filter(Boolean);
         } else {
           modalImages = [fallbackImg];
         }
+
         modalImageIndex = 0;
         modalTitle.textContent = title;
         modalPrice.textContent = price;
@@ -1685,20 +1748,20 @@
 
       // --- Slideshow HERO + ABOUT ---
       (function () {
-        // HERO – slideshow automat + swipe pe mobil + buline
+        // HERO – slideshow automat + swipe pe mobil + buline + citate
         const heroImg = document.querySelector(".hero-card img");
         const heroDotsWrap = document.querySelector(".hero-dots");
+
         if (heroImg && heroImg.dataset.heroImages) {
           const heroImages = heroImg.dataset.heroImages
             .split("|")
             .map((s) => s.trim())
             .filter(Boolean);
 
-          // TEXTE CORESPONDENTE fiecărei poze din heroImages:
           const heroQuotes = [
             "„Nu doar flori, ci un desert care arată ca un buchet.”",
             "„Bezele moi, culori pastel și un buchet care se mănâncă până la ultima floare.”",
-            "„Desertul care arată ca un buchet și rămâne în poze și în amintiri.”",
+            "„Desertul care arată ca un buchet și rămâne în poze și în amintiri.”"
           ];
 
           if (heroImages.length > 0) {
@@ -1716,7 +1779,7 @@
                 dot.className = "hero-dot" + (idx === heroIndex ? " active" : "");
                 dot.addEventListener("click", () => {
                   showHeroImage(idx);
-                  startHeroAuto(); // reset timer
+                  startHeroAuto();
                 });
                 heroDotsWrap.appendChild(dot);
                 return dot;
@@ -1736,18 +1799,21 @@
               if (newIndex === heroIndex) return;
               heroIndex = newIndex;
               const nextSrc = heroImages[heroIndex];
+
               heroImg.style.opacity = 0.2;
               setTimeout(() => {
                 heroImg.src = nextSrc;
-                // schimbăm textul din balon în funcție de index
+
                 const quoteEl = document.querySelector(".hero-floating strong");
                 if (quoteEl && heroQuotes[heroIndex]) {
                   quoteEl.textContent = heroQuotes[heroIndex];
                 }
+
                 heroImg.onload = () => {
                   heroImg.style.opacity = 1;
                 };
               }, FADE_DELAY);
+
               syncHeroDots();
             }
 
@@ -1763,6 +1829,12 @@
             heroImg.src = heroImages[0];
             heroIndex = 0;
             updateHeroDots();
+
+            const quoteElInitial = document.querySelector(".hero-floating strong");
+            if (quoteElInitial && heroQuotes[0]) {
+              quoteElInitial.textContent = heroQuotes[0];
+            }
+
             startHeroAuto();
 
             // Swipe pe mobil
@@ -1775,6 +1847,7 @@
               },
               { passive: true }
             );
+
             heroImg.addEventListener("touchend", (e) => {
               if (touchStartX === null) return;
               const touchEndX =
@@ -1817,6 +1890,7 @@
               };
             }, 250);
           }
+
           setInterval(nextAbout, 7000);
         }
       })();
