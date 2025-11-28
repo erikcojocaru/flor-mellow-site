@@ -51,6 +51,13 @@
         --section-padding: 72px;
         --transition-fast: 0.22s ease-out;
         --whatsapp: #25d366;
+
+        /* NEW warm gradient tokens */
+        --bg-grad-1: #fff6f0;
+        --bg-grad-2: #fdecea;
+        --bg-grad-3: #f9e0f0;
+        --frame-grad-1: rgba(255, 220, 230, 0.8);
+        --frame-grad-2: rgba(255, 240, 225, 0.85);
       }
 
       * {
@@ -71,12 +78,14 @@
 
       html {
         color-scheme: light;
-        background-color: var(--bg);
+        /* subtle vertical warm gradient */
+        background: linear-gradient(180deg, var(--bg-grad-1) 0%, var(--bg-grad-2) 45%, var(--bg-grad-3) 100%);
+        background-attachment: fixed;
       }
 
       body {
         font-family: "DM Sans", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-        background: var(--bg);
+        background: transparent; /* use html gradient */
         color: var(--text);
         line-height: 1.6;
         padding-bottom: env(safe-area-inset-bottom);
@@ -216,8 +225,12 @@
         margin-bottom: 16px;
       }
 
+      /* Make BEZELE MOI gradient text */
       .hero-copy h1 span {
-        color: var(--primary-dark);
+        background: linear-gradient(90deg, #ff9a9e, #f6d365, #fecf6a);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
       }
 
       .hero-subtitle {
@@ -296,6 +309,7 @@
       }
 
       .hero-card {
+        /* soft gradient behind frame */
         background: radial-gradient(circle at 10% 0, #fff7fb, #ffe5ef);
         border-radius: var(--radius-xl);
         padding: 18px;
@@ -310,12 +324,16 @@
         box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
       }
 
+      /* Add consistent frame and prevent cropping */
       .hero-card img {
-        border-radius: 22px;
-        object-fit: cover;
+        border-radius: 18px;
         width: 100%;
         height: 420px;
         max-height: 420px;
+        object-fit: contain; /* was cover */
+        background: #fff;
+        padding: 10px;                 /* creates the frame */
+        box-shadow: inset 0 0 0 1px rgba(0,0,0,0.04);
         transition: opacity 0.9s ease-in-out;
       }
 
@@ -549,8 +567,7 @@
       }
 
       .catalog-divider span {
-        background: var(--bg);
-        padding: 0 10px;
+        background: transparent;
       }
 
       .product-card {
@@ -569,17 +586,25 @@
         box-shadow: 0 22px 48px rgba(0, 0, 0, 0.15);
       }
 
+      /* Frame for product images and prevent cropping */
       .product-img-wrap {
         border-radius: 16px;
         overflow: hidden;
-        background: var(--bg-soft);
-        aspect-ratio: 1/1;
+        background: linear-gradient(135deg, var(--frame-grad-1), var(--frame-grad-2));
+        aspect-ratio: 3 / 4;                  /* make it portrait like bouquets */
+        padding: 8px;                          /* frame padding */
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
       .product-img-wrap img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain;                   /* was cover; now no cut */
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);
       }
 
       .product-content {
@@ -955,14 +980,18 @@
       .modal-media {
         position: relative;
         overflow: hidden;
-        background: #000;
+        /* warm frame and slight padding */
+        background: linear-gradient(135deg, var(--frame-grad-1), var(--frame-grad-2));
+        padding: 10px;
       }
 
       .modal-media img {
         width: 100%;
         max-height: 45vh;
-        object-fit: cover;
+        object-fit: contain; /* was cover; no cropping in modal */
         display: block;
+        background: #fff;
+        border-radius: 14px;
       }
 
       .modal-body {
@@ -1152,7 +1181,7 @@
         .hero-card img {
           height: 300px !important;
           max-height: 300px !important;
-          object-fit: cover;
+          object-fit: contain; /* keep contain on mobile too */
         }
 
         .hero-badge {
@@ -1376,7 +1405,7 @@
               <div class="product-grid">
                 <article class="product-card"
                          data-title="Petite Hug"
-                         data-price="de la 150 RON"
+                         data-price="de la -- RON"
                          data-desc="Buchet mic, cu 6–8 flori din bezea, în nuanțe pastel. Perfect pentru un gest delicat sau „m-am gândit la tine”."
                          data-img="Flor-Mellow/Bouquet size S/Bouquet Size S - 1.jpeg"
                          data-images="Flor-Mellow/Bouquet size S/Bouquet Size S - 1.jpeg|Flor-Mellow/Bouquet size S/Bouquet Size S - 2.jpeg|Flor-Mellow/Bouquet size S/Bouquet Size S - 3.jpeg">
@@ -1392,7 +1421,7 @@
                       Buchet mic, pastel, pentru un „mulțumesc” sau o surpriză rapidă.
                     </p>
                     <div class="product-meta">
-                      <div class="product-price">de la 150 RON</div>
+                      <div class="product-price">de la -- RON</div>
                       <button class="product-btn" type="button">Detalii</button>
                     </div>
                   </div>
@@ -1400,7 +1429,7 @@
 
                 <article class="product-card"
                          data-title="Everyday Magic"
-                         data-price="de la 200 RON"
+                         data-price="de la -- RON"
                          data-desc="Buchet mediu, 10–14 flori din bezea. Mărimea ideală pentru zile de naștere, vizite în familie sau cadouri de birou."
                          data-img="Flor-Mellow/Bouquet Size M/Bouquet Size M - 1.jpeg"
                          data-images="Flor-Mellow/Bouquet Size M/Bouquet Size M - 1.jpeg|Flor-Mellow/Bouquet Size M/Bouquet Size M - 2.jpeg|Flor-Mellow/Bouquet Size M/Bouquet Size M - 3.jpeg">
@@ -1416,7 +1445,7 @@
                       Buchet mediu pentru aproape orice ocazie – nici prea mic, nici exagerat.
                     </p>
                     <div class="product-meta">
-                      <div class="product-price">de la 200 RON</div>
+                      <div class="product-price">de la -- RON</div>
                       <button class="product-btn" type="button">Detalii</button>
                     </div>
                   </div>
@@ -1424,7 +1453,7 @@
 
                 <article class="product-card"
                          data-title="Pastel Dream"
-                         data-price="de la 260 RON"
+                         data-price="de la -- RON"
                          data-desc="Buchet mare, aerat, care devine punctul central al mesei. Nuanțe pastel, detalii bogate, perfect pentru aniversări."
                          data-img="Flor-Mellow/Bouquet Size L/Bouquet Size L - 1.jpeg"
                          data-images="Flor-Mellow/Bouquet Size L/Bouquet Size L - 1.jpeg|Flor-Mellow/Bouquet Size L/Bouquet Size L - 2.jpeg|Flor-Mellow/Bouquet Size L/Bouquet Size L - 3.jpeg">
@@ -1440,7 +1469,7 @@
                       Buchet mare, gândit să fie fotografiat și ținut minte.
                     </p>
                     <div class="product-meta">
-                      <div class="product-price">de la 260 RON</div>
+                      <div class="product-price">de la -- RON</div>
                       <button class="product-btn" type="button">Detalii</button>
                     </div>
                   </div>
@@ -1448,7 +1477,7 @@
 
                 <article class="product-card"
                          data-title="Grand Gesture"
-                         data-price="de la 350 RON"
+                         data-price="de la -- RON"
                          data-desc="Cel mai mare buchet, pentru momentele în care vrei efectul „wow” imediat ce intri pe ușă."
                          data-img="Flor-Mellow/King Size/King Size-1.jpeg"
                          data-images="Flor-Mellow/King Size/King Size-1.jpeg|Flor-Mellow/King Size/King Size-2.jpeg|Flor-Mellow/King Size/King Size-3.jpeg">
@@ -1464,7 +1493,7 @@
                       Buchet XL pentru cereri în căsătorie, aniversări mari sau surprize serioase.
                     </p>
                     <div class="product-meta">
-                      <div class="product-price">de la 350 RON</div>
+                      <div class="product-price">de la -- RON</div>
                       <button class="product-btn" type="button">Detalii</button>
                     </div>
                   </div>
@@ -1472,7 +1501,7 @@
 
                 <article class="product-card"
                          data-title="Mellow Box"
-                         data-price="de la 260 RON"
+                         data-price="de la -- RON"
                          data-desc="Aranjament în cutie pătrată, plin cu flori din bezea. Ușor de așezat pe masă, perfect pentru localuri sau acasă."
                          data-img="Flor-Mellow/Box 25x25/Box 25x25-1.jpeg"
                          data-images="Flor-Mellow/Box 25x25/Box 25x25-1.jpeg|Flor-Mellow/Box 25x25/Box 25x25-2.jpeg|Flor-Mellow/Box 25x25/Box 25x25-3.jpeg">
@@ -1488,7 +1517,7 @@
                       Cutie elegantă plină cu flori comestibile. Arată ca un buchet, se mănâncă ca un desert.
                     </p>
                     <div class="product-meta">
-                      <div class="product-price">de la 260 RON</div>
+                      <div class="product-price">de la -- RON</div>
                       <button class="product-btn" type="button">Detalii</button>
                     </div>
                   </div>
@@ -1496,7 +1525,7 @@
 
                 <article class="product-card"
                          data-title="Bubbles & Blooms"
-                         data-price="de la 420 RON"
+                         data-price="de la -- RON"
                          data-desc="Buchet Flor Mellow + sticlă de prosecco sau șampanie. Set complet pentru seri speciale."
                          data-img="Flor-Mellow/Bouquet Size M nr5/Bouquet Size M nr 5 - 1.jpeg"
                          data-images="Flor-Mellow/Bouquet Size M nr5/Bouquet Size M nr 5 - 1.jpeg|Flor-Mellow/Bouquet Size M nr5/Bouquet Size M nr 5 - 2.jpeg|Flor-Mellow/Bouquet Size M nr5/Bouquet Size M nr 5 - 3.jpeg">
@@ -1512,7 +1541,7 @@
                       Combinație între buchet comestibil și ceva de pus în pahare.
                     </p>
                     <div class="product-meta">
-                      <div class="product-price">de la 420 RON</div>
+                      <div class="product-price">de la -- RON</div>
                       <button class="product-btn" type="button">Detalii</button>
                     </div>
                   </div>
@@ -1520,7 +1549,7 @@
 
                 <article class="product-card"
                          data-title="Mellow Tasting Tray"
-                         data-price="de la 190 RON"
+                         data-price="de la -- RON"
                          data-desc="Selecție de flori individuale din bezea, aranjate într-o cutie plată. Toată lumea alege ce floare vrea."
                          data-img="Flor-Mellow/Box 11x18/Box 11x18-1.jpeg"
                          data-images="Flor-Mellow/Box 11x18/Box 11x18-1.jpeg|Flor-Mellow/Box 11x18/Box 11x18-2.jpeg|Flor-Mellow/Box 11x18/Box 11x18-3.jpeg">
@@ -1536,7 +1565,7 @@
                       Perfect pentru birou, familie sau cine vrea să guste „câte un pic din toate”.
                     </p>
                     <div class="product-meta">
-                      <div class="product-price">de la 190 RON</div>
+                      <div class="product-price">de la -- RON</div>
                       <button class="product-btn" type="button">Detalii</button>
                     </div>
                   </div>
@@ -1544,7 +1573,7 @@
 
                 <article class="product-card"
                          data-title="Mini Mellow Box"
-                         data-price="de la 130 RON"
+                         data-price="de la -- RON"
                          data-desc="Cutie mică cu câteva flori preferate. Ideală pentru colegi, profesori sau vecini dragi."
                          data-img="Flor-Mellow/Mini Bouquets/Mini Bouquets-1.jpeg"
                          data-images="Flor-Mellow/Mini Bouquets/Mini Bouquets-1.jpeg|Flor-Mellow/Mini Bouquets/Mini Bouquets-2.jpeg|Flor-Mellow/Mini Bouquets/Mini Bouquets-3.jpeg">
@@ -1560,7 +1589,7 @@
                       O doză mică de „wow” pentru momente mici, dar importante.
                     </p>
                     <div class="product-meta">
-                      <div class="product-price">de la 130 RON</div>
+                      <div class="product-price">de la -- RON</div>
                       <button class="product-btn" type="button">Detalii</button>
                     </div>
                   </div>
@@ -1568,7 +1597,7 @@
 
                 <article class="product-card"
                          data-title="Soft Pastel Mix"
-                         data-price="de la 210 RON"
+                         data-price="de la -- RON"
                          data-desc="Mix lejer de flori în nuanțe pastel, pentru când vrei un buchet „simplu, dar special”."
                          data-img="Flor-Mellow/Instagram/Instagram-44.jpg"
                          data-images="Flor-Mellow/Instagram/Instagram-44.jpg|Flor-Mellow/Instagram/Instagram-32.jpg">
@@ -1584,7 +1613,7 @@
                       Buchet lejer, perfect pentru vizite la prieteni sau brunch-uri de weekend.
                     </p>
                     <div class="product-meta">
-                      <div class="product-price">de la 210 RON</div>
+                      <div class="product-price">de la -- RON</div>
                       <button class="product-btn" type="button">Detalii</button>
                     </div>
                   </div>
@@ -1602,7 +1631,7 @@
               <div class="product-grid product-grid-extra">
                 <article class="product-card"
                          data-title="Petite Hug"
-                         data-price="de la 150 RON"
+                         data-price="de la -- RON"
                          data-desc="Buchet mic, cu 6–8 flori din bezea, în nuanțe pastel. Perfect pentru un gest delicat sau „m-am gândit la tine”."
                          data-img="Flor-Mellow/Bouquet size S/Bouquet Size S - 2.jpeg"
                          data-images="Flor-Mellow/Bouquet size S/Bouquet Size S - 2.jpeg|Flor-Mellow/Bouquet size S/Bouquet Size S - 3.jpeg|Flor-Mellow/Bouquet size S/Bouquet Size S - 1.jpeg">
@@ -1618,7 +1647,7 @@
                       Buchet mic, pastel, pentru un „mulțumesc” sau o surpriză rapidă.
                     </p>
                     <div class="product-meta">
-                      <div class="product-price">de la 150 RON</div>
+                      <div class="product-price">de la -- RON</div>
                       <button class="product-btn" type="button">Detalii</button>
                     </div>
                   </div>
@@ -1626,7 +1655,7 @@
 
                 <article class="product-card"
                          data-title="Everyday Magic"
-                         data-price="de la 200 RON"
+                         data-price="de la -- RON"
                          data-desc="Buchet mediu, 10–14 flori din bezea. Mărimea ideală pentru zile de naștere, vizite în familie sau cadouri de birou."
                          data-img="Flor-Mellow/Bouquet Size M/Bouquet Size M - 2.jpeg"
                          data-images="Flor-Mellow/Bouquet Size M/Bouquet Size M - 2.jpeg|Flor-Mellow/Bouquet Size M/Bouquet Size M - 3.jpeg|Flor-Mellow/Bouquet Size M/Bouquet Size M - 1.jpeg">
@@ -1642,7 +1671,7 @@
                       Buchet mediu pentru aproape orice ocazie – nici prea mic, nici exagerat.
                     </p>
                     <div class="product-meta">
-                      <div class="product-price">de la 200 RON</div>
+                      <div class="product-price">de la -- RON</div>
                       <button class="product-btn" type="button">Detalii</button>
                     </div>
                   </div>
@@ -1650,7 +1679,7 @@
 
                 <article class="product-card"
                          data-title="Pastel Dream"
-                         data-price="de la 260 RON"
+                         data-price="de la -- RON"
                          data-desc="Buchet mare, aerat, care devine punctul central al mesei. Nuanțe pastel, detalii bogate, perfect pentru aniversări."
                          data-img="Flor-Mellow/Bouquet Size L/Bouquet Size L - 2.jpeg"
                          data-images="Flor-Mellow/Bouquet Size L/Bouquet Size L - 2.jpeg|Flor-Mellow/Bouquet Size L/Bouquet Size L - 3.jpeg|Flor-Mellow/Bouquet Size L/Bouquet Size L - 1.jpeg">
@@ -1666,7 +1695,7 @@
                       Buchet mare, gândit să fie fotografiat și ținut minte.
                     </p>
                     <div class="product-meta">
-                      <div class="product-price">de la 260 RON</div>
+                      <div class="product-price">de la -- RON</div>
                       <button class="product-btn" type="button">Detalii</button>
                     </div>
                   </div>
@@ -1674,7 +1703,7 @@
 
                 <article class="product-card"
                          data-title="Grand Gesture"
-                         data-price="de la 350 RON"
+                         data-price="de la -- RON"
                          data-desc="Cel mai mare buchet, pentru momentele în care vrei efectul „wow” imediat ce intri pe ușă."
                          data-img="Flor-Mellow/King Size/King Size-2.jpeg"
                          data-images="Flor-Mellow/King Size/King Size-2.jpeg|Flor-Mellow/King Size/King Size-3.jpeg|Flor-Mellow/King Size/King Size-1.jpeg">
@@ -1690,7 +1719,7 @@
                       Buchet XL pentru cereri în căsătorie, aniversări mari sau surprize serioase.
                     </p>
                     <div class="product-meta">
-                      <div class="product-price">de la 350 RON</div>
+                      <div class="product-price">de la -- RON</div>
                       <button class="product-btn" type="button">Detalii</button>
                     </div>
                   </div>
@@ -1698,7 +1727,7 @@
 
                 <article class="product-card"
                          data-title="Mellow Box"
-                         data-price="de la 260 RON"
+                         data-price="de la -- RON"
                          data-desc="Aranjament în cutie pătrată, plin cu flori din bezea. Ușor de așezat pe masă, perfect pentru localuri sau acasă."
                          data-img="Flor-Mellow/Box 25x25/Box 25x25-2.jpeg"
                          data-images="Flor-Mellow/Box 25x25/Box 25x25-2.jpeg|Flor-Mellow/Box 25x25/Box 25x25-3.jpeg|Flor-Mellow/Box 25x25/Box 25x25-1.jpeg">
@@ -1714,7 +1743,7 @@
                       Cutie elegantă plină cu flori comestibile. Arată ca un buchet, se mănâncă ca un desert.
                     </p>
                     <div class="product-meta">
-                      <div class="product-price">de la 260 RON</div>
+                      <div class="product-price">de la -- RON</div>
                       <button class="product-btn" type="button">Detalii</button>
                     </div>
                   </div>
@@ -1722,7 +1751,7 @@
 
                 <article class="product-card"
                          data-title="Bubbles & Blooms"
-                         data-price="de la 420 RON"
+                         data-price="de la -- RON"
                          data-desc="Buchet Flor Mellow + sticlă de prosecco sau șampanie. Set complet pentru seri speciale."
                          data-img="Flor-Mellow/Bouquet Size M nr5/Bouquet Size M nr 5 - 2.jpeg"
                          data-images="Flor-Mellow/Bouquet Size M nr5/Bouquet Size M nr 5 - 2.jpeg|Flor-Mellow/Bouquet Size M nr5/Bouquet Size M nr 5 - 3.jpeg|Flor-Mellow/Bouquet Size M nr5/Bouquet Size M nr 5 - 1.jpeg">
@@ -1738,7 +1767,7 @@
                       Combinație între buchet comestibil și ceva de pus în pahare.
                     </p>
                     <div class="product-meta">
-                      <div class="product-price">de la 420 RON</div>
+                      <div class="product-price">de la -- RON</div>
                       <button class="product-btn" type="button">Detalii</button>
                     </div>
                   </div>
@@ -1746,7 +1775,7 @@
 
                 <article class="product-card"
                          data-title="Mellow Tasting Tray"
-                         data-price="de la 190 RON"
+                         data-price="de la -- RON"
                          data-desc="Selecție de flori individuale din bezea, aranjate într-o cutie plată. Toată lumea alege ce floare vrea."
                          data-img="Flor-Mellow/Box 11x18/Box 11x18-2.jpeg"
                          data-images="Flor-Mellow/Box 11x18/Box 11x18-2.jpeg|Flor-Mellow/Box 11x18/Box 11x18-3.jpeg|Flor-Mellow/Box 11x18/Box 11x18-1.jpeg">
@@ -1762,7 +1791,7 @@
                       Perfect pentru birou, familie sau cine vrea să guste „câte un pic din toate”.
                     </p>
                     <div class="product-meta">
-                      <div class="product-price">de la 190 RON</div>
+                      <div class="product-price">de la -- RON</div>
                       <button class="product-btn" type="button">Detalii</button>
                     </div>
                   </div>
@@ -1770,7 +1799,7 @@
 
                 <article class="product-card"
                          data-title="Mini Mellow Box"
-                         data-price="de la 130 RON"
+                         data-price="de la -- RON"
                          data-desc="Cutie mică cu câteva flori preferate. Ideală pentru colegi, profesori sau vecini dragi."
                          data-img="Flor-Mellow/Mini Bouquets/Mini Bouquets-2.jpeg"
                          data-images="Flor-Mellow/Mini Bouquets/Mini Bouquets-2.jpeg|Flor-Mellow/Mini Bouquets/Mini Bouquets-3.jpeg|Flor-Mellow/Mini Bouquets/Mini Bouquets-1.jpeg">
@@ -1786,7 +1815,7 @@
                       O doză mică de „wow” pentru momente mici, dar importante.
                     </p>
                     <div class="product-meta">
-                      <div class="product-price">de la 130 RON</div>
+                      <div class="product-price">de la -- RON</div>
                       <button class="product-btn" type="button">Detalii</button>
                     </div>
                   </div>
@@ -1794,7 +1823,7 @@
 
                 <article class="product-card"
                          data-title="Soft Pastel Mix"
-                         data-price="de la 210 RON"
+                         data-price="de la -- RON"
                          data-desc="Mix lejer de flori în nuanțe pastel, pentru când vrei un buchet „simplu, dar special”."
                          data-img="Flor-Mellow/Instagram/Instagram-32.jpg"
                          data-images="Flor-Mellow/Instagram/Instagram-32.jpg|Flor-Mellow/Instagram/Instagram-44.jpg">
@@ -1810,7 +1839,7 @@
                       Varianta pastel „all-rounder”, pentru orice ocazie în care nu vrei să greșești.
                     </p>
                     <div class="product-meta">
-                      <div class="product-price">de la 210 RON</div>
+                      <div class="product-price">de la -- RON</div>
                       <button class="product-btn" type="button">Detalii</button>
                     </div>
                   </div>
@@ -1828,10 +1857,10 @@
               <div class="product-grid product-grid-extra">
                 <article class="product-card"
                          data-title="Seasonal Story"
-                         data-price="de la 260 RON"
+                         data-price="de la -- RON"
                          data-desc="Buchet inspirat de anotimp – tonuri de toamnă, alb de iarnă sau pasteluri de primăvară. Designul se schimbă des."
                          data-img="Flor-Mellow/Autumn pumpkin/Autumn pumpkin - 1.jpeg"
-                         data-images="Flor-Mellow/Autumn pumpkin/Autumn pumpkin - 1.jpeg|Flor-Mellow/Autumn pumpkin/Autumn pumpkin - 2.jpeg|Flor-Mellow/Christmas Wres/Christmas Wres - 1.jpeg">
+                         data-images="Flor-Mellow/Autumn pumpkin/Autumn pumpkin - 1.jpeg|Flor-Mellow/Autumn pumpkin/Autumn pumpkin - 2.jpeg|Flor-Mellow/Christmas Wres/Christmas Wrest-1.jpeg">
                   <div class="product-img-wrap">
                     <img src="Flor-Mellow/Autumn pumpkin/Autumn pumpkin - 1.jpeg" alt="Seasonal Story buchet de sezon">
                   </div>
@@ -1844,7 +1873,7 @@
                       Buchet de sezon – când se termină, nu mai revine la fel. Perfect pentru colecționarii de momente.
                     </p>
                     <div class="product-meta">
-                      <div class="product-price">de la 260 RON</div>
+                      <div class="product-price">de la -- RON</div>
                       <button class="product-btn" type="button">Detalii</button>
                     </div>
                   </div>
@@ -1852,12 +1881,12 @@
 
                 <article class="product-card"
                          data-title="Winter Wreath Glow"
-                         data-price="de la 280 RON"
+                         data-price="de la -- RON"
                          data-desc="Coroniță comestibilă în tonuri de iarnă – perfectă pentru cadouri de Crăciun sau mese festive."
-                         data-img="Flor-Mellow/Christmas Wres/Christmas Wres - 1.jpeg"
-                         data-images="Flor-Mellow/Christmas Wres/Christmas Wres - 1.jpeg|Flor-Mellow/Autumn pumpkin/Autumn pumpkin - 1.jpeg">
+                         data-img="Flor-Mellow/Christmas Wres/Christmas Wrest-1.jpeg"
+                         data-images="Flor-Mellow/Christmas Wres/Christmas Wrest-1.jpeg|Flor-Mellow/Autumn pumpkin/Autumn pumpkin - 1.jpeg">
                   <div class="product-img-wrap">
-                    <img src="Flor-Mellow/Christmas Wres/Christmas Wres - 1.jpeg" alt="Winter Wreath Glow coroniță comestibilă">
+                    <img src="Flor-Mellow/Christmas Wres/Christmas Wrest-1.jpeg" alt="Winter Wreath Glow coroniță comestibilă">
                   </div>
                   <div class="product-content">
                     <div class="product-header-row">
@@ -1868,7 +1897,7 @@
                       Coroniță din flori de bezea, gândită pentru iarnă, luminițe și poze de pus pe story.
                     </p>
                     <div class="product-meta">
-                      <div class="product-price">de la 280 RON</div>
+                      <div class="product-price">de la -- RON</div>
                       <button class="product-btn" type="button">Detalii</button>
                     </div>
                   </div>
@@ -1876,7 +1905,7 @@
 
                 <article class="product-card"
                          data-title="Autumn Pumpkin Bloom"
-                         data-price="de la 260 RON"
+                         data-price="de la -- RON"
                          data-desc="Buchet de toamnă cu accente de dovleac, în tonuri calde, pentru seri cozy și cine acasă."
                          data-img="Flor-Mellow/Autumn pumpkin/Autumn pumpkin - 2.jpeg"
                          data-images="Flor-Mellow/Autumn pumpkin/Autumn pumpkin - 2.jpeg|Flor-Mellow/Autumn pumpkin/Autumn pumpkin - 1.jpeg">
@@ -1892,7 +1921,7 @@
                       Inspirat din toamnă, cu texturi bogate și culori calde, de pus în mijlocul mesei.
                     </p>
                     <div class="product-meta">
-                      <div class="product-price">de la 260 RON</div>
+                      <div class="product-price">de la -- RON</div>
                       <button class="product-btn" type="button">Detalii</button>
                     </div>
                   </div>
@@ -2122,7 +2151,7 @@
     <!-- MODAL PRODUSE -->
     <div class="modal" id="productModal">
       <div class="modal-content">
-        <div class="modal-media">
+        <div class="modal-media" id="modalMedia">
           <img id="modalImg" src="" alt="Detaliu buchet">
           <button class="modal-close" type="button" onclick="closeModal()">×</button>
           <button class="modal-nav prev" type="button" onclick="prevModalImage()">‹</button>
@@ -2180,6 +2209,7 @@
       const modalDesc = document.getElementById("modalDesc");
       const modalWhatsAppBtn = document.getElementById("modalWhatsAppBtn");
       const modalDots = document.getElementById("modalDots");
+      const modalMedia = document.getElementById("modalMedia");
       let modalImages = [];
       let modalImageIndex = 0;
 
@@ -2351,7 +2381,7 @@
 
             startHeroAuto();
 
-            // Swipe mobil
+            // Swipe mobil pentru HERO (există deja în codul tău, îl păstrăm)
             let touchStartX = null;
             heroImg.addEventListener(
               "touchstart",
@@ -2382,7 +2412,7 @@
           }
         }
 
-        // ABOUT – slideshow cu bubble + buline
+        // ABOUT – slideshow cu bubble + buline (păstrat)
         const aboutImg = document.querySelector("#about .about-photo img");
         const aboutDotsWrap = document.querySelector("#about .about-dots");
         const aboutQuoteEl = document.querySelector("#about .about-floating strong");
@@ -2448,7 +2478,7 @@
           setInterval(() => showAboutImage(aboutIndex + 1), 7000);
         }
 
-        // SLIDER PRODUSE – dots pe mobil
+        // SLIDER PRODUSE – dots pe mobil (păstrat)
         const sliders = document.querySelectorAll("[data-slider]");
         sliders.forEach((slider) => {
           const track = slider.querySelector(".product-grid");
@@ -2488,6 +2518,38 @@
             setActive(closestIdx);
           });
         });
+      })();
+
+      // --- SWIPE GESTURES pentru MODAL (mobile) ---
+      (function () {
+        let startX = 0;
+        let endX = 0;
+        const THRESHOLD = 40;
+
+        function onTouchStart(e) {
+          if (!e.touches || !e.touches.length) return;
+          startX = e.touches[0].clientX;
+        }
+
+        function onTouchEnd(e) {
+          if (typeof startX !== "number") return;
+          endX = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0].clientX : startX;
+          const delta = endX - startX;
+          if (Math.abs(delta) > THRESHOLD) {
+            if (delta < 0) {
+              nextModalImage();
+            } else {
+              prevModalImage();
+            }
+          }
+          startX = 0;
+          endX = 0;
+        }
+
+        if (modalMedia) {
+          modalMedia.addEventListener("touchstart", onTouchStart, { passive: true });
+          modalMedia.addEventListener("touchend", onTouchEnd, { passive: true });
+        }
       })();
     </script>
   </body>
