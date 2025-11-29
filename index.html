@@ -583,19 +583,41 @@
         box-shadow: 0 22px 48px rgba(0, 0, 0, 0.15);
       }
 
-      /* PRODUSE – fără rame „grele”, doar contur simplu */
-      .product-img-wrap {
-        border-radius: 16px;
-        overflow: hidden;
-        background: #fff;
-        border: 1px solid var(--border-soft);
-      }
+      .product-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  background: rgba(255,255,255,0.95);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.14);
+}
 
-      .product-img-wrap img {
-        width: 100%;
-        height: auto;
-        display: block;
-      }
+.product-badge--best {
+  color: #d35478;
+}
+
+.product-badge--new {
+  color: #1c8c5f;
+}
+      
+      /* Catalog – imagini simple, full, fără rame încărcate */
+.product-img-wrap {
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff;
+  aspect-ratio: 3 / 4;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.06);
+}
+
+.product-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* full în card, fără margini albe */
+  display: block;
+}
 
       .product-content {
         padding-top: 10px;
@@ -720,21 +742,27 @@
         color: var(--primary-dark);
       }
 
-      .about-photo {
-        border-radius: var(--radius-xl);
-        overflow: hidden;
-        box-shadow: var(--shadow-soft);
-        background: var(--bg-soft);
-        position: relative;
-        max-height: 420px;
-      }
+      /* ABOUT / HOW – frame în stil HERO */
+.about-photo {
+  border-radius: var(--radius-xl);
+  padding: 18px;
+  background: radial-gradient(circle at 10% 0, #fff7fb, #ffe5ef);
+  box-shadow: var(--shadow-soft);
+  position: relative;
+  max-height: 420px;
+  overflow: visible; /* să se vadă frumos și bula de text */
+}
 
-      .about-photo img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: opacity 0.8s ease-in-out;
-      }
+.about-photo img {
+  width: 100%;
+  max-height: 420px;
+  border-radius: 18px;
+  object-fit: cover;
+  display: block;
+  background: #fff;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.04);
+  transition: opacity 0.8s ease-in-out;
+}
 
       .about-floating {
         position: absolute;
@@ -1195,20 +1223,20 @@
 
         /* slider produse pe mobil */
         .product-grid {
-          display: flex;
-          overflow-x: auto;
-          gap: 16px;
-          padding: 6px 8px 10px;
-          scroll-snap-type: x mandatory;
-          -webkit-overflow-scrolling: touch;
-        }
+    display: flex;
+    overflow-x: auto;
+    gap: 16px;
+    padding: 6px 8px 10px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
 
-        .product-card {
-          min-width: 80%;
-          max-width: 400px;
-          margin: 0 auto 4px;
-          scroll-snap-align: start;
-        }
+  .product-card {
+    min-width: 80%;
+    max-width: 400px;
+    margin: 0 auto 4px;
+    scroll-snap-align: start;
+  }
 
         .product-dots {
           display: flex;
@@ -1396,6 +1424,7 @@
                          data-desc="Buchet mic, cu 6–8 flori din bezea, în nuanțe pastel. Perfect pentru un gest delicat sau „m-am gândit la tine”."
                          data-img="Flor-Mellow/Bouquet size S/Bouquet Size S - 1.jpeg"
                          data-images="Flor-Mellow/Bouquet size S/Bouquet Size S - 1.jpeg|Flor-Mellow/Bouquet size S/Bouquet Size S - 2.jpeg|Flor-Mellow/Bouquet size S/Bouquet Size S - 3.jpeg">
+                  <div class="product-badge product-badge--best">BEST SELLER</div>
                   <div class="product-img-wrap">
                     <img src="Flor-Mellow/Bouquet size S/Bouquet Size S - 1.jpeg" alt="Petite Hug buchet mic">
                   </div>
@@ -1468,6 +1497,7 @@
                          data-desc="Cel mai mare buchet, pentru momentele în care vrei efectul „wow” imediat ce intri pe ușă."
                          data-img="Flor-Mellow/King Size/King Size-1.jpeg"
                          data-images="Flor-Mellow/King Size/King Size-1.jpeg|Flor-Mellow/King Size/King Size-2.jpeg|Flor-Mellow/King Size/King Size-3.jpeg">
+                  <div class="product-badge product-badge--best">BEST SELLER</div>
                   <div class="product-img-wrap">
                     <img src="Flor-Mellow/King Size/King Size-1.jpeg" alt="Grand Gesture buchet XL">
                   </div>
@@ -1564,6 +1594,7 @@
                          data-desc="Cutie mică cu câteva flori preferate. Ideală pentru colegi, profesori sau vecini dragi."
                          data-img="Flor-Mellow/Mini Bouquets/Mini Bouquets-1.jpeg"
                          data-images="Flor-Mellow/Mini Bouquets/Mini Bouquets-1.jpeg|Flor-Mellow/Mini Bouquets/Mini Bouquets-2.jpeg|Flor-Mellow/Mini Bouquets/Mini Bouquets-3.jpeg">
+                  <div class="product-badge product-badge--new">NEW</div>
                   <div class="product-img-wrap">
                     <img src="Flor-Mellow/Mini Bouquets/Mini Bouquets-1.jpeg" alt="Mini Mellow Box">
                   </div>
@@ -1588,6 +1619,7 @@
                          data-desc="Mix lejer de flori în nuanțe pastel, pentru când vrei un buchet „simplu, dar special”."
                          data-img="Flor-Mellow/Instagram/Instagram-44.jpg"
                          data-images="Flor-Mellow/Instagram/Instagram-44.jpg|Flor-Mellow/Instagram/Instagram-32.jpg">
+                  <div class="product-badge product-badge--best">BEST SELLER</div>
                   <div class="product-img-wrap">
                     <img src="Flor-Mellow/Instagram/Instagram-44.jpg" alt="Soft Pastel Mix buchet pastel">
                   </div>
@@ -1790,6 +1822,7 @@
                          data-desc="Cutie mică cu câteva flori preferate. Ideală pentru colegi, profesori sau vecini dragi."
                          data-img="Flor-Mellow/Mini Bouquets/Mini Bouquets-2.jpeg"
                          data-images="Flor-Mellow/Mini Bouquets/Mini Bouquets-2.jpeg|Flor-Mellow/Mini Bouquets/Mini Bouquets-3.jpeg|Flor-Mellow/Mini Bouquets/Mini Bouquets-1.jpeg">
+                  <div class="product-badge product-badge--new">NEW</div>
                   <div class="product-img-wrap">
                     <img src="Flor-Mellow/Mini Bouquets/Mini Bouquets-2.jpeg" alt="Mini Mellow Box">
                   </div>
@@ -1848,6 +1881,7 @@
                          data-desc="Buchet inspirat de anotimp – tonuri de toamnă, alb de iarnă sau pasteluri de primăvară. Designul se schimbă des."
                          data-img="Flor-Mellow/Autumn pumpkin/Autumn pumpkin - 1.jpeg"
                          data-images="Flor-Mellow/Autumn pumpkin/Autumn pumpkin - 1.jpeg|Flor-Mellow/Autumn pumpkin/Autumn pumpkin - 2.jpeg|Flor-Mellow/Christmas Wres/Christmas Wrest-1.jpeg">
+                  <div class="product-badge product-badge--new">NEW</div>
                   <div class="product-img-wrap">
                     <img src="Flor-Mellow/Autumn pumpkin/Autumn pumpkin - 1.jpeg" alt="Seasonal Story buchet de sezon">
                   </div>
@@ -1872,6 +1906,7 @@
                          data-desc="Coroniță comestibilă în tonuri de iarnă – perfectă pentru cadouri de Crăciun sau mese festive."
                          data-img="Flor-Mellow/Christmas Wres/Christmas Wrest-1.jpeg"
                          data-images="Flor-Mellow/Christmas Wres/Christmas Wrest-1.jpeg|Flor-Mellow/Autumn pumpkin/Autumn pumpkin - 1.jpeg">
+                  <div class="product-badge product-badge--new">NEW</div>
                   <div class="product-img-wrap">
                     <img src="Flor-Mellow/Christmas Wres/Christmas Wrest-1.jpeg" alt="Winter Wreath Glow coroniță comestibilă">
                   </div>
@@ -2542,3 +2577,4 @@
     </script>
   </body>
 </html>
+
