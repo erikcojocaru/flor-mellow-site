@@ -336,40 +336,38 @@
         transition: opacity 0.9s ease-in-out;
       }
 
-      /* HERO – balon etichetă, mai transparent, jos-dreapta */
       .hero-floating {
         position: absolute;
-        bottom: 12px;
-        right: 14px;
-        left: auto;
-        padding: 6px 12px;
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.80);
-        font-size: 0.74rem;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-        max-width: 65%;
+        bottom: 14px;
+        left: 18px;
+        padding: 10px 14px;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.92);
+        font-size: 0.78rem;
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
       }
 
       .hero-floating strong {
         display: block;
-        font-size: 0.78rem;
+        font-size: 0.82rem;
       }
 
+      /* HERO badge – etichetă mai mică și mai transparentă */
       .hero-badge {
         position: absolute;
-        top: -18px;
-        right: -18px;
-        width: 110px;
-        height: 110px;
-        border-radius: 50%;
-        background: #fff;
-        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+        top: 12px;
+        right: 12px;
+        padding: 9px 14px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.88);
+        box-shadow: 0 10px 26px rgba(0, 0, 0, 0.16);
+        border: 1px solid rgba(243, 154, 181, 0.35);
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 0.74rem;
         text-align: center;
-        padding: 18px;
+        transform: rotate(-6deg);
       }
 
       .hero-badge span {
@@ -755,7 +753,7 @@
         background: radial-gradient(circle at 10% 0, #fff7fb, #ffe5ef);
         box-shadow: var(--shadow-soft);
         position: relative;
-        overflow: visible; /* să se vadă frumos și bula de text */
+        overflow: visible;
       }
 
       .about-photo img {
@@ -769,18 +767,20 @@
         transition: opacity 0.8s ease-in-out;
       }
 
+      /* ABOUT floating label – mai transparent și jos ca etichetă, să nu acopere fața/buchetul */
       .about-floating {
         position: absolute;
-        top: auto;
         bottom: 12px;
-        left: 14px;
-        right: auto;
-        padding: 6px 12px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 8px 14px;
         border-radius: 999px;
-        background: rgba(255, 255, 255, 0.80);
-        font-size: 0.74rem;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-        max-width: 70%;
+        background: rgba(255, 255, 255, 0.9);
+        font-size: 0.78rem;
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+        max-width: 80%;
+        text-align: center;
+        pointer-events: none;
       }
 
       .about-floating strong {
@@ -796,8 +796,7 @@
       .about-dots {
         position: absolute;
         bottom: 10px;
-        left: 50%;
-        transform: translateX(-50%);
+        left: 14px;
         display: flex;
         gap: 6px;
       }
@@ -1201,30 +1200,21 @@
           margin: 0 auto;
         }
 
-        /* pe mobil lăsăm tot full, fără rame și fără height fix */
         .hero-card img {
           height: auto !important;
           max-height: none !important;
         }
 
         .hero-badge {
-          transform: scale(0.85);
-          top: -12px;
-          right: -12px;
+          transform: scale(0.9) rotate(-6deg);
+          top: 8px;
+          right: 8px;
         }
 
         .hero-floating {
-          background: rgba(255, 255, 255, 0.78);
-          font-size: 0.7rem;
-          padding: 5px 10px;
-          max-width: 80%;
-        }
-
-        .about-floating {
-          background: rgba(255, 255, 255, 0.78);
-          font-size: 0.7rem;
-          padding: 5px 10px;
-          max-width: 80%;
+          font-size: 0.75rem;
+          padding: 8px 10px;
+          bottom: 10px;
         }
 
         .reviews-grid,
@@ -1285,10 +1275,7 @@
     </style>
   </head>
   <body>
-    <!-- ancora pentru "Acasă" -->
-    <div id="top"></div>
-
-    <header>
+    <header id="top">
       <div class="container nav">
         <div class="logo">
           <a href="#top">
@@ -1335,8 +1322,8 @@
               PENTRU MOMENTE CARE CHIAR SE GUSTĂ.
             </h1>
             <p class="hero-subtitle">
-              Făcute manual în Cluj-Napoca, din bezele moi în nuanțe pastel. Mai întâi îl admiri ca pe un buchet,
-              apoi îl împarți ca pe un desert împreună cu cei dragi.
+              Făcute manual în Cluj-Napoca, din bezele moi în nuanțe pastel. Un buchet pe care îl admiri,
+              apoi îl mănânci împreună cu cei dragi.
             </p>
             <div class="hero-tags">
               <span class="tag-pill">✨ Artizanat, nu producție de masă</span>
@@ -1345,7 +1332,7 @@
             </div>
             <div class="hero-actions">
               <button class="btn-primary" type="button"
-                      onclick='scrollToId("bouquets")'>
+                      onclick='document.getElementById("bouquets").scrollIntoView({behavior:"smooth"})'>
                 Vezi buchetele →
               </button>
               <button class="btn-ghost" type="button"
@@ -1364,8 +1351,8 @@
                 alt="Buchet pastel de flori comestibile Flor Mellow"
                 data-hero-images="Flor-Mellow/Random/Random-1.jpeg|Flor-Mellow/Random/Random-5.jpeg|Flor-Mellow/Instagram/Instagram-62.jpg|Flor-Mellow/Instagram/Instagram-63.jpg">
               <div class="hero-floating">
-                <strong>„Desert care arată ca un buchet.”</strong>
-                <span>Flor Mellow • Cluj-Napoca</span>
+                <strong>„Nu doar flori, ci un desert care arată ca un buchet.”</strong>
+                <span>– Flor Mellow Atelier</span>
               </div>
               <div class="hero-badge">
                 <span>Buchete comestibile<br>din bezele moi</span>
@@ -1428,7 +1415,7 @@
             <div class="section-kicker">Best sellers</div>
             <h2 class="section-title">Alege buchetul Flor Mellow.</h2>
             <p class="section-subtitle">
-              Alege mărimea, iar culorile, detaliile și mesajul le stabilim împreună pe WhatsApp sau Instagram.
+              Pornești de la mărime, apoi personalizăm culorile, mesajul și stilul împreună, pe WhatsApp sau Instagram.
             </p>
           </div>
 
@@ -1950,7 +1937,7 @@
                          data-img="Flor-Mellow/Christmas Three/Christmas Three-2.jpeg"
                          data-images="Flor-Mellow/Christmas Three/Christmas Three-2.jpeg|Flor-Mellow/Christmas Three/Christmas Three-3.jpeg|Flor-Mellow/Christmas Three/Christmas Three-4.jpeg|Flor-Mellow/Christmas Three/Christmas Three-5.jpeg">
                   <div class="product-img-wrap">
-                    <img src="Flor-Mellow/Christmas Three/Christmas Three-2.jpeg" alt="Christmas Tree delight - brad de craciun">
+                    <img src="Flor-Mellow/Christmas Three/Christmas Three-2.jpeg" alt="Christmas Tree delight - brad de Craciun">
                   </div>
                   <div class="product-content">
                     <div class="product-header-row">
@@ -1986,7 +1973,7 @@
             <p>
               În loc să se ofilească după câteva zile, buchetul nostru devine desertul pe care îl împarți cu cei dragi.
               Fiecare floare este modelată manual din bezea cremoasă, apoi combinată în buchete, cutii și aranjamente de sezon. 
-              Ne inspirăm din florăriile premium, dar reinterpretăm totul în formă comestibilă, pastelată și foarte fotogenică.
+              Ne inspirăm din estetica florăriilor premium, dar reinterpretăm totul în formă comestibilă, pastelată și foarte fotogenică.
             </p>
             <p>
               Lucrăm în loturi mici, în Cluj-Napoca, astfel încât fiecare buchet să fie proaspăt, unic și pregătit cu atenție.
@@ -2000,7 +1987,7 @@
               data-about-images="Flor-Mellow/Bouquet Size L/Bouquet Size L - 5.jpeg|Flor-Mellow/Basket L/Basket L - 1.jpeg|Flor-Mellow/Random/Random-7.jpeg|Flor-Mellow/Pink Box 18x18/Pink Box 18x18-2.jpeg|Flor-Mellow/Roses process/Roses Process-7.jpeg">
             <div class="about-floating">
               <strong>„Fiecare floare din bezea e făcută manual, petală cu petală.”</strong>
-              <span>Flor Mellow Atelier</span>
+              <span>– Flor Mellow Atelier</span>
             </div>
             <div class="about-dots"></div>
           </div>
@@ -2017,8 +2004,8 @@
             <div class="section-kicker">Cum comanzi</div>
             <h3>3 pași simpli ca să comanzi un buchet comestibil din bezele moi.</h3>
             <p>
-              Majoritatea comenzilor se fac pe Instagram sau WhatsApp.
-              Durează câteva minute, iar noi te ghidăm în tot ce ai nevoie.
+              Majoritatea comenzilor se fac rapid pe Instagram sau WhatsApp. 
+              Procesul durează câteva minute și te ghidăm noi în tot ce ai nevoie.
             </p>
             <div class="steps">
               <div class="step">
@@ -2245,6 +2232,28 @@
       // Year in footer
       document.getElementById("year").textContent = new Date().getFullYear();
 
+      // Shuffle buchete în catalog la fiecare reload
+      function shuffleArray(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+      }
+
+      function shuffleCatalog() {
+        const grids = document.querySelectorAll(".product-grid");
+        grids.forEach((grid) => {
+          const cards = Array.from(grid.querySelectorAll(".product-card"));
+          if (cards.length <= 1) return;
+          const shuffled = shuffleArray(cards.slice());
+          shuffled.forEach((card) => grid.appendChild(card));
+        });
+      }
+
+      // rulăm shuffle înainte să legăm evenimentele pe carduri
+      shuffleCatalog();
+
       // MODAL + slider
       const modal = document.getElementById("productModal");
       const modalImg = document.getElementById("modalImg");
@@ -2356,7 +2365,7 @@
             .filter(Boolean);
 
           const heroQuotes = [
-            "„Desert care arată ca un buchet.”",
+            "„Nu doar flori, ci un desert care arată ca un buchet.”",
             "„Bezele moi, culori pastel și un buchet care se mănâncă până la ultima floare.”",
             "„Desertul care arată ca un buchet și rămâne în poze și în amintiri.”",
           ];
@@ -2470,6 +2479,8 @@
             "„Fiecare floare din bezea e făcută manual, petală cu petală.”",
             "„Lucrăm în loturi mici, ca fiecare buchet să primească atenția lui.”",
             "„Ne inspirăm din florării, dar gândim totul ca un desert de împărțit.”",
+            "„Combinația noastră preferată: pastel, texturi și gust.”",
+            "„Fiecare buchet pornește de la o singură floare din bezea.”",
           ];
 
           let aboutIndex = 0;
@@ -2492,7 +2503,7 @@
             setTimeout(() => {
               aboutImg.src = nextSrc;
               if (aboutQuoteEl && aboutQuotes[aboutIndex]) {
-                aboutQuoteEl.textContent = aboutQuotes[aboutIndex];
+                aboutQuoteEl.textContent = aboutQuotes[aboutIndex] || aboutQuotes[0];
               }
               aboutImg.onload = () => {
                 aboutImg.style.opacity = 1;
@@ -2594,33 +2605,6 @@
           modalMedia.addEventListener("touchend", onTouchEnd, { passive: true });
         }
       })();
-
-      // Smooth scroll pentru link-urile cu # (meniu & logo)
-      function scrollToId(targetId) {
-        const target = document.getElementById(targetId);
-        if (!target) return;
-
-        const header = document.querySelector("header");
-        const headerOffset = header ? header.offsetHeight : 80;
-        const elementPosition = target.getBoundingClientRect().top + window.scrollY;
-        const offsetPosition = elementPosition - headerOffset;
-
-        window.scrollTo({
-          top: offsetPosition < 0 ? 0 : offsetPosition,
-          behavior: "smooth",
-        });
-      }
-
-      document.querySelectorAll('a[href^="#"]').forEach((link) => {
-        link.addEventListener("click", function (e) {
-          const targetId = this.getAttribute("href").substring(1);
-          if (!targetId) return;
-          const target = document.getElementById(targetId);
-          if (!target) return;
-          e.preventDefault();
-          scrollToId(targetId);
-        });
-      });
     </script>
   </body>
 </html>
