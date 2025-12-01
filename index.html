@@ -336,20 +336,23 @@
         transition: opacity 0.9s ease-in-out;
       }
 
+      /* HERO – balon etichetă, mai transparent, jos-dreapta */
       .hero-floating {
         position: absolute;
-        bottom: 14px;
-        left: 18px;
-        padding: 10px 14px;
-        border-radius: 16px;
-        background: rgba(255, 255, 255, 0.92);
-        font-size: 0.78rem;
-        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+        bottom: 12px;
+        right: 14px;
+        left: auto;
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.80);
+        font-size: 0.74rem;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        max-width: 65%;
       }
 
       .hero-floating strong {
         display: block;
-        font-size: 0.82rem;
+        font-size: 0.78rem;
       }
 
       .hero-badge {
@@ -587,40 +590,40 @@
       }
 
       .product-badge {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 0.7rem;
-  font-weight: 600;
-  background: rgba(255,255,255,0.95);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.14);
-}
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        background: rgba(255,255,255,0.95);
+        box-shadow: 0 6px 18px rgba(0,0,0,0.14);
+      }
 
-.product-badge--best {
-  color: #d35478;
-}
+      .product-badge--best {
+        color: #d35478;
+      }
 
-.product-badge--new {
-  color: #1c8c5f;
-}
+      .product-badge--new {
+        color: #1c8c5f;
+      }
       
       /* Catalog – imagini simple, full, fără rame încărcate */
-.product-img-wrap {
-  border-radius: 16px;
-  overflow: hidden;
-  background: #fff;
-  aspect-ratio: 3 / 4;
-  box-shadow: 0 10px 24px rgba(0,0,0,0.06);
-}
+      .product-img-wrap {
+        border-radius: 16px;
+        overflow: hidden;
+        background: #fff;
+        aspect-ratio: 3 / 4;
+        box-shadow: 0 10px 24px rgba(0,0,0,0.06);
+      }
 
-.product-img-wrap img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* full în card, fără margini albe */
-  display: block;
-}
+      .product-img-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* full în card, fără margini albe */
+        display: block;
+      }
 
       .product-content {
         padding-top: 10px;
@@ -746,36 +749,38 @@
       }
 
       /* ABOUT / HOW – frame în stil HERO */
-.about-photo {
-  border-radius: var(--radius-xl);
-  padding: 18px;
-  background: radial-gradient(circle at 10% 0, #fff7fb, #ffe5ef);
-  box-shadow: var(--shadow-soft);
-  position: relative;
-  overflow: visible; /* să se vadă frumos și bula de text */
-}
+      .about-photo {
+        border-radius: var(--radius-xl);
+        padding: 18px;
+        background: radial-gradient(circle at 10% 0, #fff7fb, #ffe5ef);
+        box-shadow: var(--shadow-soft);
+        position: relative;
+        overflow: visible; /* să se vadă frumos și bula de text */
+      }
 
-.about-photo img {
-  width: 100%;
-  max-height: 420px;
-  border-radius: 18px;
-  object-fit: cover;
-  display: block;
-  background: #fff;
-  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.04);
-  transition: opacity 0.8s ease-in-out;
-}
+      .about-photo img {
+        width: 100%;
+        max-height: 420px;
+        border-radius: 18px;
+        object-fit: cover;
+        display: block;
+        background: #fff;
+        box-shadow: inset 0 0 0 1px rgba(0,0,0,0.04);
+        transition: opacity 0.8s ease-in-out;
+      }
 
       .about-floating {
         position: absolute;
-        top: 14px;
+        top: auto;
+        bottom: 12px;
         left: 14px;
-        padding: 9px 12px;
+        right: auto;
+        padding: 6px 12px;
         border-radius: 999px;
-        background: rgba(255, 255, 255, 0.96);
-        font-size: 0.78rem;
-        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
-        max-width: 72%;
+        background: rgba(255, 255, 255, 0.80);
+        font-size: 0.74rem;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        max-width: 70%;
       }
 
       .about-floating strong {
@@ -1209,9 +1214,17 @@
         }
 
         .hero-floating {
-          font-size: 0.75rem;
-          padding: 8px 10px;
-          bottom: 10px;
+          background: rgba(255, 255, 255, 0.78);
+          font-size: 0.7rem;
+          padding: 5px 10px;
+          max-width: 80%;
+        }
+
+        .about-floating {
+          background: rgba(255, 255, 255, 0.78);
+          font-size: 0.7rem;
+          padding: 5px 10px;
+          max-width: 80%;
         }
 
         .reviews-grid,
@@ -1225,20 +1238,20 @@
 
         /* slider produse pe mobil */
         .product-grid {
-    display: flex;
-    overflow-x: auto;
-    gap: 16px;
-    padding: 6px 8px 10px;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-  }
+          display: flex;
+          overflow-x: auto;
+          gap: 16px;
+          padding: 6px 8px 10px;
+          scroll-snap-type: x mandatory;
+          -webkit-overflow-scrolling: touch;
+        }
 
-  .product-card {
-    min-width: 80%;
-    max-width: 400px;
-    margin: 0 auto 4px;
-    scroll-snap-align: start;
-  }
+        .product-card {
+          min-width: 80%;
+          max-width: 400px;
+          margin: 0 auto 4px;
+          scroll-snap-align: start;
+        }
 
         .product-dots {
           display: flex;
@@ -1272,7 +1285,10 @@
     </style>
   </head>
   <body>
-    <header id="top">
+    <!-- ancora pentru "Acasă" -->
+    <div id="top"></div>
+
+    <header>
       <div class="container nav">
         <div class="logo">
           <a href="#top">
@@ -1319,8 +1335,8 @@
               PENTRU MOMENTE CARE CHIAR SE GUSTĂ.
             </h1>
             <p class="hero-subtitle">
-              Făcute manual în Cluj-Napoca, din bezele moi în nuanțe pastel. Un buchet pe care îl admiri,
-              apoi îl mănânci împreună cu cei dragi.
+              Făcute manual în Cluj-Napoca, din bezele moi în nuanțe pastel. Mai întâi îl admiri ca pe un buchet,
+              apoi îl împarți ca pe un desert împreună cu cei dragi.
             </p>
             <div class="hero-tags">
               <span class="tag-pill">✨ Artizanat, nu producție de masă</span>
@@ -1329,7 +1345,7 @@
             </div>
             <div class="hero-actions">
               <button class="btn-primary" type="button"
-                      onclick='document.getElementById("bouquets").scrollIntoView({behavior:"smooth"})'>
+                      onclick='scrollToId("bouquets")'>
                 Vezi buchetele →
               </button>
               <button class="btn-ghost" type="button"
@@ -1348,8 +1364,8 @@
                 alt="Buchet pastel de flori comestibile Flor Mellow"
                 data-hero-images="Flor-Mellow/Random/Random-1.jpeg|Flor-Mellow/Random/Random-5.jpeg|Flor-Mellow/Instagram/Instagram-62.jpg|Flor-Mellow/Instagram/Instagram-63.jpg">
               <div class="hero-floating">
-                <strong>„Nu doar flori, ci un desert care arată ca un buchet.”</strong>
-                <span>– Flor Mellow Atelier</span>
+                <strong>„Desert care arată ca un buchet.”</strong>
+                <span>Flor Mellow • Cluj-Napoca</span>
               </div>
               <div class="hero-badge">
                 <span>Buchete comestibile<br>din bezele moi</span>
@@ -1412,7 +1428,7 @@
             <div class="section-kicker">Best sellers</div>
             <h2 class="section-title">Alege buchetul Flor Mellow.</h2>
             <p class="section-subtitle">
-              Pornești de la mărime, apoi personalizăm culorile, mesajul și stilul împreună, pe WhatsApp sau Instagram.
+              Alege mărimea, iar culorile, detaliile și mesajul le stabilim împreună pe WhatsApp sau Instagram.
             </p>
           </div>
 
@@ -1970,7 +1986,7 @@
             <p>
               În loc să se ofilească după câteva zile, buchetul nostru devine desertul pe care îl împarți cu cei dragi.
               Fiecare floare este modelată manual din bezea cremoasă, apoi combinată în buchete, cutii și aranjamente de sezon. 
-              Ne inspirăm din estetica florăriilor premium, dar reinterpretăm totul în formă comestibilă, pastelată și foarte fotogenică.
+              Ne inspirăm din florăriile premium, dar reinterpretăm totul în formă comestibilă, pastelată și foarte fotogenică.
             </p>
             <p>
               Lucrăm în loturi mici, în Cluj-Napoca, astfel încât fiecare buchet să fie proaspăt, unic și pregătit cu atenție.
@@ -1984,7 +2000,7 @@
               data-about-images="Flor-Mellow/Bouquet Size L/Bouquet Size L - 5.jpeg|Flor-Mellow/Basket L/Basket L - 1.jpeg|Flor-Mellow/Random/Random-7.jpeg|Flor-Mellow/Pink Box 18x18/Pink Box 18x18-2.jpeg|Flor-Mellow/Roses process/Roses Process-7.jpeg">
             <div class="about-floating">
               <strong>„Fiecare floare din bezea e făcută manual, petală cu petală.”</strong>
-              <span>– Flor Mellow Atelier</span>
+              <span>Flor Mellow Atelier</span>
             </div>
             <div class="about-dots"></div>
           </div>
@@ -2001,8 +2017,8 @@
             <div class="section-kicker">Cum comanzi</div>
             <h3>3 pași simpli ca să comanzi un buchet comestibil din bezele moi.</h3>
             <p>
-              Majoritatea comenzilor se fac rapid pe Instagram sau WhatsApp. 
-              Procesul durează câteva minute și te ghidăm noi în tot ce ai nevoie.
+              Majoritatea comenzilor se fac pe Instagram sau WhatsApp.
+              Durează câteva minute, iar noi te ghidăm în tot ce ai nevoie.
             </p>
             <div class="steps">
               <div class="step">
@@ -2340,7 +2356,7 @@
             .filter(Boolean);
 
           const heroQuotes = [
-            "„Nu doar flori, ci un desert care arată ca un buchet.”",
+            "„Desert care arată ca un buchet.”",
             "„Bezele moi, culori pastel și un buchet care se mănâncă până la ultima floare.”",
             "„Desertul care arată ca un buchet și rămâne în poze și în amintiri.”",
           ];
@@ -2578,14 +2594,33 @@
           modalMedia.addEventListener("touchend", onTouchEnd, { passive: true });
         }
       })();
+
+      // Smooth scroll pentru link-urile cu # (meniu & logo)
+      function scrollToId(targetId) {
+        const target = document.getElementById(targetId);
+        if (!target) return;
+
+        const header = document.querySelector("header");
+        const headerOffset = header ? header.offsetHeight : 80;
+        const elementPosition = target.getBoundingClientRect().top + window.scrollY;
+        const offsetPosition = elementPosition - headerOffset;
+
+        window.scrollTo({
+          top: offsetPosition < 0 ? 0 : offsetPosition,
+          behavior: "smooth",
+        });
+      }
+
+      document.querySelectorAll('a[href^="#"]').forEach((link) => {
+        link.addEventListener("click", function (e) {
+          const targetId = this.getAttribute("href").substring(1);
+          if (!targetId) return;
+          const target = document.getElementById(targetId);
+          if (!target) return;
+          e.preventDefault();
+          scrollToId(targetId);
+        });
+      });
     </script>
   </body>
 </html>
-
-
-
-
-
-
-
-
