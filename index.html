@@ -11,13 +11,15 @@
     <!-- Open Graph -->
     <meta property="og:title" content="Buchete comestibile din bezele moi – Flor Mellow Cluj-Napoca">
     <meta property="og:description" content="Buchete comestibile din bezele moi, făcute manual în Cluj-Napoca. Dulce, pastel și foarte Instagram-abil.">
-    <meta property="og:image" content="https://erikcojocaru.github.io/flor-mellow-site/Flor-Mellow/Instagram/Instagram-32.jpg">
-    <meta property="og:url" content="https://erikcojocaru.github.io/flor-mellow-site/">
+    <meta property="og:image" content="https://flormellow.ro/Flor-Mellow/Instagram/Instagram-32.jpg">
+    <meta property="og:url" content="https://flormellow.ro/">
     <meta property="og:type" content="website">
-
+    <meta property="og:site_name" content="Flor Mellow">
+    
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
 
+    <link rel="canonical" href="https://flormellow.ro/">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -350,21 +352,22 @@
         font-size: 0.82rem;
       }
 
+      /* HERO badge – etichetă mai mică și mai transparentă */
       .hero-badge {
         position: absolute;
-        top: -18px;
-        right: -18px;
-        width: 110px;
-        height: 110px;
-        border-radius: 50%;
-        background: #fff;
-        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+        top: 12px;
+        right: 12px;
+        padding: 9px 14px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.88);
+        box-shadow: 0 10px 26px rgba(0, 0, 0, 0.16);
+        border: 1px solid rgba(243, 154, 181, 0.35);
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 0.74rem;
         text-align: center;
-        padding: 18px;
+        transform: rotate(-6deg);
       }
 
       .hero-badge span {
@@ -585,40 +588,40 @@
       }
 
       .product-badge {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 0.7rem;
-  font-weight: 600;
-  background: rgba(255,255,255,0.95);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.14);
-}
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        background: rgba(255,255,255,0.95);
+        box-shadow: 0 6px 18px rgba(0,0,0,0.14);
+      }
 
-.product-badge--best {
-  color: #d35478;
-}
+      .product-badge--best {
+        color: #d35478;
+      }
 
-.product-badge--new {
-  color: #1c8c5f;
-}
+      .product-badge--new {
+        color: #1c8c5f;
+      }
       
       /* Catalog – imagini simple, full, fără rame încărcate */
-.product-img-wrap {
-  border-radius: 16px;
-  overflow: hidden;
-  background: #fff;
-  aspect-ratio: 3 / 4;
-  box-shadow: 0 10px 24px rgba(0,0,0,0.06);
-}
+      .product-img-wrap {
+        border-radius: 16px;
+        overflow: hidden;
+        background: #fff;
+        aspect-ratio: 3 / 4;
+        box-shadow: 0 10px 24px rgba(0,0,0,0.06);
+      }
 
-.product-img-wrap img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* full în card, fără margini albe */
-  display: block;
-}
+      .product-img-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* full în card, fără margini albe */
+        display: block;
+      }
 
       .product-content {
         padding-top: 10px;
@@ -744,36 +747,40 @@
       }
 
       /* ABOUT / HOW – frame în stil HERO */
-.about-photo {
-  border-radius: var(--radius-xl);
-  padding: 18px;
-  background: radial-gradient(circle at 10% 0, #fff7fb, #ffe5ef);
-  box-shadow: var(--shadow-soft);
-  position: relative;
-  overflow: visible; /* să se vadă frumos și bula de text */
-}
+      .about-photo {
+        border-radius: var(--radius-xl);
+        padding: 18px;
+        background: radial-gradient(circle at 10% 0, #fff7fb, #ffe5ef);
+        box-shadow: var(--shadow-soft);
+        position: relative;
+        overflow: visible;
+      }
 
-.about-photo img {
-  width: 100%;
-  max-height: 420px;
-  border-radius: 18px;
-  object-fit: cover;
-  display: block;
-  background: #fff;
-  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.04);
-  transition: opacity 0.8s ease-in-out;
-}
+      .about-photo img {
+        width: 100%;
+        max-height: 420px;
+        border-radius: 18px;
+        object-fit: cover;
+        display: block;
+        background: #fff;
+        box-shadow: inset 0 0 0 1px rgba(0,0,0,0.04);
+        transition: opacity 0.8s ease-in-out;
+      }
 
+      /* ABOUT floating label – mai transparent și jos ca etichetă, să nu acopere fața/buchetul */
       .about-floating {
         position: absolute;
-        top: 14px;
-        left: 14px;
-        padding: 9px 12px;
+        bottom: 12px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 8px 14px;
         border-radius: 999px;
-        background: rgba(255, 255, 255, 0.96);
+        background: rgba(255, 255, 255, 0.9);
         font-size: 0.78rem;
         box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
-        max-width: 72%;
+        max-width: 80%;
+        text-align: center;
+        pointer-events: none;
       }
 
       .about-floating strong {
@@ -789,8 +796,7 @@
       .about-dots {
         position: absolute;
         bottom: 10px;
-        left: 50%;
-        transform: translateX(-50%);
+        left: 14px;
         display: flex;
         gap: 6px;
       }
@@ -1194,16 +1200,15 @@
           margin: 0 auto;
         }
 
-        /* pe mobil lăsăm tot full, fără rame și fără height fix */
         .hero-card img {
           height: auto !important;
           max-height: none !important;
         }
 
         .hero-badge {
-          transform: scale(0.85);
-          top: -12px;
-          right: -12px;
+          transform: scale(0.9) rotate(-6deg);
+          top: 8px;
+          right: 8px;
         }
 
         .hero-floating {
@@ -1223,20 +1228,20 @@
 
         /* slider produse pe mobil */
         .product-grid {
-    display: flex;
-    overflow-x: auto;
-    gap: 16px;
-    padding: 6px 8px 10px;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-  }
+          display: flex;
+          overflow-x: auto;
+          gap: 16px;
+          padding: 6px 8px 10px;
+          scroll-snap-type: x mandatory;
+          -webkit-overflow-scrolling: touch;
+        }
 
-  .product-card {
-    min-width: 80%;
-    max-width: 400px;
-    margin: 0 auto 4px;
-    scroll-snap-align: start;
-  }
+        .product-card {
+          min-width: 80%;
+          max-width: 400px;
+          margin: 0 auto 4px;
+          scroll-snap-align: start;
+        }
 
         .product-dots {
           display: flex;
@@ -1885,7 +1890,7 @@
                          data-price="de la -- RON"
                          data-desc="Buchet inspirat de anotimp – tonuri de toamnă, alb de iarnă sau pasteluri de primăvară. Designul se schimbă des."
                          data-img="Flor-Mellow/Autumn pumpkin/Autumn pumpkin - 1.jpeg"
-                         data-images="Flor-Mellow/Autumn pumpkin/Autumn pumpkin - 1.jpeg|Flor-Mellow/Autumn pumpkin/Autumn pumpkin - 2.jpeg|Flor-Mellow/Christmas Wres/Christmas Wrest-1.jpeg">
+                         data-images="Flor-Mellow/Autumn pumpkin/Autumn pumpkin - 1.jpeg|Flor-Mellow/Autumn pumpkin/Autumn pumpkin - 2.jpeg|Flor-Mellow/Autumn pumpkin/Autumn pumpkin - 4.jpeg">
                   <div class="product-badge product-badge--new">NEW</div>
                   <div class="product-img-wrap">
                     <img src="Flor-Mellow/Autumn pumpkin/Autumn pumpkin - 1.jpeg" alt="Seasonal Story buchet de sezon">
@@ -1909,11 +1914,11 @@
                          data-title="Winter Wreath Glow"
                          data-price="de la -- RON"
                          data-desc="Coroniță comestibilă în tonuri de iarnă – perfectă pentru cadouri de Crăciun sau mese festive."
-                         data-img="Flor-Mellow/Christmas Wres/Christmas Wrest-1.jpeg"
-                         data-images="Flor-Mellow/Christmas Wres/Christmas Wrest-1.jpeg|Flor-Mellow/Autumn pumpkin/Autumn pumpkin - 1.jpeg">
+                         data-img="Flor-Mellow/Christmas Wrest/Christmas Wrest-1.jpeg"
+                         data-images="Flor-Mellow/Christmas Wrest/Christmas Wrest-1.jpeg|Flor-Mellow/Christmas Wrest/Christmas Wrest-3.jpeg|Flor-Mellow/Christmas Wrest/Christmas Wrest-4.jpeg">
                   <div class="product-badge product-badge--new">NEW</div>
                   <div class="product-img-wrap">
-                    <img src="Flor-Mellow/Christmas Wres/Christmas Wrest-1.jpeg" alt="Winter Wreath Glow coroniță comestibilă">
+                    <img src="Flor-Mellow/Christmas Wrest/Christmas Wrest-1.jpeg" alt="Winter Wreath Glow coroniță comestibilă">
                   </div>
                   <div class="product-content">
                     <div class="product-header-row">
@@ -1931,21 +1936,21 @@
                 </article>
 
                 <article class="product-card"
-                         data-title="Autumn Pumpkin Bloom"
+                         data-title="Christmas Tree delight"
                          data-price="de la -- RON"
-                         data-desc="Buchet de toamnă cu accente de dovleac, în tonuri calde, pentru seri cozy și cine acasă."
-                         data-img="Flor-Mellow/Autumn pumpkin/Autumn pumpkin - 2.jpeg"
-                         data-images="Flor-Mellow/Autumn pumpkin/Autumn pumpkin - 2.jpeg|Flor-Mellow/Autumn pumpkin/Autumn pumpkin - 1.jpeg">
+                         data-desc="Brăduț de Crăciun din bezea fină, decorat manual în tonuri festive. Un desert-cadou delicat, perfect pentru masa de sărbători."
+                         data-img="Flor-Mellow/Christmas Three/Christmas Three-2.jpeg"
+                         data-images="Flor-Mellow/Christmas Three/Christmas Three-2.jpeg|Flor-Mellow/Christmas Three/Christmas Three-3.jpeg|Flor-Mellow/Christmas Three/Christmas Three-4.jpeg|Flor-Mellow/Christmas Three/Christmas Three-5.jpeg">
                   <div class="product-img-wrap">
-                    <img src="Flor-Mellow/Autumn pumpkin/Autumn pumpkin - 2.jpeg" alt="Autumn Pumpkin Bloom buchet de toamnă">
+                    <img src="Flor-Mellow/Christmas Three/Christmas Three-2.jpeg" alt="Christmas Tree delight - brad de Craciun">
                   </div>
                   <div class="product-content">
                     <div class="product-header-row">
-                      <div class="product-name">Autumn Pumpkin Bloom</div>
+                      <div class="product-name">Christmas Tree delight</div>
                       <div class="size-pill">Seasonal</div>
                     </div>
                     <p class="product-desc">
-                      Inspirat din toamnă, cu texturi bogate și culori calde, de pus în mijlocul mesei.
+                      Brăduț festiv din bezea, realizat manual, ideal ca desert rafinat sau cadou de Crăciun.
                     </p>
                     <div class="product-meta">
                       <div class="product-price">de la -- RON</div>
@@ -1965,27 +1970,26 @@
         <div class="container two-column">
           <div class="text-block">
             <div class="section-kicker">Povestea noastră</div>
-            <h3>De la flori clasice la deserturi în formă de buchet.</h3>
+            <h3>De la flori adevărate la deserturi care arată ca florile.</h3>
             <p>
-              Flor Mellow a pornit de la o întrebare simplă: dacă buchetul nu ar mai fi doar decor,
-              ci și desertul principal? În loc să îl arunci după câteva zile, îl pui în mijlocul mesei
-              și împărțiți fiecare floare.
+              Flor Mellow a pornit de la o idee simplă:
+              dacă un buchet ar putea fi nu doar frumos, ci și delicios?
             </p>
             <p>
-              Fiecare floare este creată manual din bezea fină, apoi îmbinată în buchete, cutii și
-              aranjamente de sezon. Ne inspirăm din estetica florăriilor, dar o traducem în dulciuri
-              comestibile, gândite să fie și fotogenice, și gustoase.
+              În loc să se ofilească după câteva zile, buchetul nostru devine desertul pe care îl împarți cu cei dragi.
+              Fiecare floare este modelată manual din bezea cremoasă, apoi combinată în buchete, cutii și aranjamente de sezon. 
+              Ne inspirăm din estetica florăriilor premium, dar reinterpretăm totul în formă comestibilă, pastelată și foarte fotogenică.
             </p>
             <p>
-              Lucrăm în loturi mici, în Cluj-Napoca, pentru ca fiecare buchet să primească timpul și
-              atenția pe care le merită.
+              Lucrăm în loturi mici, în Cluj-Napoca, astfel încât fiecare buchet să fie proaspăt, unic și pregătit cu atenție.
+              Un desert-cadou care nu doar arată superb, ci rămâne în amintiri.
             </p>
           </div>
           <div class="about-photo">
             <img
               src="Flor-Mellow/Random/Random-10.jpeg"
               alt="Creatoarea buchetelor Flor Mellow"
-              data-about-images="Flor-Mellow/Bouquet Size L/Bouquet Size L - 5.jpeg|Flor-Mellow/Basket L/Basket L - 1.jpeg|Flor-Mellow/Random/Random-7.jpeg|Flor-Mellow/Ping Box 18x18/Ping Box 18x18-2.jpeg|Flor-Mellow/Roses process/Roses process-7.jpeg">
+              data-about-images="Flor-Mellow/Bouquet Size L/Bouquet Size L - 5.jpeg|Flor-Mellow/Basket L/Basket L - 1.jpeg|Flor-Mellow/Random/Random-7.jpeg|Flor-Mellow/Pink Box 18x18/Pink Box 18x18-2.jpeg|Flor-Mellow/Roses process/Roses Process-7.jpeg">
             <div class="about-floating">
               <strong>„Fiecare floare din bezea e făcută manual, petală cu petală.”</strong>
               <span>– Flor Mellow Atelier</span>
@@ -2003,38 +2007,41 @@
           </div>
           <div class="text-block">
             <div class="section-kicker">Cum comanzi</div>
-            <h3>3 pași, fără formular complicat.</h3>
+            <h3>3 pași simpli ca să comanzi un buchet comestibil din bezele moi.</h3>
             <p>
-              Majoritatea comenzilor încep pe Instagram sau WhatsApp și se clarifică în câteva mesaje.
+              Majoritatea comenzilor se fac rapid pe Instagram sau WhatsApp. 
+              Procesul durează câteva minute și te ghidăm noi în tot ce ai nevoie.
             </p>
             <div class="steps">
               <div class="step">
                 <div class="step-number">1</div>
                 <div>
                   <strong>Alegi mărimea și stilul.</strong><br>
-                  Ne spui dacă vrei S, M, L, XL, cutie sau set cu prosecco/șampanie și trimiți o poză
-                  de inspirație din feed.
+                  Ne spui dacă vrei S, M, L, XL, cutie, coș sau buchet clasic și ne trimiți o poză de inspirație. 
+                  Te ajutăm să alegi cea mai potrivită variantă pentru bugetul și ocazia ta.
                 </div>
               </div>
               <div class="step">
                 <div class="step-number">2</div>
                 <div>
                   <strong>Stabilim culorile & mesajul.</strong><br>
-                  Adaptăm paleta la eveniment, includem un mesaj scris de mână și confirmăm bugetul.
+                  Adaptăm paleta la eveniment, iar dacă vrei includem și un mesaj personal scris de mână. 
+                  Totul se personalizează în funcție de preferințele tale.
                 </div>
               </div>
               <div class="step">
                 <div class="step-number">3</div>
                 <div>
                   <strong>Pregătire proaspătă & livrare.</strong><br>
-                  Pregătim buchetul în ziua stabilită și îl livrăm în Cluj-Napoca sau îl preiei personal.
+                  Realizăm buchetul în ziua stabilită și îl livrăm în Cluj-Napoca sau îl poți ridica personal. 
+                  Bezele sunt proaspete, moi și sigure pentru consum.
                 </div>
               </div>
             </div>
             <div style="margin-top:16px">
               <button class="btn-primary" type="button"
                       onclick='openWhatsApp("Bună, aș vrea să comand un buchet Flor Mellow. Putem stabili detaliile?")'>
-                Deschide conversație pe WhatsApp →
+                Comandă pe WhatsApp →
               </button>
             </div>
           </div>
@@ -2229,6 +2236,28 @@
 
       // Year in footer
       document.getElementById("year").textContent = new Date().getFullYear();
+
+      // Shuffle buchete în catalog la fiecare reload
+      function shuffleArray(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+      }
+
+      function shuffleCatalog() {
+        const grids = document.querySelectorAll(".product-grid");
+        grids.forEach((grid) => {
+          const cards = Array.from(grid.querySelectorAll(".product-card"));
+          if (cards.length <= 1) return;
+          const shuffled = shuffleArray(cards.slice());
+          shuffled.forEach((card) => grid.appendChild(card));
+        });
+      }
+
+      // rulăm shuffle înainte să legăm evenimentele pe carduri
+      shuffleCatalog();
 
       // MODAL + slider
       const modal = document.getElementById("productModal");
@@ -2455,6 +2484,8 @@
             "„Fiecare floare din bezea e făcută manual, petală cu petală.”",
             "„Lucrăm în loturi mici, ca fiecare buchet să primească atenția lui.”",
             "„Ne inspirăm din florării, dar gândim totul ca un desert de împărțit.”",
+            "„Combinația noastră preferată: pastel, texturi și gust.”",
+            "„Fiecare buchet pornește de la o singură floare din bezea.”",
           ];
 
           let aboutIndex = 0;
@@ -2477,7 +2508,7 @@
             setTimeout(() => {
               aboutImg.src = nextSrc;
               if (aboutQuoteEl && aboutQuotes[aboutIndex]) {
-                aboutQuoteEl.textContent = aboutQuotes[aboutIndex];
+                aboutQuoteEl.textContent = aboutQuotes[aboutIndex] || aboutQuotes[0];
               }
               aboutImg.onload = () => {
                 aboutImg.style.opacity = 1;
@@ -2582,4 +2613,3 @@
     </script>
   </body>
 </html>
-
