@@ -814,7 +814,31 @@
         font-weight: 500;
         color: var(--text);
       }
+		
+	.filter-search-wrapper {
+  position: relative;
+  display: inline-block;
+}
 
+.filter-search {
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,0.08);
+  background: #fff;
+  font-size: 0.82rem;
+  padding: 7px 30px 7px 30px; /* loc pt icon */
+  min-width: 190px;
+}
+
+.filter-search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.9rem;
+  opacity: 0.6;
+}
+	
+		
       /* FAQ */
       .faq {
         max-width: 760px;
