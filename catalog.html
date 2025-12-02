@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <title>Catalogul Flor Mellow – Buchete comestibile din bezele moi</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Catalogul Flor Mellow – toat... cutiile, coronițele și seturile speciale, într-un singur loc.">
+  <meta name="description" content="Catalogul Flor Mellow – toate buchetele comestibile din bezele moi, cutiile, coronițele și seturile speciale, într-un singur loc.">
 
   <meta name="color-scheme" content="light">
   <meta name="theme-color" content="#f7f2ee">
 
   <!-- Open Graph -->
   <meta property="og:title" content="Catalogul Flor Mellow – buchete comestibile din bezele moi">
-  <meta property="og:description" content="Alege buchetul tău Fl...chete, cutii, seturi și ediții de sezon, toate din bezele moi.">
+  <meta property="og:description" content="Alege buchetul tău Flor Mellow: buchete, cutii, seturi și ediții de sezon, toate din bezele moi.">
   <meta property="og:image" content="https://flormellow.ro/Flor-Mellow/Instagram/Instagram-32.jpg">
   <meta property="og:url" content="https://flormellow.ro/catalog.html">
   <meta property="og:type" content="website">
@@ -22,49 +22,23 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=DM+Sans:wght@400;500;600&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <!-- Font Awesome -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    integrity="sha512-SVL7D1rjx1xvrf7k..."
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-  <!-- CSS principal -->
+  <!-- CSS comun -->
   <link rel="stylesheet" href="assets/css/style.css">
 
+  <!-- CSS specific catalog -->
   <style>
-    :root {
-      --catalog-bg: #fff7f2;
-      --catalog-chip-bg: rgba(255, 255, 255, 0.85);
-      --catalog-chip-border: rgba(0, 0, 0, 0.06);
-      --catalog-shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.06);
-      --catalog-radius-pill: 999px;
-      --catalog-radius-card: 26px;
-    }
-
-    body {
-      background:
-        radial-gradient(circle at 0 0, #ffe6f0 0, transparent 50%),
-        radial-gradient(circle at 100% 0, #ffe7c2 0, transparent 55%),
-        radial-gradient(circle at 50% 100%, #ffe9d9 0, transparent 60%),
-        #fff7f2;
-    }
-
-    .catalog-page {
-      padding-top: 84px;
-      padding-bottom: 60px;
-    }
-
+    /* wrapper general catalog */
     .catalog-hero {
-      padding: 24px 0 12px;
+      padding: 40px 0 26px;
     }
 
     .catalog-hero-inner {
-      max-width: 920px;
+      max-width: 760px;
       margin: 0 auto;
       text-align: center;
     }
@@ -72,84 +46,74 @@
     .catalog-hero-kicker {
       text-transform: uppercase;
       font-size: 11px;
-      letter-spacing: 0.16em;
-      color: var(--text-soft);
-      margin-bottom: 8px;
+      letter-spacing: 0.15em;
+      color: var(--primary-dark);
+      font-weight: 600;
+      margin-bottom: 6px;
     }
 
     .catalog-hero-title {
-      font-family: var(--font-display);
-      font-size: clamp(2.1rem, 3vw, 2.5rem);
-      letter-spacing: -0.04em;
-      margin-bottom: 10px;
-      background: linear-gradient(120deg, #2e1a13, #9f4f64, #c1843f);
+      font-family: Fraunces, serif;
+      font-size: clamp(2rem, 3vw, 2.4rem);
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .catalog-hero-title span {
+      background: linear-gradient(90deg, #ff9a9e, #fecf6a);
       -webkit-background-clip: text;
+      background-clip: text;
       color: transparent;
     }
 
     .catalog-hero-subtitle {
-      font-size: 0.98rem;
+      font-size: 0.95rem;
       color: var(--text-soft);
-      max-width: 640px;
-      margin: 0 auto 18px;
+      max-width: 560px;
+      margin: 0 auto 16px;
     }
 
     .catalog-hero-actions {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 10px;
-      margin-bottom: 12px;
+      gap: 12px;
+      margin-bottom: 10px;
     }
 
     .btn-outline {
       padding: 10px 18px;
       border-radius: 999px;
-      border: 1px solid rgba(0, 0, 0, 0.08);
-      background: #fff7f2;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
+      border: 1px solid rgba(0,0,0,0.08);
+      background: rgba(255,255,255,0.9);
       font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      transition: transform 0.15s ease-out, box-shadow 0.15s ease-out, background 0.15s ease-out;
+      gap: 6px;
     }
 
     .btn-outline span {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
     }
 
-    .btn-outline:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
-      background: #fff0e7;
-    }
-
-    .catalog-hero-note {
+    .catalog-note {
       font-size: 0.8rem;
       color: var(--text-soft);
-      max-width: 520px;
-      margin: 0.2rem auto 0;
     }
 
-    .catalog-intro {
-      padding-bottom: 18px;
-      margin-top: 4px;
-    }
-
+    /* card intro roz de sub titlu */
     .catalog-intro-card {
+      margin: 24px auto 22px;
+      max-width: 880px;
+      background: linear-gradient(135deg, #ffeaf2, #fff5f0);
+      border-radius: 28px;
+      padding: 14px 16px;
       display: flex;
       align-items: center;
-      gap: 14px;
-      padding: 16px 18px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.9);
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.07);
-      border: 1px solid rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(14px);
-      max-width: 720px;
-      margin: 0 auto;
+      gap: 12px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.06);
     }
 
     .catalog-intro-thumb {
@@ -158,7 +122,7 @@
       border-radius: 50%;
       overflow: hidden;
       flex-shrink: 0;
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.16);
     }
 
     .catalog-intro-thumb img {
@@ -179,32 +143,32 @@
       color: var(--text-soft);
     }
 
-    .catalog-toolbar {
-      margin: 26px 0 16px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px 14px;
-      justify-content: space-between;
-      align-items: center;
+    /* chip-uri categorie */
+    .catalog-section {
+      padding-bottom: 56px;
     }
 
-    .catalog-chips {
+    .catalog-categories {
       display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 12px 0 6px;
+      -webkit-overflow-scrolling: touch;
     }
 
     .catalog-chip {
-      border-radius: 999px;
-      padding: 6px 12px;
-      background: var(--catalog-chip-bg);
-      border: 1px solid var(--catalog-chip-border);
-      display: inline-flex;
+      min-width: 130px;
+      padding: 10px 12px;
+      border-radius: 18px;
+      border: 1px solid rgba(0,0,0,0.06);
+      background: #fff;
+      display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 8px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
-      transition: transform 0.15s ease-out, box-shadow 0.15s ease-out, border-color 0.15s ease-out, background 0.15s ease-out;
+      gap: 6px;
       cursor: pointer;
+      box-shadow: 0 10px 26px rgba(0,0,0,0.05);
+      transition: transform 0.15s ease-out, box-shadow 0.15s ease-out, border-color 0.15s ease-out, background 0.15s ease-out;
     }
 
     .catalog-chip-icon-wrap {
@@ -236,76 +200,113 @@
       color: #c6416f;
     }
 
-    .catalog-chip input {
-      display: none;
-    }
-
-    .catalog-filters {
+    /* filtre + search */
+    .catalog-filters-wrapper {
+      margin-top: 18px;
       display: flex;
+      flex-direction: column;
       gap: 10px;
-      align-items: center;
-      flex-wrap: wrap;
-      justify-content: flex-end;
     }
 
-    .catalog-select-wrap {
-      position: relative;
+	.filter-search-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.filter-search {
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,0.08);
+  background: #fff;
+  font-size: 0.82rem;
+  padding: 7px 30px 7px 30px; /* loc pt icon */
+  min-width: 190px;
+}
+
+.filter-search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.9rem;
+  opacity: 0.6;
+}
+
+
+    .catalog-filters-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
     .catalog-select {
-      appearance: none;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      padding: 8px 30px 8px 12px;
-      font-size: 0.85rem;
+      flex: 1 1 200px;
+      padding: 9px 14px;
       border-radius: 999px;
-      border: 1px solid rgba(0, 0, 0, 0.08);
-      background: rgba(255, 255, 255, 0.9);
-      cursor: pointer;
+      border: 1px solid rgba(0,0,0,0.08);
+      background: rgba(255,255,255,0.9);
+      font-size: 0.86rem;
+      outline: none;
     }
 
-    .catalog-select-wrap::after {
-      content: "▾";
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 0.8rem;
-      color: #7a5a4b;
-      pointer-events: none;
-    }
-
-    .catalog-search-wrap {
+    .catalog-search {
       position: relative;
+      max-width: 360px;
+      width: 100%;
     }
 
-    .catalog-search-wrap input {
-      padding: 8px 10px 8px 28px;
+    .catalog-search input {
+      width: 100%;
+      padding: 9px 34px 9px 34px;
       border-radius: 999px;
-      border: 1px solid rgba(0, 0, 0, 0.08);
-      background: rgba(255, 255, 255, 0.9);
-      font-size: 0.85rem;
-      min-width: 180px;
+      border: 1px solid rgba(0,0,0,0.08);
+      background: rgba(255,255,255,0.95);
+      font-size: 0.86rem;
+      outline: none;
     }
 
-    .catalog-search-wrap span.icon {
+    .catalog-search-icon {
       position: absolute;
-      left: 10px;
+      left: 11px;
       top: 50%;
       transform: translateY(-50%);
-      font-size: 0.8rem;
-      opacity: 0.7;
-    }
-
-    .catalog-count {
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       color: var(--text-soft);
     }
 
-    .catalog-count span {
-      font-weight: 600;
+    .catalog-count {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      margin-top: 4px;
     }
 
+    .catalog-count span {
+      font-variant-numeric: tabular-nums;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+/* tabletă */
+@media (max-width: 960px) {
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* telefoane mici – tot 2, dacă vrei 1, poți schimba aici */
+@media (max-width: 480px) {
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+	
+	/* GRID PRODUSE – aici folosim .catalog-grid ca să nu stricăm sliderul de pe index */
     .catalog-grid {
       margin-top: 18px;
       display: grid;
@@ -313,6 +314,8 @@
       gap: 22px;
     }
 
+    /* pe catalog lăsăm .product-card la fel ca în CSS comun */
+    /* responsive pentru grid */
     @media (max-width: 960px) {
       .catalog-intro-card {
         flex-direction: row;
@@ -346,37 +349,10 @@
         min-width: 120px;
       }
     }
-  
-@media (max-width: 640px) {
-  .catalog-grid .product-card {
-    padding: 10px 10px 14px;
-    border-radius: 18px;
-  }
-  .catalog-grid .product-img-wrap {
-    aspect-ratio: 4 / 5;
-  }
-  .catalog-grid .product-desc {
-    display: none;
-  }
-  .catalog-grid .product-name {
-    font-size: 0.9rem;
-  }
-  .catalog-grid .size-pill {
-    font-size: 0.7rem;
-    padding: 2px 8px;
-  }
-  .catalog-grid .product-price {
-    font-size: 0.82rem;
-  }
-  .catalog-grid .product-btn {
-    padding: 6px 10px;
-    font-size: 0.78rem;
-  }
-}
   </style>
 
   <!-- JS comun (modal + WhatsApp + hero etc) -->
-  <script src="assets/js/script.js" defer></script>
+  <script src="assets/js/main.js" defer></script>
 </head>
 
 <body>
@@ -398,11 +374,11 @@
           <li><a href="index.html#contact">Contact</a></li>
         </ul>
       </nav>
-      <div class="nav-social">
-        <div class="social-icons">
-          <a href="https://www.instagram.com/flormellow.ro"
+      <div class="nav-right">
+        <div class="social-links">
+          <a href="https://www.instagram.com/flor_mellow_atelier"
              target="_blank" rel="noopener"
-             class="social-icon" aria-label="Instagram Flor Mellow">
+             class="social-icon" aria-label="Instagram">
             <i class="fa-brands fa-instagram"></i>
           </a>
           <a href="https://www.facebook.com/share/1DEzKHV3NC/?mibextid=wwXIfr"
@@ -419,105 +395,99 @@
     </div>
   </header>
 
-  <main class="catalog-page">
+  <main>
+    <!-- HERO / INTRO CATALOG -->
     <section class="catalog-hero">
-      <div class="container">
-        <div class="catalog-hero-inner">
-          <p class="catalog-hero-kicker">Catalog Flor Mellow</p>
-          <h1 class="catalog-hero-title">Alege buchetul care ți se potrivește</h1>
-          <p class="catalog-hero-subtitle">
-            Buchete comestibile din bezele moi, făcute manual în Cluj-Napoca. Alege mărimea, stilul și culorile – apoi povestim pe WhatsApp restul detaliilor.
-          </p>
-
-          <div class="catalog-hero-actions">
-            <button class="btn-outline" type="button"
-                    onclick='openWhatsApp("Bună! Aș vrea un buchet personalizat Flor Mellow. Putem discuta câteva idei?")'>
-              <span>✨</span> Vreau un buchet personalizat
-            </button>
-            <button class="btn-outline" type="button"
-                    onclick='openWhatsApp("Bună! Aș vrea o ofertă pentru firmă sau eveniment (Flor Mellow).")'>
-              <span>🤝</span> Ofertă pentru firmă / eveniment
-            </button>
-          </div>
-
-          <p class="catalog-hero-note">
-            Fiecare buchet este realizat la comandă, în funcție de stocul de bezele și de sezon.
-            Imaginile sunt orientative, dar vibe-ul rămâne la fel. 💐
-          </p>
+      <div class="container catalog-hero-inner">
+        <div class="catalog-hero-kicker">Catalog</div>
+        <h1 class="catalog-hero-title">
+          Catalogul <span>Flor Mellow</span>
+        </h1>
+        <p class="catalog-hero-subtitle">
+          Toate buchetele comestibile din bezele moi, cutiile, coronițele și seturile speciale – într-un singur loc.
+          Alege ce îți place, apoi ne scrii pe WhatsApp pentru detalii.
+        </p>
+        <div class="catalog-hero-actions">
+          <button class="btn-primary" type="button"
+                  onclick='openWhatsApp("Bună, mă uitam pe catalogul Flor Mellow și aș vrea să comand un produs. Putem discuta detaliile?")'>
+            Întreabă-ne pe WhatsApp →
+          </button>
+          <button class="btn-outline" type="button" onclick="window.location.href='index.html#top'">
+            <span>🏠</span> Înapoi la pagina principală
+          </button>
         </div>
+        <p class="catalog-note">
+          Vezi toate produsele disponibile în Cluj-Napoca. Fiecare aranjament se poate adapta ca nuanțe și stil.
+        </p>
       </div>
-    </section>
 
-    <section class="catalog-intro">
       <div class="container">
         <div class="catalog-intro-card">
           <div class="catalog-intro-thumb">
-            <img src="Flor-Mellow/Instagram/Instagram-32.jpg" alt="Detaliu bezele pastel Flor Mellow">
+            <img src="Flor-Mellow/Instagram/Instagram-44.jpg" alt="Buchet pastel Flor Mellow">
           </div>
           <div class="catalog-intro-text">
-            <strong>Comanzi ușor pe WhatsApp</strong>
+            <strong>Explorează pe îndelete.</strong>
             <p>
-              Spune-ne care buchet ți-a atras atenția, ocazia și bugetul aproximativ,
-              iar noi îți trimitem poze și propuneri în privat.
+              Vezi toate mărimile, tipurile și edițiile de sezon. Folosește filtrele de mai jos ca să găsești rapid
+              buchetul sau combinația potrivită pentru momentul tău.
             </p>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="catalog-filters-section">
+    <!-- CATALOG CU FILTRE -->
+    <section class="catalog-section">
       <div class="container">
-        <div class="catalog-toolbar">
-          <div class="catalog-chips" id="catalogCategories">
-            <button class="catalog-chip active" data-category="toate">
-              <div class="catalog-chip-icon-wrap">
-                <i class="fa-solid fa-star"></i>
-              </div>
-              <div class="catalog-chip-label">Toate</div>
-            </button>
+        <!-- CATEGORII -->
+        <div class="catalog-categories">
+          <button class="catalog-chip active" data-category-filter="all">
+            <div class="catalog-chip-icon-wrap">🎁</div>
+            <div class="catalog-chip-label">Toate produsele</div>
+          </button>
+          <button class="catalog-chip" data-category-filter="buchete">
+            <div class="catalog-chip-icon-wrap">🌸</div>
+            <div class="catalog-chip-label">Buchete</div>
+          </button>
+          <button class="catalog-chip" data-category-filter="cutii">
+            <div class="catalog-chip-icon-wrap">🧁</div>
+            <div class="catalog-chip-label">Cutii &amp; Box-uri</div>
+          </button>
+          <button class="catalog-chip" data-category-filter="seturi">
+            <div class="catalog-chip-icon-wrap">🥂</div>
+            <div class="catalog-chip-label">Seturi &amp; coșuri</div>
+          </button>
+          <button class="catalog-chip" data-category-filter="editii">
+            <div class="catalog-chip-icon-wrap">✨</div>
+            <div class="catalog-chip-label">Ediții de sezon</div>
+          </button>
+        </div>
 
-            <button class="catalog-chip" data-category="buchete">
-              <div class="catalog-chip-icon-wrap">
-                <i class="fa-solid fa-sun"></i>
-              </div>
-              <div class="catalog-chip-label">Buchete</div>
-            </button>
+        <!-- FILTRE & SEARCH -->
+        <div class="catalog-filters-wrapper">
+          <div class="catalog-filters-row">
+            <select id="sizeFilter" class="catalog-select">
+              <option value="all">Mărime: toate</option>
+              <option value="S">Mărime: S</option>
+              <option value="M">Mărime: M</option>
+              <option value="L">Mărime: L</option>
+              <option value="XL">Mărime: XL</option>
+              <option value="Box">Mărime: Box</option>
+              <option value="Set">Mărime: Set</option>
+              <option value="Limited">Mărime: Limited</option>
+              <option value="Holiday">Mărime: Holiday</option>
+              <option value="Seasonal">Mărime: Seasonal</option>
+            </select>
 
-            <button class="catalog-chip" data-category="cutii">
-              <div class="catalog-chip-icon-wrap">
-                <i class="fa-solid fa-gift"></i>
-              </div>
-              <div class="catalog-chip-label">Cuti &amp; coșuri</div>
-            </button>
+            <select id="sortSelect" class="catalog-select">
+              <option value="recommended">Sortare: recomandate</option>
+              <option value="name-asc">Sortare: nume A–Z</option>
+              <option value="name-desc">Sortare: nume Z–A</option>
+            </select>
 
-            <button class="catalog-chip" data-category="seturi">
-              <div class="catalog-chip-icon-wrap">
-                <i class="fa-solid fa-heart"></i>
-              </div>
-              <div class="catalog-chip-label">Seturi &amp; cadouri</div>
-            </button>
-
-            <button class="catalog-chip" data-category="editii">
-              <div class="catalog-chip-icon-wrap">
-                <i class="fa-solid fa-moon"></i>
-              </div>
-              <div class="catalog-chip-label">Ediții de sezon</div>
-            </button>
-          </div>
-
-          <div class="catalog-filters">
-            <div class="catalog-select-wrap">
-              <select class="catalog-select" id="catalogSizeFilter">
-                <option value="toate">Toate mărimile</option>
-                <option value="S">Doar S</option>
-                <option value="M">Doar M</option>
-                <option value="L">Doar L</option>
-                <option value="XL">Doar XL</option>
-              </select>
-            </div>
-
-            <div class="catalog-search-wrap">
-              <span class="icon">
+            <div class="catalog-search">
+              <span class="catalog-search-icon">
                 <i class="fa-solid fa-magnifying-glass"></i>
               </span>
               <input id="searchInput" type="search" placeholder="Caută">
@@ -564,13 +534,13 @@
                    data-title="Everyday Magic"
                    data-price="--"
                    data-desc="Buchet mediu, 10–14 flori din bezea. Mărimea ideală pentru aproape orice ocazie."
-                   data-img="Flor-Mellow/Bouquet size M/Bouquet Size M - 1.jpeg"
-                   data-images="Flor-Mellow/Bouquet size M/Bouquet Size M - 1.jpeg|Flor-Mellow/Bouquet size M/Bouquet Size M - 2.jpeg|Flor-Mellow/Bouquet size M/Bouquet Size M - 3.jpeg"
+                   data-img="Flor-Mellow/Bouquet Size M/Bouquet Size M - 1.jpeg"
+                   data-images="Flor-Mellow/Bouquet Size M/Bouquet Size M - 1.jpeg|Flor-Mellow/Bouquet Size M/Bouquet Size M - 2.jpeg|Flor-Mellow/Bouquet Size M/Bouquet Size M - 3.jpeg"
                    data-category="buchete"
                    data-size="M"
                    data-order="2">
             <div class="product-img-wrap">
-              <img src="Flor-Mellow/Bouquet size M/Bouquet Size M - 1.jpeg" alt="Everyday Magic buchet mediu">
+              <img src="Flor-Mellow/Bouquet Size M/Bouquet Size M - 1.jpeg" alt="Everyday Magic buchet mediu">
             </div>
             <div class="product-content">
               <div class="product-header-row">
@@ -590,14 +560,15 @@
           <article class="product-card"
                    data-title="Soft Pastel Mix"
                    data-price="--"
-                   data-desc="Mix pastelat în tonuri de roz, piersică și crem, perfect pentru persoanele care adoră culorile blânde."
-                   data-img="Flor-Mellow/Bouquet size M/Bouquet Size M - 2.jpeg"
-                   data-images="Flor-Mellow/Bouquet size M/Bouquet Size M - 2.jpeg|Flor-Mellow/Bouquet size M/Bouquet Size M - 3.jpeg|Flor-Mellow/Bouquet size M/Bouquet Size M - 4.jpeg"
+                   data-desc="Mix lejer de flori în nuanțe pastel – varianta all-rounder pentru orice ocazie."
+                   data-img="Flor-Mellow/Instagram/Instagram-44.jpg"
+                   data-images="Flor-Mellow/Instagram/Instagram-44.jpg|Flor-Mellow/Instagram/Instagram-32.jpg"
                    data-category="buchete"
                    data-size="M"
                    data-order="3">
+            <div class="product-badge product-badge--best">BEST SELLER</div>
             <div class="product-img-wrap">
-              <img src="Flor-Mellow/Bouquet size M/Bouquet Size M - 2.jpeg" alt="Soft Pastel Mix buchet mediu">
+              <img src="Flor-Mellow/Instagram/Instagram-44.jpg" alt="Soft Pastel Mix buchet pastel">
             </div>
             <div class="product-content">
               <div class="product-header-row">
@@ -605,7 +576,7 @@
                 <div class="size-pill">M</div>
               </div>
               <p class="product-desc">
-                Mix de flori din bezea, în culori pastelate, pentru un efect vizual calm și elegant.
+                Buchet pastel „simplu, dar special”, greu de greșit cu el.
               </p>
               <div class="product-meta">
                 <div class="product-price">de la -- RON</div>
@@ -615,24 +586,24 @@
           </article>
 
           <article class="product-card"
-                   data-title="Blooming Surprise"
+                   data-title="Pastel Dream"
                    data-price="--"
-                   data-desc="Buchet mare, aerat, pentru momente în care vrei să impresionezi cu adevărat."
-                   data-img="Flor-Mellow/Bouquet size L/Bouquet Size L - 1.jpeg"
-                   data-images="Flor-Mellow/Bouquet size L/Bouquet Size L - 1.jpeg|Flor-Mellow/Bouquet size L/Bouquet Size L - 2.jpeg|Flor-Mellow/Bouquet size L/Bouquet Size L - 3.jpeg"
+                   data-desc="Buchet mare, aerat, care devine punctul central al mesei."
+                   data-img="Flor-Mellow/Bouquet Size L/Bouquet Size L - 1.jpeg"
+                   data-images="Flor-Mellow/Bouquet Size L/Bouquet Size L - 1.jpeg|Flor-Mellow/Bouquet Size L/Bouquet Size L - 2.jpeg|Flor-Mellow/Bouquet Size L/Bouquet Size L - 3.jpeg"
                    data-category="buchete"
                    data-size="L"
                    data-order="4">
             <div class="product-img-wrap">
-              <img src="Flor-Mellow/Bouquet size L/Bouquet Size L - 1.jpeg" alt="Blooming Surprise buchet mare">
+              <img src="Flor-Mellow/Bouquet Size L/Bouquet Size L - 1.jpeg" alt="Pastel Dream buchet mare">
             </div>
             <div class="product-content">
               <div class="product-header-row">
-                <div class="product-name">Blooming Surprise</div>
+                <div class="product-name">Pastel Dream</div>
                 <div class="size-pill">L</div>
               </div>
               <p class="product-desc">
-                Buchet mare, cu multe detalii pastelate și volum generos.
+                Buchet mare gândit să fie fotografiat și ținut minte.
               </p>
               <div class="product-meta">
                 <div class="product-price">de la -- RON</div>
@@ -641,27 +612,26 @@
             </div>
           </article>
 
-          <!-- Cuti & coșuri -->
           <article class="product-card"
-                   data-title="Pastel Basket"
+                   data-title="Grand Gesture"
                    data-price="--"
-                   data-desc="Coș pastelat, ideal pentru cadouri de familie, mese festive sau vizite importante."
-                   data-img="Flor-Mellow/Bouquet Baskets/Bouquet Baskets 2 - 1.jpeg"
-                   data-images="Flor-Mellow/Bouquet Baskets/Bouquet Baskets 2 - 1.jpeg|Flor-Mellow/Bouquet Baskets/Bouquet Baskets 2 - 2.jpeg|Flor-Mellow/Bouquet Baskets/Bouquet Baskets 2 - 3.jpeg"
-                   data-category="cutii"
-                   data-size="M"
+                   data-desc="Cel mai mare buchet – pentru momentele cu efect „wow” instant."
+                   data-img="Flor-Mellow/King Size/King Size-1.jpeg"
+                   data-images="Flor-Mellow/King Size/King Size-1.jpeg|Flor-Mellow/King Size/King Size-2.jpeg|Flor-Mellow/King Size/King Size-3.jpeg"
+                   data-category="buchete"
+                   data-size="XL"
                    data-order="5">
             <div class="product-badge product-badge--best">BEST SELLER</div>
             <div class="product-img-wrap">
-              <img src="Flor-Mellow/Bouquet Baskets/Bouquet Baskets 2 - 1.jpeg" alt="Pastel Basket coș pastelat">
+              <img src="Flor-Mellow/King Size/King Size-1.jpeg" alt="Grand Gesture buchet XL">
             </div>
             <div class="product-content">
               <div class="product-header-row">
-                <div class="product-name">Pastel Basket</div>
-                <div class="size-pill">M</div>
+                <div class="product-name">Grand Gesture</div>
+                <div class="size-pill">XL</div>
               </div>
               <p class="product-desc">
-                Coș plin cu flori din bezea, în nuanțe calde și pastelate, perfect pentru a fi pus în centrul mesei.
+                Buchet XL pentru cereri în căsătorie, aniversări mari sau surprize serioase.
               </p>
               <div class="product-meta">
                 <div class="product-price">de la -- RON</div>
@@ -670,25 +640,26 @@
             </div>
           </article>
 
+          <!-- Cutii & Box-uri -->
           <article class="product-card"
-                   data-title="Heartfelt Box"
+                   data-title="Mellow Box"
                    data-price="--"
-                   data-desc="Cutie elegantă, perfectă pentru mesaje romantice, cereri sau aniversări speciale."
-                   data-img="Flor-Mellow/Boxes/Boxes 1 - 1.jpeg"
-                   data-images="Flor-Mellow/Boxes/Boxes 1 - 1.jpeg|Flor-Mellow/Boxes/Boxes 1 - 2.jpeg|Flor-Mellow/Boxes/Boxes 1 - 3.jpeg"
+                   data-desc="Cutie elegantă plină cu flori din bezea – arată ca un buchet, se mănâncă ca un desert."
+                   data-img="Flor-Mellow/Box 25x25/Box 25x25-1.jpeg"
+                   data-images="Flor-Mellow/Box 25x25/Box 25x25-1.jpeg|Flor-Mellow/Box 25x25/Box 25x25-2.jpeg|Flor-Mellow/Box 25x25/Box 25x25-3.jpeg"
                    data-category="cutii"
-                   data-size="M"
+                   data-size="Box"
                    data-order="6">
             <div class="product-img-wrap">
-              <img src="Flor-Mellow/Boxes/Boxes 1 - 1.jpeg" alt="Heartfelt Box cutie elegantă">
+              <img src="Flor-Mellow/Box 25x25/Box 25x25-1.jpeg" alt="Mellow Box aranjament în cutie">
             </div>
             <div class="product-content">
               <div class="product-header-row">
-                <div class="product-name">Heartfelt Box</div>
-                <div class="size-pill">M</div>
+                <div class="product-name">Mellow Box</div>
+                <div class="size-pill">Box</div>
               </div>
               <p class="product-desc">
-                Cutie rotundă cu aranjament compact de flori din bezea, pentru un efect wow când este deschisă.
+                Ușor de așezat pe masă – pentru localuri, birou sau acasă.
               </p>
               <div class="product-meta">
                 <div class="product-price">de la -- RON</div>
@@ -698,24 +669,24 @@
           </article>
 
           <article class="product-card"
-                   data-title="Soft Blossom Box"
+                   data-title="Mellow Tasting Tray"
                    data-price="--"
-                   data-desc="Cutie în nuanțe dulci, pastel, pentru cadouri rafinate și feminine."
-                   data-img="Flor-Mellow/Boxes/Boxes 2 - 1.jpeg"
-                   data-images="Flor-Mellow/Boxes/Boxes 2 - 1.jpeg|Flor-Mellow/Boxes/Boxes 2 - 2.jpeg|Flor-Mellow/Boxes/Boxes 2 - 3.jpeg"
+                   data-desc="Selecție de flori individuale din bezea, aranjate într-o cutie plată."
+                   data-img="Flor-Mellow/Box 11x18/Box 11x18-1.jpeg"
+                   data-images="Flor-Mellow/Box 11x18/Box 11x18-1.jpeg|Flor-Mellow/Box 11x18/Box 11x18-2.jpeg|Flor-Mellow/Box 11x18/Box 11x18-3.jpeg"
                    data-category="cutii"
-                   data-size="M"
+                   data-size="Box"
                    data-order="7">
             <div class="product-img-wrap">
-              <img src="Flor-Mellow/Boxes/Boxes 2 - 1.jpeg" alt="Soft Blossom Box cutie pastel">
+              <img src="Flor-Mellow/Box 11x18/Box 11x18-1.jpeg" alt="Mellow Tasting Tray cutie de degustare">
             </div>
             <div class="product-content">
               <div class="product-header-row">
-                <div class="product-name">Soft Blossom Box</div>
-                <div class="size-pill">M</div>
+                <div class="product-name">Mellow Tasting Tray</div>
+                <div class="size-pill">Box</div>
               </div>
               <p class="product-desc">
-                Cutie cu aranjament compact, potrivită pentru cadouri elegante, feminine și delicate.
+                Perfect pentru birou sau familie – fiecare își alege floarea preferată.
               </p>
               <div class="product-meta">
                 <div class="product-price">de la -- RON</div>
@@ -724,26 +695,54 @@
             </div>
           </article>
 
-          <!-- Seturi & cadouri -->
           <article class="product-card"
-                   data-title="Cozy Moments Set"
+                   data-title="Mini Mellow Box"
                    data-price="--"
-                   data-desc="Set pentru seri în doi sau seri de film – buchet mic + cutie cu bezele de împărțit."
-                   data-img="Flor-Mellow/Sets/Sets 1 - 1.jpeg"
-                   data-images="Flor-Mellow/Sets/Sets 1 - 1.jpeg|Flor-Mellow/Sets/Sets 1 - 2.jpeg|Flor-Mellow/Sets/Sets 1 - 3.jpeg"
-                   data-category="seturi"
-                   data-size="M"
+                   data-desc="Cutie mică cu câteva flori preferate – pentru colegi, profesori sau vecini dragi."
+                   data-img="Flor-Mellow/Mini Bouquets/Mini Bouquets-1.jpeg"
+                   data-images="Flor-Mellow/Mini Bouquets/Mini Bouquets-1.jpeg|Flor-Mellow/Mini Bouquets/Mini Bouquets-2.jpeg|Flor-Mellow/Mini Bouquets/Mini Bouquets-3.jpeg"
+                   data-category="cutii"
+                   data-size="Box"
                    data-order="8">
+            <div class="product-badge product-badge--new">NEW</div>
             <div class="product-img-wrap">
-              <img src="Flor-Mellow/Sets/Sets 1 - 1.jpeg" alt="Cozy Moments Set Flor Mellow">
+              <img src="Flor-Mellow/Mini Bouquets/Mini Bouquets-1.jpeg" alt="Mini Mellow Box">
             </div>
             <div class="product-content">
               <div class="product-header-row">
-                <div class="product-name">Cozy Moments Set</div>
-                <div class="size-pill">M</div>
+                <div class="product-name">Mini Mellow Box</div>
+                <div class="size-pill">S / Box</div>
               </div>
               <p class="product-desc">
-                Set gândit pentru seri acasă, cu bezele de gustat și buchet de admirat – ideal pentru cupluri sau prieteni apropiați.
+                O doză mică de „wow” pentru gesturi rapide, dar memorabile.
+              </p>
+              <div class="product-meta">
+                <div class="product-price">de la -- RON</div>
+                <button type="button" class="product-btn">Detalii</button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Seturi & coșuri -->
+          <article class="product-card"
+                   data-title="Bubbles & Blooms"
+                   data-price="--"
+                   data-desc="Buchet Flor Mellow + sticlă de prosecco sau șampanie, set complet pentru seri speciale."
+                   data-img="Flor-Mellow/Bouquet Size M nr5/Bouquet Size M nr 5 - 1.jpeg"
+                   data-images="Flor-Mellow/Bouquet Size M nr5/Bouquet Size M nr 5 - 1.jpeg|Flor-Mellow/Bouquet Size M nr5/Bouquet Size M nr 5 - 2.jpeg|Flor-Mellow/Bouquet Size M nr5/Bouquet Size M nr 5 - 3.jpeg"
+                   data-category="seturi"
+                   data-size="Set"
+                   data-order="9">
+            <div class="product-img-wrap">
+              <img src="Flor-Mellow/Bouquet Size M nr5/Bouquet Size M nr 5 - 1.jpeg" alt="Bubbles & Blooms set">
+            </div>
+            <div class="product-content">
+              <div class="product-header-row">
+                <div class="product-name">Bubbles &amp; Blooms</div>
+                <div class="size-pill">Set</div>
+              </div>
+              <p class="product-desc">
+                Combinație între buchet comestibil și ceva de pus în pahare.
               </p>
               <div class="product-meta">
                 <div class="product-price">de la -- RON</div>
@@ -754,52 +753,25 @@
 
           <!-- Ediții de sezon -->
           <article class="product-card"
-                   data-title="Holiday Glow"
+                   data-title="Seasonal Story"
                    data-price="--"
-                   data-desc="Buchet de sezon, inspirat din luminițe, brad și seri de iarnă."
-                   data-img="Flor-Mellow/Seasonal/Seasonal 1 - 1.jpeg"
-                   data-images="Flor-Mellow/Seasonal/Seasonal 1 - 1.jpeg|Flor-Mellow/Seasonal/Seasonal 1 - 2.jpeg|Flor-Mellow/Seasonal/Seasonal 1 - 3.jpeg"
+                   data-desc="Buchet inspirat de anotimp – tonuri de toamnă, alb de iarnă sau pasteluri de primăvară."
+                   data-img="Flor-Mellow/Autumn pumpkin/Autumn pumpkin - 1.jpeg"
+                   data-images="Flor-Mellow/Autumn pumpkin/Autumn pumpkin - 1.jpeg|Flor-Mellow/Autumn pumpkin/Autumn pumpkin - 2.jpeg|Flor-Mellow/Autumn pumpkin/Autumn pumpkin - 4.jpeg"
                    data-category="editii"
-                   data-size="L"
-                   data-order="9">
-            <div class="product-badge product-badge--best">BEST SELLER</div>
-            <div class="product-img-wrap">
-              <img src="Flor-Mellow/Seasonal/Seasonal 1 - 1.jpeg" alt="Holiday Glow ediție sezon">
-            </div>
-            <div class="product-content">
-              <div class="product-header-row">
-                <div class="product-name">Holiday Glow</div>
-                <div class="size-pill">L</div>
-              </div>
-              <p class="product-desc">
-                Ediție limitată, cu accente de sezon, ideală pentru cadouri de Crăciun sau iarnă.
-              </p>
-              <div class="product-meta">
-                <div class="product-price">de la -- RON</div>
-                <button type="button" class="product-btn">Detalii</button>
-              </div>
-            </div>
-          </article>
-
-          <article class="product-card"
-                   data-title="Spring Sunrise"
-                   data-price="--"
-                   data-desc="Buchet de primăvară, în nuanțe de galben, verde și roz, pentru începuturi noi."
-                   data-img="Flor-Mellow/Seasonal/Seasonal 2 - 1.jpeg"
-                   data-images="Flor-Mellow/Seasonal/Seasonal 2 - 1.jpeg|Flor-Mellow/Seasonal/Seasonal 2 - 2.jpeg|Flor-Mellow/Seasonal/Seasonal 2 - 3.jpeg"
-                   data-category="editii"
-                   data-size="M"
+                   data-size="Limited"
                    data-order="10">
+            <div class="product-badge product-badge--new">NEW</div>
             <div class="product-img-wrap">
-              <img src="Flor-Mellow/Seasonal/Seasonal 2 - 1.jpeg" alt="Spring Sunrise ediție sezon">
+              <img src="Flor-Mellow/Autumn pumpkin/Autumn pumpkin - 1.jpeg" alt="Seasonal Story buchet de sezon">
             </div>
             <div class="product-content">
               <div class="product-header-row">
-                <div class="product-name">Spring Sunrise</div>
-                <div class="size-pill">M</div>
+                <div class="product-name">Seasonal Story</div>
+                <div class="size-pill">Limited</div>
               </div>
               <p class="product-desc">
-                Ediție de primăvară, cu tonuri fresh și luminoase, potrivită pentru zile senine.
+                Când se termină, nu mai revine la fel. Pentru colecționarii de momente.
               </p>
               <div class="product-meta">
                 <div class="product-price">de la -- RON</div>
@@ -809,24 +781,25 @@
           </article>
 
           <article class="product-card"
-                   data-title="Golden Hour XL"
+                   data-title="Winter Wreath Glow"
                    data-price="--"
-                   data-desc="Buchet XL foarte bogat, pentru momente mari: aniversări, cereri, ocazii deosebite."
-                   data-img="Flor-Mellow/Bouquet size XL/Bouquet Size XL - 1.jpeg"
-                   data-images="Flor-Mellow/Bouquet size XL/Bouquet Size XL - 1.jpeg|Flor-Mellow/Bouquet size XL/Bouquet Size XL - 2.jpeg|Flor-Mellow/Bouquet size XL/Bouquet Size XL - 3.jpeg"
-                   data-category="buchete"
-                   data-size="XL"
+                   data-desc="Coroniță comestibilă în tonuri de iarnă, gândită pentru mese festive și poze de pus pe story."
+                   data-img="Flor-Mellow/Christmas Wrest/Christmas Wrest-1.jpeg"
+                   data-images="Flor-Mellow/Christmas Wrest/Christmas Wrest-1.jpeg|Flor-Mellow/Christmas Wrest/Christmas Wrest-3.jpeg|Flor-Mellow/Christmas Wrest/Christmas Wrest-4.jpeg"
+                   data-category="editii"
+                   data-size="Holiday"
                    data-order="11">
+            <div class="product-badge product-badge--new">NEW</div>
             <div class="product-img-wrap">
-              <img src="Flor-Mellow/Bouquet size XL/Bouquet Size XL - 1.jpeg" alt="Golden Hour XL buchet extra mare">
+              <img src="Flor-Mellow/Christmas Wrest/Christmas Wrest-1.jpeg" alt="Winter Wreath Glow coroniță comestibilă">
             </div>
             <div class="product-content">
               <div class="product-header-row">
-                <div class="product-name">Golden Hour XL</div>
-                <div class="size-pill">XL</div>
+                <div class="product-name">Winter Wreath Glow</div>
+                <div class="size-pill">Holiday</div>
               </div>
               <p class="product-desc">
-                Buchet foarte bogat, cu multe tonuri calde, ideal pentru ocazii în care vrei să lași o impresie puternică.
+                Coroniță din flori de bezea, perfectă pentru cadouri de Crăciun sau masa de sărbători.
               </p>
               <div class="product-meta">
                 <div class="product-price">de la -- RON</div>
@@ -836,24 +809,24 @@
           </article>
 
           <article class="product-card"
-                   data-title="Pastel Dream Box"
+                   data-title="Christmas Tree delight"
                    data-price="--"
-                   data-desc="Cutie mare, pastelată, potrivită pentru cadouri de grup sau surprize spectaculoase."
-                   data-img="Flor-Mellow/Boxes/Boxes 3 - 1.jpeg"
-                   data-images="Flor-Mellow/Boxes/Boxes 3 - 1.jpeg|Flor-Mellow/Boxes/Boxes 3 - 2.jpeg|Flor-Mellow/Boxes/Boxes 3 - 3.jpeg"
-                   data-category="cutii"
-                   data-size="L"
+                   data-desc="Brăduț de Crăciun din bezea fină, decorat manual în tonuri festive."
+                   data-img="Flor-Mellow/Christmas Three/Christmas Three-2.jpeg"
+                   data-images="Flor-Mellow/Christmas Three/Christmas Three-2.jpeg|Flor-Mellow/Christmas Three/Christmas Three-3.jpeg|Flor-Mellow/Christmas Three/Christmas Three-4.jpeg|Flor-Mellow/Christmas Three/Christmas Three-5.jpeg"
+                   data-category="editii"
+                   data-size="Seasonal"
                    data-order="12">
             <div class="product-img-wrap">
-              <img src="Flor-Mellow/Boxes/Boxes 3 - 1.jpeg" alt="Pastel Dream Box cutie mare">
+              <img src="Flor-Mellow/Christmas Three/Christmas Three-2.jpeg" alt="Christmas Tree delight brăduț comestibil">
             </div>
             <div class="product-content">
               <div class="product-header-row">
-                <div class="product-name">Pastel Dream Box</div>
-                <div class="size-pill">L</div>
+                <div class="product-name">Christmas Tree delight</div>
+                <div class="size-pill">Seasonal</div>
               </div>
               <p class="product-desc">
-                Cutie mare cu aranjament generos de flori din bezea, ideală pentru cadouri de impact.
+                Desert-cadou delicat pentru masa de Crăciun sau vizite în familie.
               </p>
               <div class="product-meta">
                 <div class="product-price">de la -- RON</div>
@@ -866,41 +839,35 @@
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-main">
-        <div>
-          <div class="footer-logo">
-            <img src="logo.PNG" alt="Flor Mellow logo">
-          </div>
-          <p>Buchete de flori din bezele moi, făcute manual în Cluj-Napoca.</p>
-        </div>
-        <div class="footer-col">
-          <h4>Contact</h4>
-          <p>Comenzi pe WhatsApp:</p>
-          <a href="javascript:void(0)"
-             onclick='openWhatsApp("Bună! Aș vrea să comand un buchet Flor Mellow din catalog.")'
-             class="footer-whatsapp">
-            💬 Scrie-ne pe WhatsApp
+  <!-- FOOTER -->
+  <footer>
+    <div class="container footer-inner">
+      <div class="footer-left">
+        © <span id="year"></span> Flor Mellow – Buchete comestibile din bezele moi.
+      </div>
+      <div class="footer-right">
+        <div class="social-links">
+          <a href="https://www.instagram.com/flor_mellow_atelier"
+             target="_blank" rel="noopener"
+             class="social-icon social-ig" aria-label="Instagram">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+          <a href="https://www.facebook.com/share/1DEzKHV3NC/?mibextid=wwXIfr"
+             target="_blank" rel="noopener"
+             class="social-icon social-fb" aria-label="Facebook">
+            <i class="fa-brands fa-facebook-f"></i>
+          </a>
+          <a href="https://wa.me/40738841225"
+             target="_blank" rel="noopener"
+             class="social-icon social-wa" aria-label="WhatsApp">
+            <i class="fa-brands fa-whatsapp"></i>
           </a>
         </div>
-        <div class="footer-col">
-          <h4>Social</h4>
-          <p>Urmărește-ne pentru idei, culise și noi modele:</p>
-          <div class="footer-social">
-            <a href="https://www.instagram.com/flormellow.ro" target="_blank" rel="noopener">Instagram</a>
-            <a href="https://www.facebook.com/share/1DEzKHV3NC/?mibextid=wwXIfr" target="_blank" rel="noopener">Facebook</a>
-          </div>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <span>© <span id="year"></span> Flor Mellow. Toate drepturile rezervate.</span>
-        <span>Realizat cu ❤️ în Cluj-Napoca.</span>
       </div>
     </div>
   </footer>
 
-  <!-- MODAL PRODUSE -->
+  <!-- MODAL PRODUSE (același markup ca pe index, ca să funcționeze main.js) -->
   <div class="modal" id="productModal">
     <div class="modal-content">
       <div class="modal-media" id="modalMedia">
@@ -916,85 +883,91 @@
         <p id="modalDesc"></p>
         <div class="modal-actions">
           <button class="btn-whatsapp" type="button" id="modalWhatsAppBtn">
-            <span>💬</span> Comandă acest buchet pe WhatsApp
+            Comandă acest buchet pe WhatsApp
           </button>
-          <button class="btn-ghost" type="button" onclick="closeModal()">Închide</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Script local pentru filtre catalog -->
+  <!-- JS specific catalog: filtre / sort / search -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {
+      // anul curent în footer
+      var yearSpan = document.getElementById("year");
+      if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+
       const grid = document.getElementById("catalogGrid");
-      const chips = document.querySelectorAll(".catalog-chip");
-      const sizeFilter = document.getElementById("catalogSizeFilter");
-      const searchInput = document.getElementById("searchInput");
-      const countEl = document.getElementById("catalogCount");
       const cards = Array.from(grid.querySelectorAll(".product-card"));
 
-      function applyFilters() {
-        const activeChip = document.querySelector(".catalog-chip.active");
-        const category = activeChip ? activeChip.dataset.category : "toate";
-        const size = sizeFilter.value;
-        const search = searchInput.value.trim().toLowerCase();
+      const countEl = document.getElementById("catalogCount");
+      const sizeFilter = document.getElementById("sizeFilter");
+      const sortSelect = document.getElementById("sortSelect");
+      const searchInput = document.getElementById("searchInput");
+      const chips = document.querySelectorAll(".catalog-chip");
 
-        const visible = [];
-
-        cards.forEach(card => {
-          let ok = true;
-
-          const cardCategory = card.dataset.category || "toate";
-          if (category !== "toate" && cardCategory !== category) {
-            ok = false;
-          }
-
-          const cardSize = card.dataset.size || "";
-          if (size !== "toate" && cardSize !== size) {
-            ok = false;
-          }
-
-          if (search) {
-            const title = (card.dataset.title || card.querySelector(".product-name")?.textContent || "").toLowerCase();
-            const desc = (card.dataset.desc || card.querySelector(".product-desc")?.textContent || "").toLowerCase();
-            if (!title.includes(search) && !desc.includes(search)) {
-              ok = false;
-            }
-          }
-
-          if (ok) {
-            card.style.display = "";
-            visible.push(card);
-          } else {
-            card.style.display = "none";
-          }
-        });
-
-        visible.sort((a, b) => {
-          const oa = parseInt(a.dataset.order || "999", 10);
-          const ob = parseInt(b.dataset.order || "999", 10);
-          return oa - ob;
-        });
-
-        visible.forEach(card => grid.appendChild(card));
-
-        if (countEl) {
-          countEl.textContent = String(visible.length).padStart(2, "0");
-        }
-      }
+      let activeCategory = "all";
 
       chips.forEach(chip => {
         chip.addEventListener("click", () => {
           chips.forEach(c => c.classList.remove("active"));
           chip.classList.add("active");
+          activeCategory = chip.getAttribute("data-category-filter") || "all";
           applyFilters();
         });
       });
 
       sizeFilter.addEventListener("change", applyFilters);
+      sortSelect.addEventListener("change", applyFilters);
       searchInput.addEventListener("input", applyFilters);
 
+      function applyFilters() {
+        const sizeVal = sizeFilter.value;
+        const sortVal = sortSelect.value;
+        const term = searchInput.value.trim().toLowerCase();
+
+        let visible = [];
+
+        cards.forEach(card => {
+          const cardCat = card.dataset.category || "";
+          const cardSize = card.dataset.size || "";
+          const name = (card.dataset.title || "").toLowerCase();
+          const desc = (card.dataset.desc || "").toLowerCase();
+
+          let ok = true;
+
+          if (activeCategory !== "all" && cardCat !== activeCategory) ok = false;
+          if (sizeVal !== "all" && cardSize !== sizeVal) ok = false;
+          if (term && !name.includes(term) && !desc.includes(term)) ok = false;
+
+          card.style.display = ok ? "" : "none";
+          if (ok) visible.push(card);
+        });
+
+        // sortare simplă după nume sau ordinea "recomandate"
+        if (sortVal === "name-asc" || sortVal === "name-desc") {
+          visible.sort((a, b) => {
+            const an = (a.dataset.title || "").localeCompare(b.dataset.title || "", "ro");
+            return sortVal === "name-asc" ? an : -an;
+          });
+        } else {
+          // recommended = după data-order
+          visible.sort((a, b) => {
+            return (parseInt(a.dataset.order || "0", 10) || 0) -
+                   (parseInt(b.dataset.order || "0", 10) || 0);
+          });
+        }
+
+        // reatașează în DOM pentru a menține ordinea vizibilă
+        visible.forEach(card => grid.appendChild(card));
+
+        if (countEl) {
+          const n = visible.length;
+          countEl.textContent = n.toString().padStart(2, "0");
+        }
+      }
+
+      // apply once la load
       applyFilters();
     });
   </script>
