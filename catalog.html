@@ -11,26 +11,19 @@
 
   <!-- Open Graph -->
   <meta property="og:title" content="Catalogul Flor Mellow – buchete comestibile din bezele moi">
-  <meta property="og:description" content="Alege buchetul tău Flor Mellow: buchete, cutii, seturi și ediții de sezon, toate din bezele moi.">
+  <meta property="og:description" content="Alege buchetul tău Flor Mellow – buchete, cutii, seturi și ediții de sezon, toate din bezele moi.">
   <meta property="og:image" content="https://flormellow.ro/Flor-Mellow/Instagram/Instagram-32.jpg">
   <meta property="og:url" content="https://flormellow.ro/catalog.html">
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Flor Mellow">
 
-  <link rel="canonical" href="https://flormellow.ro/catalog.html">
+  <link rel="icon" type="image/png" href="Flor-Mellow/Logo/favicon.png">
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-  <!-- CSS comun -->
   <link rel="stylesheet" href="assets/css/style.css">
 
-  <!-- CSS specific catalog -->
   <style>
     /* wrapper general catalog */
     .catalog-hero {
@@ -47,23 +40,16 @@
       text-transform: uppercase;
       font-size: 11px;
       letter-spacing: 0.15em;
-      color: var(--primary-dark);
-      font-weight: 600;
-      margin-bottom: 6px;
+      color: var(--text-soft);
+      margin-bottom: 10px;
     }
 
     .catalog-hero-title {
-      font-family: Fraunces, serif;
-      font-size: clamp(2rem, 3vw, 2.4rem);
-      letter-spacing: -0.02em;
+      font-family: var(--font-display);
+      font-size: clamp(1.9rem, 2.6vw, 2.4rem);
+      letter-spacing: -0.03em;
       margin-bottom: 8px;
-    }
-
-    .catalog-hero-title span {
-      background: linear-gradient(90deg, #ff9a9e, #fecf6a);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+      color: #2c1a16;
     }
 
     .catalog-hero-subtitle {
@@ -85,35 +71,39 @@
       padding: 10px 18px;
       border-radius: 999px;
       border: 1px solid rgba(0,0,0,0.08);
-      background: rgba(255,255,255,0.9);
+      background: #fff7f2;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.07);
       font-size: 0.9rem;
-      font-weight: 500;
-      cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
     }
 
     .btn-outline span {
-      font-size: 1.1rem;
+      font-size: 1.2rem;
     }
 
-    .catalog-note {
+    .catalog-hero-note {
       font-size: 0.8rem;
       color: var(--text-soft);
     }
 
-    /* card intro roz de sub titlu */
+    .catalog-intro {
+      padding-bottom: 16px;
+    }
+
     .catalog-intro-card {
-      margin: 24px auto 22px;
-      max-width: 880px;
-      background: linear-gradient(135deg, #ffeaf2, #fff5f0);
-      border-radius: 28px;
-      padding: 14px 16px;
       display: flex;
       align-items: center;
-      gap: 12px;
-      box-shadow: 0 16px 40px rgba(0,0,0,0.06);
+      gap: 14px;
+      padding: 16px 18px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.85);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.06);
+      border: 1px solid rgba(255,255,255,0.7);
+      backdrop-filter: blur(14px);
+      max-width: 640px;
+      margin: 0 auto;
     }
 
     .catalog-intro-thumb {
@@ -143,170 +133,121 @@
       color: var(--text-soft);
     }
 
-    /* chip-uri categorie */
-    .catalog-section {
-      padding-bottom: 56px;
+    .catalog-toolbar {
+      margin: 26px 0 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 14px;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    .catalog-categories {
+    .catalog-chips {
       display: flex;
-      gap: 10px;
-      overflow-x: auto;
-      padding: 12px 0 6px;
-      -webkit-overflow-scrolling: touch;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
     .catalog-chip {
-      min-width: 130px;
-      padding: 10px 12px;
-      border-radius: 18px;
-      border: 1px solid rgba(0,0,0,0.06);
-      background: #fff;
-      display: flex;
-      flex-direction: column;
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 0.85rem;
+      border: 1px solid rgba(0,0,0,0.08);
+      background: rgba(255,255,255,0.8);
+      cursor: pointer;
+      display: inline-flex;
       align-items: center;
       gap: 6px;
-      cursor: pointer;
-      box-shadow: 0 10px 26px rgba(0,0,0,0.05);
-      transition: transform 0.15s ease-out, box-shadow 0.15s ease-out, border-color 0.15s ease-out, background 0.15s ease-out;
     }
 
-    .catalog-chip-icon-wrap {
-      width: 54px;
-      height: 54px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 10%, #fff, #ffe4ee);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.4rem;
+    .catalog-chip input {
+      display: none;
     }
 
-    .catalog-chip-label {
-      font-size: 0.8rem;
-      font-weight: 600;
-      text-align: center;
-      color: var(--text-soft);
+    .catalog-chip span.indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.12);
     }
 
     .catalog-chip.active {
-      border-color: var(--primary-dark);
-      background: linear-gradient(135deg, #fff2f6, #fff8ed);
-      box-shadow: 0 14px 32px rgba(243, 154, 181, 0.28);
-      transform: translateY(-2px);
+      background: #3c180e;
+      color: #fff;
+      border-color: transparent;
     }
 
-    .catalog-chip.active .catalog-chip-label {
-      color: #c6416f;
+    .catalog-chip.active span.indicator {
+      background: #fff1d2;
     }
 
-    /* filtre + search */
-    .catalog-filters-wrapper {
-      margin-top: 18px;
+    .catalog-filters {
       display: flex;
-      flex-direction: column;
       gap: 10px;
-    }
-
-	.filter-search-wrapper {
-  position: relative;
-  display: inline-block;
-}
-
-.filter-search {
-  border-radius: 999px;
-  border: 1px solid rgba(0,0,0,0.08);
-  background: #fff;
-  font-size: 0.82rem;
-  padding: 7px 30px 7px 30px; /* loc pt icon */
-  min-width: 190px;
-}
-
-.filter-search-icon {
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 0.9rem;
-  opacity: 0.6;
-}
-
-
-    .catalog-filters-row {
-      display: flex;
+      align-items: center;
       flex-wrap: wrap;
-      gap: 10px;
+    }
+
+    .catalog-select-wrap {
+      position: relative;
     }
 
     .catalog-select {
-      flex: 1 1 200px;
-      padding: 9px 14px;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      padding: 8px 30px 8px 12px;
+      font-size: 0.85rem;
       border-radius: 999px;
       border: 1px solid rgba(0,0,0,0.08);
       background: rgba(255,255,255,0.9);
-      font-size: 0.86rem;
-      outline: none;
+      cursor: pointer;
+    }
+
+    .catalog-select-wrap::after {
+      content: "▾";
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.8rem;
+      color: #7a5a4b;
+      pointer-events: none;
     }
 
     .catalog-search {
-      position: relative;
-      max-width: 360px;
-      width: 100%;
-    }
-
-    .catalog-search input {
-      width: 100%;
-      padding: 9px 34px 9px 34px;
+      padding: 8px 10px 8px 28px;
       border-radius: 999px;
       border: 1px solid rgba(0,0,0,0.08);
-      background: rgba(255,255,255,0.95);
-      font-size: 0.86rem;
-      outline: none;
+      background: rgba(255,255,255,0.9);
+      font-size: 0.85rem;
+      min-width: 180px;
     }
 
-    .catalog-search-icon {
+    .catalog-search-wrap {
+      position: relative;
+    }
+
+    .catalog-search-wrap::before {
+      content: "🔍";
       position: absolute;
-      left: 11px;
+      left: 10px;
       top: 50%;
       transform: translateY(-50%);
-      font-size: 0.9rem;
-      color: var(--text-soft);
+      font-size: 0.8rem;
+      opacity: 0.7;
     }
 
     .catalog-count {
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       color: var(--text-soft);
-      margin-top: 4px;
     }
 
     .catalog-count span {
-      font-variant-numeric: tabular-nums;
       font-weight: 600;
-      color: var(--text);
     }
 
-    .product-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 22px;
-}
-
-/* tabletă */
-@media (max-width: 960px) {
-  .product-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-/* telefoane mici – tot 2, dacă vrei 1, poți schimba aici */
-@media (max-width: 480px) {
-  .product-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-	
-	/* GRID PRODUSE – aici folosim .catalog-grid ca să nu stricăm sliderul de pe index */
+    /* GRID PRODUSE – aici folosim .catalog-grid ca să nu stricăm sliderul de pe index */
     .catalog-grid {
       margin-top: 18px;
       display: grid;
@@ -315,6 +256,7 @@
     }
 
     /* pe catalog lăsăm .product-card la fel ca în CSS comun */
+
     /* responsive pentru grid */
     @media (max-width: 960px) {
       .catalog-intro-card {
@@ -343,6 +285,37 @@
       .catalog-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 14px;
+      }
+
+      .catalog-grid .product-card {
+        padding: 10px 10px 14px;
+        border-radius: 18px;
+      }
+
+      .catalog-grid .product-img-wrap {
+        aspect-ratio: 4 / 5;
+      }
+
+      .catalog-grid .product-desc {
+        display: none;
+      }
+
+      .catalog-grid .product-name {
+        font-size: 0.9rem;
+      }
+
+      .catalog-grid .size-pill {
+        font-size: 0.7rem;
+        padding: 2px 8px;
+      }
+
+      .catalog-grid .product-price {
+        font-size: 0.82rem;
+      }
+
+      .catalog-grid .product-btn {
+        padding: 6px 10px;
+        font-size: 0.78rem;
       }
 
       .catalog-chip {
@@ -840,34 +813,37 @@
   </main>
 
   <!-- FOOTER -->
-  <footer>
-    <div class="container footer-inner">
-      <div class="footer-left">
-        © <span id="year"></span> Flor Mellow – Buchete comestibile din bezele moi.
-      </div>
-      <div class="footer-right">
-        <div class="social-links">
-          <a href="https://www.instagram.com/flor_mellow_atelier"
-             target="_blank" rel="noopener"
-             class="social-icon social-ig" aria-label="Instagram">
-            <i class="fa-brands fa-instagram"></i>
-          </a>
-          <a href="https://www.facebook.com/share/1DEzKHV3NC/?mibextid=wwXIfr"
-             target="_blank" rel="noopener"
-             class="social-icon social-fb" aria-label="Facebook">
-            <i class="fa-brands fa-facebook-f"></i>
-          </a>
-          <a href="https://wa.me/40738841225"
-             target="_blank" rel="noopener"
-             class="social-icon social-wa" aria-label="WhatsApp">
-            <i class="fa-brands fa-whatsapp"></i>
-          </a>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-main">
+        <div>
+          <div class="footer-logo">
+            <img src="Flor-Mellow/Logo/flor-mellow-logo.png" alt="Flor Mellow logo">
+          </div>
+          <p>Buchete de flori din bezele moi, făcute manual în Cluj-Napoca.</p>
         </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <p>Comenzi pe WhatsApp:</p>
+          <a href="javascript:void(0)" onclick="openWhatsApp('Bună! Aș vrea să comand un buchet Flor Mellow din catalog.')" class="footer-whatsapp">💬 Scrie-ne pe WhatsApp</a>
+        </div>
+        <div class="footer-col">
+          <h4>Social</h4>
+          <p>Urmărește-ne pentru idei, culise și noi modele:</p>
+          <div class="footer-social">
+            <a href="https://www.instagram.com/flormellow.ro" target="_blank" rel="noopener">Instagram</a>
+            <a href="https://www.facebook.com/people/Flor-Mellow/61579018337608" target="_blank" rel="noopener">Facebook</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="year"></span> Flor Mellow. Toate drepturile rezervate.</span>
+        <span>Realizat cu ❤️ în Cluj-Napoca.</span>
       </div>
     </div>
   </footer>
 
-  <!-- MODAL PRODUSE (același markup ca pe index, ca să funcționeze main.js) -->
+  <!-- MODAL PRODUSE (același markup ca pe index, ca să funcționeze script.js) -->
   <div class="modal" id="productModal">
     <div class="modal-content">
       <div class="modal-media" id="modalMedia">
@@ -883,82 +859,67 @@
         <p id="modalDesc"></p>
         <div class="modal-actions">
           <button class="btn-whatsapp" type="button" id="modalWhatsAppBtn">
-            Comandă acest buchet pe WhatsApp
+            <span>💬</span> Comandă acest buchet pe WhatsApp
           </button>
+          <button class="btn-ghost" type="button" onclick="closeModal()">Închide</button>
         </div>
       </div>
     </div>
   </div>
 
   <!-- JS specific catalog: filtre / sort / search -->
-  <script>
+ <script>
     document.addEventListener("DOMContentLoaded", function () {
-      // anul curent în footer
-      var yearSpan = document.getElementById("year");
-      if (yearSpan) yearSpan.textContent = new Date().getFullYear();
-
       const grid = document.getElementById("catalogGrid");
+      const chips = document.querySelectorAll(".catalog-chip");
+      const sizeFilter = document.getElementById("catalogSizeFilter");
+      const searchInput = document.getElementById("catalogSearch");
+      const countEl = document.getElementById("catalogCount");
       const cards = Array.from(grid.querySelectorAll(".product-card"));
 
-      const countEl = document.getElementById("catalogCount");
-      const sizeFilter = document.getElementById("sizeFilter");
-      const sortSelect = document.getElementById("sortSelect");
-      const searchInput = document.getElementById("searchInput");
-      const chips = document.querySelectorAll(".catalog-chip");
-
-      let activeCategory = "all";
-
-      chips.forEach(chip => {
-        chip.addEventListener("click", () => {
-          chips.forEach(c => c.classList.remove("active"));
-          chip.classList.add("active");
-          activeCategory = chip.getAttribute("data-category-filter") || "all";
-          applyFilters();
-        });
-      });
-
-      sizeFilter.addEventListener("change", applyFilters);
-      sortSelect.addEventListener("change", applyFilters);
-      searchInput.addEventListener("input", applyFilters);
-
       function applyFilters() {
-        const sizeVal = sizeFilter.value;
-        const sortVal = sortSelect.value;
-        const term = searchInput.value.trim().toLowerCase();
+        const activeChip = document.querySelector(".catalog-chip.active");
+        const category = activeChip ? activeChip.dataset.category : "toate";
+        const size = sizeFilter.value;
+        const search = searchInput.value.trim().toLowerCase();
 
-        let visible = [];
+        const visible = [];
 
         cards.forEach(card => {
-          const cardCat = card.dataset.category || "";
-          const cardSize = card.dataset.size || "";
-          const name = (card.dataset.title || "").toLowerCase();
-          const desc = (card.dataset.desc || "").toLowerCase();
-
           let ok = true;
 
-          if (activeCategory !== "all" && cardCat !== activeCategory) ok = false;
-          if (sizeVal !== "all" && cardSize !== sizeVal) ok = false;
-          if (term && !name.includes(term) && !desc.includes(term)) ok = false;
+          const cardCategory = card.dataset.category || "toate";
+          if (category !== "toate" && cardCategory !== category) {
+            ok = false;
+          }
 
-          card.style.display = ok ? "" : "none";
-          if (ok) visible.push(card);
+          const cardSize = card.dataset.size || "";
+          if (size !== "toate" && cardSize !== size) {
+            ok = false;
+          }
+
+          if (search) {
+            const title = (card.dataset.title || card.querySelector(".product-name")?.textContent || "").toLowerCase();
+            const desc = (card.dataset.desc || card.querySelector(".product-desc")?.textContent || "").toLowerCase();
+            if (!title.includes(search) && !desc.includes(search)) {
+              ok = false;
+            }
+          }
+
+          if (ok) {
+            card.style.display = "";
+            visible.push(card);
+          } else {
+            card.style.display = "none";
+          }
         });
 
-        // sortare simplă după nume sau ordinea "recomandate"
-        if (sortVal === "name-asc" || sortVal === "name-desc") {
-          visible.sort((a, b) => {
-            const an = (a.dataset.title || "").localeCompare(b.dataset.title || "", "ro");
-            return sortVal === "name-asc" ? an : -an;
-          });
-        } else {
-          // recommended = după data-order
-          visible.sort((a, b) => {
-            return (parseInt(a.dataset.order || "0", 10) || 0) -
-                   (parseInt(b.dataset.order || "0", 10) || 0);
-          });
-        }
+        visible.sort((a, b) => {
+          const oa = parseInt(a.dataset.order || "999", 10);
+          const ob = parseInt(b.dataset.order || "999", 10);
+          return oa - ob;
+        });
 
-        // reatașează în DOM pentru a menține ordinea vizibilă
         visible.forEach(card => grid.appendChild(card));
 
         if (countEl) {
@@ -967,7 +928,17 @@
         }
       }
 
-      // apply once la load
+      chips.forEach(chip => {
+        chip.addEventListener("click", () => {
+          chips.forEach(c => c.classList.remove("active"));
+          chip.classList.add("active");
+          applyFilters();
+        });
+      });
+
+      sizeFilter.addEventListener("change", applyFilters);
+      searchInput.addEventListener("input", applyFilters);
+
       applyFilters();
     });
   </script>
