@@ -964,6 +964,30 @@
       </div>
     </footer>
 
+    <!-- MODAL PRODUSE (același markup ca în catalog) -->
+    <div class="modal" id="productModal">
+      <div class="modal-content">
+        <div class="modal-media" id="modalMedia">
+          <img id="modalImg" src="" alt="Detaliu buchet">
+          <button class="modal-close" type="button" onclick="closeModal()">×</button>
+          <button class="modal-nav prev" type="button" onclick="prevModalImage()">‹</button>
+          <button class="modal-nav next" type="button" onclick="nextModalImage()">›</button>
+          <div class="modal-dots" id="modalDots"></div>
+        </div>
+        <div class="modal-body">
+          <h3 id="modalTitle"></h3>
+          <div class="modal-price" id="modalPrice"></div>
+          <p id="modalDesc"></p>
+          <div class="modal-actions">
+            <button class="btn-whatsapp" type="button" id="modalWhatsAppBtn">
+              <span>💬</span> Comandă acest buchet pe WhatsApp
+            </button>
+            <button class="btn-ghost" type="button" onclick="closeModal()">Închide</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- JS extern -->
     <script src="assets/js/script.js" defer></script>
   </body>
