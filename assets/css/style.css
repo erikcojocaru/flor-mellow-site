@@ -89,7 +89,8 @@
 
       .logo img {
         display: block;
-        height: 54px;
+        height: 68px;
+		transition: height 0.2s ease-out;
       }
 
       nav ul {
@@ -1146,7 +1147,7 @@
         }
 
         .logo img {
-          height: 40px;
+          height: 52px;
         }
 
         .social-links {
