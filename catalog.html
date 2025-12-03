@@ -349,6 +349,52 @@
         min-width: 120px;
       }
     }
+	
+	/* Ajustări pentru catalog pe mobil */
+@media (max-width: 768px) {
+  /* 2 carduri pe rând + spațiu mai mic între ele */
+  .catalog-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  /* Card mai compact */
+  .catalog-grid .product-card {
+    padding: 10px 10px 14px;
+    border-radius: 18px;
+  }
+
+  .catalog-grid .product-content {
+    padding-top: 6px;
+  }
+
+  /* Nu mai ținem descrierea lungă pe card – o vezi în modal */
+  .catalog-grid .product-desc {
+    display: none;
+  }
+
+  .catalog-grid .product-name {
+    font-size: 0.92rem;
+  }
+
+  .catalog-grid .size-pill,
+  .catalog-grid .product-price {
+    font-size: 0.8rem;
+  }
+
+  .catalog-grid .product-btn {
+    padding: 6px 11px;
+    font-size: 0.8rem;
+  }
+
+  /* Poze fără rama albă suplimentară în interiorul cardului */
+  .catalog-grid .product-img-wrap {
+    background: transparent;  /* nu mai e pătratul alb separat */
+    box-shadow: none;         /* lăsăm doar shadow-ul cardului mare */
+    border-radius: 20px;
+  }
+}
+
   </style>
 
   <!-- JS comun (modal + WhatsApp + hero etc) -->
