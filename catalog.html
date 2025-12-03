@@ -527,10 +527,11 @@
             </select>
 
             <select id="sortSelect" class="catalog-select">
-              <option value="recommended">Sortare: recomandate</option>
-              <option value="name-asc">Sortare: nume A–Z</option>
-              <option value="name-desc">Sortare: nume Z–A</option>
-            </select>
+			  <option value="none">Fără sortare</option>
+			  <option value="recommended">Sortare: recomandate</option>
+			  <option value="name-asc">Sortare: nume A–Z</option>
+			  <option value="name-desc">Sortare: nume Z–A</option>
+			</select>
 
             <div class="catalog-search">
               <span class="catalog-search-icon">
@@ -945,6 +946,14 @@
 
       const grid = document.getElementById("catalogGrid");
       const cards = Array.from(grid.querySelectorAll(".product-card"));
+	  
+	  // randomizare inițială a cardurilor pentru starea "Fără sortare"
+	  const shuffled = cards
+		.map(card => ({ card, sort: Math.random() }))
+		.sort((a, b) => a.sort - b.sort)
+		.map(x => x.card);
+
+	  shuffled.forEach(card => grid.appendChild(card));
 
       const countEl = document.getElementById("catalogCount");
       const sizeFilter = document.getElementById("sizeFilter");
@@ -990,19 +999,24 @@
           if (ok) visible.push(card);
         });
 
-        // sortare simplă după nume sau ordinea "recomandate"
+                // sortare simplă după nume sau ordinea "recomandate"
         if (sortVal === "name-asc" || sortVal === "name-desc") {
           visible.sort((a, b) => {
-            const an = (a.dataset.title || "").localeCompare(b.dataset.title || "", "ro");
+            const an = (a.dataset.title || "").localeCompare(
+              b.dataset.title || "",
+              "ro"
+            );
             return sortVal === "name-asc" ? an : -an;
           });
-        } else {
-          // recommended = după data-order
+        } else if (sortVal === "recommended") {
+          // "Recomandate" = după data-order
           visible.sort((a, b) => {
             return (parseInt(a.dataset.order || "0", 10) || 0) -
                    (parseInt(b.dataset.order || "0", 10) || 0);
           });
         }
+        // dacă sortVal === "none" -> nu sortăm, păstrăm ordinea random din DOM
+
 
         // reatașează în DOM pentru a menține ordinea vizibilă
         visible.forEach(card => grid.appendChild(card));
