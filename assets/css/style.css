@@ -815,29 +815,7 @@
         color: var(--text);
       }
 		
-	.filter-search-wrapper {
-  position: relative;
-  display: inline-block;
-}
-
-.filter-search {
-  border-radius: 999px;
-  border: 1px solid rgba(0,0,0,0.08);
-  background: #fff;
-  font-size: 0.82rem;
-  padding: 7px 30px 7px 30px; /* loc pt icon */
-  min-width: 190px;
-}
-
-.filter-search-icon {
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 0.9rem;
-  opacity: 0.6;
-}
-	
+		
 		
       /* FAQ */
       .faq {
@@ -1288,4 +1266,31 @@
           text-align: center;
         }
       }
+	  
+	  /* ===== override: scoatem rama albă din cardurile de produse ===== */
+.product-img-wrap {
+  background: transparent;     /* fără pătrat alb în interior */
+  box-shadow: none;            /* lăsăm doar shadow-ul cardului mare */
+  border-radius: 16px;
+}
+
+.product-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;           /* umple complet cardul, fără margini */
+}
+
+/* ===== override: imagine full în modal, fără cadru alb ===== */
+.modal-media {
+  padding: 0;                   /* fără padding de 10px în jurul imaginii */
+  background: transparent;      /* fără gradient-cadru */
+}
+
+.modal-media img {
+  max-height: 70vh;             /* mai înaltă pe desktop, ajustează dacă vrei */
+  object-fit: cover;            /* umple perfect zona, fără margini albe */
+  background: transparent;      /* scoatem pătratul alb */
+  border-radius: 0;             /* se va rotunji oricum după .modal-content */
+}
+
     
