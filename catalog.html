@@ -945,15 +945,16 @@
       if (yearSpan) yearSpan.textContent = new Date().getFullYear();
 
       const grid = document.getElementById("catalogGrid");
-      const cards = Array.from(grid.querySelectorAll(".product-card"));
+	  let cards = Array.from(grid.querySelectorAll(".product-card"));
 	  
 	  // randomizare inițială a cardurilor pentru starea "Fără sortare"
 	  const shuffled = cards
-		.map(card => ({ card, sort: Math.random() }))
-		.sort((a, b) => a.sort - b.sort)
-		.map(x => x.card);
+	  .map(card => ({ card, sort: Math.random() }))
+	  .sort((a, b) => a.sort - b.sort)
+	  .map(x => x.card);
 
 	  shuffled.forEach(card => grid.appendChild(card));
+	  cards = shuffled;   // <- IMPORTANT: acum "cards" are ordinea random
 
       const countEl = document.getElementById("catalogCount");
       const sizeFilter = document.getElementById("sizeFilter");
