@@ -160,6 +160,26 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
   });
+  
+  // ======================
+  // Randomizare produse (index + catalog)
+  // ======================
+  (function randomizeProductCards() {
+    const grids = document.querySelectorAll(".product-grid");
+    grids.forEach((grid) => {
+      const cards = Array.from(grid.querySelectorAll(".product-card"));
+      if (cards.length <= 1) return;
+
+      // shuffle simplu
+      const shuffled = cards
+        .map((card) => ({ card, sort: Math.random() }))
+        .sort((a, b) => a.sort - b.sort)
+        .map((x) => x.card);
+
+      // reatașăm în DOM în noua ordine
+      shuffled.forEach((card) => grid.appendChild(card));
+    });
+  })();
 
   // ======================
   // HERO slideshow
