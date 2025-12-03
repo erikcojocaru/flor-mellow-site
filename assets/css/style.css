@@ -1252,9 +1252,13 @@
         .modal-content {
           max-width: 380px;
           width: 86%;
-          max-height: 80vh;
           border-radius: 20px;
         }
+		
+		/* imaginea puțin mai mică pe mobil, să lase loc textului + butonului */
+		.modal-media img {
+		  max-height: 55vh;
+		}
 
         .cta {
           border-radius: 22px;
