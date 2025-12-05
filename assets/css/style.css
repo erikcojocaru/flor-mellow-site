@@ -1297,4 +1297,63 @@
   border-radius: 0;             /* se va rotunji oricum după .modal-content */
 }
 
-    
+/* === Launch promo banner === */
+.launch-promo {
+  margin: 18px 0 10px;
+}
+
+.launch-promo-inner {
+  border-radius: 24px;
+  padding: 14px 18px;
+  background: linear-gradient(120deg, #fff5f0, #ffe9f4);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.04);
+}
+
+.launch-promo-badge {
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.85);
+  color: #c6416f;
+  flex-shrink: 0;
+}
+
+.launch-promo-text h2 {
+  font-family: Fraunces, serif;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+  margin: 0 0 2px;
+}
+
+.launch-promo-text h2 span {
+  color: #c6416f;
+}
+
+.launch-promo-text p {
+  margin: 0;
+  font-size: 0.84rem;
+  color: var(--text-soft);
+}
+
+/* responsive */
+@media (max-width: 640px) {
+  .launch-promo-inner {
+    padding: 12px 14px;
+    border-radius: 20px;
+  }
+
+  .launch-promo-text h2 {
+    font-size: 0.96rem;
+  }
+
+  .launch-promo-text p {
+    font-size: 0.8rem;
+  }
+}
