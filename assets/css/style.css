@@ -1298,62 +1298,86 @@
 }
 
 /* === Launch promo banner === */
-.launch-promo {
-  margin: 18px 0 10px;
+/* Launch offer banner – reducere până la 40% */
+.launch-offer {
+  padding: 20px 0 10px;
 }
 
-.launch-promo-inner {
-  border-radius: 24px;
-  padding: 14px 18px;
-  background: linear-gradient(120deg, #fff5f0, #ffe9f4);
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 12px;
-  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.04);
+.launch-offer-inner {
+  max-width: 880px;
+  margin: 0 auto 10px;
+  background: linear-gradient(135deg, #ffeaf2, #fff5f0);
+  border-radius: 28px;
+  padding: 16px 18px 18px;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.06);
 }
 
-.launch-promo-badge {
+.launch-badge {
+  display: inline-block;
+  padding: 5px 12px;
+  margin-bottom: 6px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.9);
   font-size: 0.72rem;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   font-weight: 600;
-  padding: 5px 10px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.85);
-  color: #c6416f;
-  flex-shrink: 0;
-}
-
-.launch-promo-text h2 {
-  font-family: Fraunces, serif;
-  font-size: 1rem;
-  letter-spacing: -0.01em;
-  margin: 0 0 2px;
-}
-
-.launch-promo-text h2 span {
   color: #c6416f;
 }
 
-.launch-promo-text p {
-  margin: 0;
-  font-size: 0.84rem;
+.launch-title {
+  font-family: "Fraunces", serif;
+  font-size: clamp(1.3rem, 3.2vw, 1.6rem);
+  letter-spacing: -0.02em;
+  margin: 2px 0 6px;
+}
+
+.launch-title span {
+  color: #c6416f;
+}
+
+.launch-text {
+  font-size: 0.9rem;
   color: var(--text-soft);
+  margin: 0 0 10px;
+  max-width: 620px;
 }
 
-/* responsive */
+.launch-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: none;
+  background: #c6416f;
+  color: #fff;
+  font-size: 0.86rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(198, 65, 111, 0.35);
+  transition: transform 0.12s ease-out, box-shadow 0.12s ease-out, background 0.12s ease-out;
+}
+
+.launch-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 32px rgba(198, 65, 111, 0.45);
+  background: #b33764;
+}
+
+/* Mobile tweaks */
 @media (max-width: 640px) {
-  .launch-promo-inner {
-    padding: 12px 14px;
-    border-radius: 20px;
+  .launch-offer-inner {
+    padding: 14px 14px 16px;
+    border-radius: 24px;
   }
 
-  .launch-promo-text h2 {
-    font-size: 0.96rem;
+  .launch-text {
+    font-size: 0.84rem;
   }
 
-  .launch-promo-text p {
-    font-size: 0.8rem;
+  .launch-cta {
+    width: 100%;
+    justify-content: center;
   }
 }
