@@ -465,67 +465,69 @@ document.addEventListener("DOMContentLoaded", function () {
   const items = Array.from(track.querySelectorAll("img"));
   if (items.length === 0) return;
 
-  let index = 0;
-  let autoplayId = null;
+  let rafId = null;
+  let autoSpeed = 0.25; // pixeli per frame (~15 px/sec la 60fps)
 
-  function getStep() {
+  function getMaxScroll() {
+    return track.scrollWidth - track.clientWidth;
+  }
+
+  function startAuto() {
+    if (rafId !== null) return;
+
+    function step() {
+      const max = getMaxScroll();
+      if (max > 0) {
+        track.scrollLeft += autoSpeed;
+        // când ajungem la capăt, revenim lin la început
+        if (track.scrollLeft >= max - 1) {
+          track.scrollLeft = 0;
+        }
+      }
+      rafId = requestAnimationFrame(step);
+    }
+
+    rafId = requestAnimationFrame(step);
+  }
+
+  function stopAuto() {
+    if (rafId !== null) {
+      cancelAnimationFrame(rafId);
+      rafId = null;
+    }
+  }
+
+  function scrollOneCard(direction) {
     const first = items[0];
     const rect = first.getBoundingClientRect();
     const style = window.getComputedStyle(track);
     const gap = parseFloat(style.gap || "0");
-    return rect.width + gap;
-  }
+    const step = rect.width + gap;
 
-  function goTo(newIndex) {
-    const step = getStep();
-    const total = items.length;
-
-    index = (newIndex + total) % total;
-
-    const target = index * step;
-    track.scrollTo({
-      left: target,
+    track.scrollBy({
+      left: direction * step,
       behavior: "smooth"
     });
   }
 
-  function startAutoplay() {
-    stopAutoplay();
-    autoplayId = setInterval(() => {
-      goTo(index + 1);
-    }, 3000); // 3 sec între poze, schimbă dacă vrei mai repede/încet
-  }
-
-  function stopAutoplay() {
-    if (autoplayId !== null) {
-      clearInterval(autoplayId);
-      autoplayId = null;
-    }
-  }
-
   next.addEventListener("click", () => {
-    goTo(index + 1);
-    startAutoplay(); // resetăm timerul după click
+    stopAuto();
+    scrollOneCard(1);
+    setTimeout(startAuto, 3000);
   });
 
   prev.addEventListener("click", () => {
-    goTo(index - 1);
-    startAutoplay();
+    stopAuto();
+    scrollOneCard(-1);
+    setTimeout(startAuto, 3000);
   });
 
-  // sincronizăm index-ul cu scroll-ul manual (swipe / scroll)
-  track.addEventListener("scroll", () => {
-    const step = getStep();
-    const approxIndex = Math.round(track.scrollLeft / step);
-    index = Math.min(items.length - 1, Math.max(0, approxIndex));
-  });
+  // pauză autoplay când user-ul interacționează
+  wrap.addEventListener("mouseenter", stopAuto);
+  wrap.addEventListener("mouseleave", startAuto);
+  wrap.addEventListener("touchstart", stopAuto);
+  wrap.addEventListener("touchend", startAuto);
 
-  // pauză autoplay când user-ul e cu mouse-ul peste sau ține degetul
-  wrap.addEventListener("mouseenter", stopAutoplay);
-  wrap.addEventListener("mouseleave", startAutoplay);
-  wrap.addEventListener("touchstart", stopAutoplay);
-  wrap.addEventListener("touchend", startAutoplay);
-
-  // pornim autoplay la load
-  startAutoplay();
+  // pornim autoplay global (desktop + mobil)
+  startAuto();
 });

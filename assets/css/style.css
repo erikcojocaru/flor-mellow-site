@@ -1404,38 +1404,6 @@
   overflow: hidden;
 }
 
-/* fade / blur la margini */
-.mini-carousel-wrap::before,
-.mini-carousel-wrap::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 80px;
-  pointer-events: none;
-  z-index: 5;
-}
-
-.mini-carousel-wrap::before {
-  left: 0;
-  background: linear-gradient(
-    to right,
-    #fbeee6 0%,
-    rgba(251, 238, 230, 0.7) 40%,
-    transparent 100%
-  );
-}
-
-.mini-carousel-wrap::after {
-  right: 0;
-  background: linear-gradient(
-    to left,
-    #fbeee6 0%,
-    rgba(251, 238, 230, 0.7) 40%,
-    transparent 100%
-  );
-}
-
 /* track scrollabil orizontal */
 .mini-carousel-track {
   display: flex;
@@ -1443,7 +1411,6 @@
   overflow-x: auto;
   padding: 0 1.5rem 0 1.5rem;
   scroll-behavior: smooth;
-  scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -1453,13 +1420,12 @@
 }
 
 .mini-carousel-track img {
-  width: 320px;
-  height: 420px;
+  width: 340px;
+  height: 440px;
   object-fit: cover;
   border-radius: 1.75rem;
   flex-shrink: 0;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-  scroll-snap-align: start;
 }
 
 /* butoane nav */
@@ -1491,9 +1457,5 @@
     width: 260px;
     height: 340px;
   }
-
-  .mini-carousel-wrap::before,
-  .mini-carousel-wrap::after {
-    width: 50px;
-  }
 }
+
