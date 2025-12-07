@@ -1406,7 +1406,16 @@
 .mini-carousel-track {
   display: flex;
   gap: 1.5rem;
-  transition: transform 0.4s ease;
+  overflow-x: auto;
+  padding: 0 0.5rem;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ascundem scroll bar-ul orizontal */
+.mini-carousel-track::-webkit-scrollbar {
+  display: none;
 }
 
 .mini-carousel-track img {
@@ -1416,6 +1425,7 @@
   border-radius: 1.5rem;
   flex-shrink: 0;
   box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+  scroll-snap-align: start;
 }
 
 /* Nav buttons */

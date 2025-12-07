@@ -453,21 +453,44 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document.addEventListener("DOMContentLoaded", function () {
   const track = document.querySelector(".mini-carousel-track");
-  const prev = document.querySelector(".mini-prev");
-  const next = document.querySelector(".mini-next");
+  const wrap  = document.querySelector(".mini-carousel-wrap");
+  const prev  = document.querySelector(".mini-prev");
+  const next  = document.querySelector(".mini-next");
 
-  if (!track || !prev || !next) return;
+  if (!track || !wrap || !prev || !next) return;
 
-  let index = 0;
-  const step = 280;
+  function getStep() {
+    const first = track.querySelector("img");
+    if (!first) return wrap.clientWidth;
+    const style = window.getComputedStyle(track);
+    const gap = parseFloat(style.gap || "0");
+    return first.getBoundingClientRect().width + gap;
+  }
 
-  next.addEventListener("click", () => {
-    index++;
-    track.style.transform = `translateX(-${index * step}px)`;
-  });
+  function slide(dir) {
+    const step = getStep();
+    const maxScroll = track.scrollWidth - track.clientWidth;
 
-  prev.addEventListener("click", () => {
-    index = Math.max(0, index - 1);
-    track.style.transform = `translateX(-${index * step}px)`;
-  });
+    if (dir === 1) {
+      // dreapta
+      if (track.scrollLeft + step >= maxScroll - 5) {
+        // dacă suntem la capăt -> loop la început
+        track.scrollTo({ left: 0, behavior: "smooth" });
+      } else {
+        track.scrollBy({ left: step, behavior: "smooth" });
+      }
+    } else {
+      // stânga
+      if (track.scrollLeft - step <= 5) {
+        // de la început -> loop la capăt
+        track.scrollTo({ left: maxScroll, behavior: "smooth" });
+      } else {
+        track.scrollBy({ left: -step, behavior: "smooth" });
+      }
+    }
+  }
+
+  next.addEventListener("click", () => slide(1));
+  prev.addEventListener("click", () => slide(-1));
 });
+
