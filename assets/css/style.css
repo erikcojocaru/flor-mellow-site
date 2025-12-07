@@ -1396,60 +1396,104 @@
   font-size: 2rem;
 }
 
+/* container general */
 .mini-carousel-wrap {
   position: relative;
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto;
   overflow: hidden;
 }
 
+/* fade / blur la margini */
+.mini-carousel-wrap::before,
+.mini-carousel-wrap::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.mini-carousel-wrap::before {
+  left: 0;
+  background: linear-gradient(
+    to right,
+    #fbeee6 0%,
+    rgba(251, 238, 230, 0.7) 40%,
+    transparent 100%
+  );
+}
+
+.mini-carousel-wrap::after {
+  right: 0;
+  background: linear-gradient(
+    to left,
+    #fbeee6 0%,
+    rgba(251, 238, 230, 0.7) 40%,
+    transparent 100%
+  );
+}
+
+/* track scrollabil orizontal */
 .mini-carousel-track {
   display: flex;
-  gap: 1.5rem;
+  gap: 1.75rem;
   overflow-x: auto;
-  padding: 0 0.5rem;
+  padding: 0 1.5rem 0 1.5rem;
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
 }
 
-/* ascundem scroll bar-ul orizontal */
+/* ascundem scrollbar-ul */
 .mini-carousel-track::-webkit-scrollbar {
   display: none;
 }
 
 .mini-carousel-track img {
-  width: 260px;
-  height: 340px;
+  width: 320px;
+  height: 420px;
   object-fit: cover;
-  border-radius: 1.5rem;
+  border-radius: 1.75rem;
   flex-shrink: 0;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
   scroll-snap-align: start;
 }
 
-/* Nav buttons */
+/* butoane nav */
 .mini-nav {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: white;
+  background: #ffffff;
   border: none;
-  font-size: 2rem;
+  font-size: 1.9rem;
   width: 44px;
   height: 44px;
   border-radius: 50%;
   cursor: pointer;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
   z-index: 10;
 }
 
-.mini-prev { left: -20px; }
-.mini-next { right: -20px; }
+.mini-prev {
+  left: 6px;
+}
+
+.mini-next {
+  right: 6px;
+}
 
 @media (max-width: 768px) {
   .mini-carousel-track img {
-    width: 200px;
-    height: 260px;
+    width: 260px;
+    height: 340px;
+  }
+
+  .mini-carousel-wrap::before,
+  .mini-carousel-wrap::after {
+    width: 50px;
   }
 }

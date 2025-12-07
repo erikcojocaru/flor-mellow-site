@@ -458,13 +458,15 @@ document.addEventListener("DOMContentLoaded", function () {
   const track = document.querySelector(".mini-carousel-track");
   const prev  = document.querySelector(".mini-prev");
   const next  = document.querySelector(".mini-next");
+  const wrap  = document.querySelector(".mini-carousel-wrap");
 
-  if (!track || !prev || !next) return;
+  if (!track || !prev || !next || !wrap) return;
 
   const items = Array.from(track.querySelectorAll("img"));
   if (items.length === 0) return;
 
   let index = 0;
+  let autoplayId = null;
 
   function getStep() {
     const first = items[0];
@@ -478,7 +480,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const step = getStep();
     const total = items.length;
 
-    // loop frumos: dupa ultimul -> primul, inainte de primul -> ultimul
     index = (newIndex + total) % total;
 
     const target = index * step;
@@ -488,19 +489,43 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  function startAutoplay() {
+    stopAutoplay();
+    autoplayId = setInterval(() => {
+      goTo(index + 1);
+    }, 3000); // 3 sec între poze, schimbă dacă vrei mai repede/încet
+  }
+
+  function stopAutoplay() {
+    if (autoplayId !== null) {
+      clearInterval(autoplayId);
+      autoplayId = null;
+    }
+  }
+
   next.addEventListener("click", () => {
     goTo(index + 1);
+    startAutoplay(); // resetăm timerul după click
   });
 
   prev.addEventListener("click", () => {
     goTo(index - 1);
+    startAutoplay();
   });
 
-  // cand user-ul da scroll cu rotita / touchpad pe desktop,
-  // sincronizam indexul cu pozitia curenta (ca sa nu o ia razna)
+  // sincronizăm index-ul cu scroll-ul manual (swipe / scroll)
   track.addEventListener("scroll", () => {
     const step = getStep();
     const approxIndex = Math.round(track.scrollLeft / step);
     index = Math.min(items.length - 1, Math.max(0, approxIndex));
   });
+
+  // pauză autoplay când user-ul e cu mouse-ul peste sau ține degetul
+  wrap.addEventListener("mouseenter", stopAutoplay);
+  wrap.addEventListener("mouseleave", startAutoplay);
+  wrap.addEventListener("touchstart", stopAutoplay);
+  wrap.addEventListener("touchend", startAutoplay);
+
+  // pornim autoplay la load
+  startAutoplay();
 });
