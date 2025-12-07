@@ -450,47 +450,57 @@ document.addEventListener("DOMContentLoaded", () => {
     modalMedia.addEventListener("touchend", onTouchEnd, { passive: true });
   })();
 });
+  // ======================
+  // momente flor mellow - carousel-track
+  // ======================
 
 document.addEventListener("DOMContentLoaded", function () {
   const track = document.querySelector(".mini-carousel-track");
-  const wrap  = document.querySelector(".mini-carousel-wrap");
   const prev  = document.querySelector(".mini-prev");
   const next  = document.querySelector(".mini-next");
 
-  if (!track || !wrap || !prev || !next) return;
+  if (!track || !prev || !next) return;
+
+  const items = Array.from(track.querySelectorAll("img"));
+  if (items.length === 0) return;
+
+  let index = 0;
 
   function getStep() {
-    const first = track.querySelector("img");
-    if (!first) return wrap.clientWidth;
+    const first = items[0];
+    const rect = first.getBoundingClientRect();
     const style = window.getComputedStyle(track);
     const gap = parseFloat(style.gap || "0");
-    return first.getBoundingClientRect().width + gap;
+    return rect.width + gap;
   }
 
-  function slide(dir) {
+  function goTo(newIndex) {
     const step = getStep();
-    const maxScroll = track.scrollWidth - track.clientWidth;
+    const total = items.length;
 
-    if (dir === 1) {
-      // dreapta
-      if (track.scrollLeft + step >= maxScroll - 5) {
-        // dacă suntem la capăt -> loop la început
-        track.scrollTo({ left: 0, behavior: "smooth" });
-      } else {
-        track.scrollBy({ left: step, behavior: "smooth" });
-      }
-    } else {
-      // stânga
-      if (track.scrollLeft - step <= 5) {
-        // de la început -> loop la capăt
-        track.scrollTo({ left: maxScroll, behavior: "smooth" });
-      } else {
-        track.scrollBy({ left: -step, behavior: "smooth" });
-      }
-    }
+    // loop frumos: dupa ultimul -> primul, inainte de primul -> ultimul
+    index = (newIndex + total) % total;
+
+    const target = index * step;
+    track.scrollTo({
+      left: target,
+      behavior: "smooth"
+    });
   }
 
-  next.addEventListener("click", () => slide(1));
-  prev.addEventListener("click", () => slide(-1));
-});
+  next.addEventListener("click", () => {
+    goTo(index + 1);
+  });
 
+  prev.addEventListener("click", () => {
+    goTo(index - 1);
+  });
+
+  // cand user-ul da scroll cu rotita / touchpad pe desktop,
+  // sincronizam indexul cu pozitia curenta (ca sa nu o ia razna)
+  track.addEventListener("scroll", () => {
+    const step = getStep();
+    const approxIndex = Math.round(track.scrollLeft / step);
+    index = Math.min(items.length - 1, Math.max(0, approxIndex));
+  });
+});
