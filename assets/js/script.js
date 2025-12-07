@@ -462,28 +462,45 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (!track || !prev || !next || !wrap) return;
 
-  const items = Array.from(track.querySelectorAll("img"));
-  if (items.length === 0) return;
+  // ia doar imaginile originale
+  let items = Array.from(track.querySelectorAll("img"));
+  const originalCount = items.length;
+  if (originalCount === 0) return;
+
+  // DUBLĂM imaginile pentru efect de bandă rulantă infinită
+  items.forEach((img) => {
+    const clone = img.cloneNode(true);
+    clone.setAttribute("data-clone", "true");
+    track.appendChild(clone);
+  });
+
+  // actualizăm lista după clonare
+  items = Array.from(track.querySelectorAll("img"));
 
   let rafId = null;
-  let autoSpeed = 0.25; // pixeli per frame (~15 px/sec la 60fps)
+  let autoSpeed = 0.75; // pixeli per frame (~15px/sec la 60fps)
 
-  function getMaxScroll() {
-    return track.scrollWidth - track.clientWidth;
+  function getLoopWidth() {
+    // jumătate din scrollWidth = lățimea setului original
+    return track.scrollWidth / 2;
   }
 
+  // autoplay: mișcare constantă spre dreapta, fără să atingem capătul real
   function startAuto() {
     if (rafId !== null) return;
 
     function step() {
-      const max = getMaxScroll();
-      if (max > 0) {
+      const loopWidth = getLoopWidth();
+
+      if (loopWidth > 0) {
         track.scrollLeft += autoSpeed;
-        // când ajungem la capăt, revenim lin la început
-        if (track.scrollLeft >= max - 1) {
-          track.scrollLeft = 0;
+
+        // când depășim lățimea setului original, revenim înapoi cu exact acea lățime
+        if (track.scrollLeft >= loopWidth) {
+          track.scrollLeft -= loopWidth;
         }
       }
+
       rafId = requestAnimationFrame(step);
     }
 
@@ -497,6 +514,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  // săgeți: mută cu un "card" original, nu cu clone
   function scrollOneCard(direction) {
     const first = items[0];
     const rect = first.getBoundingClientRect();
@@ -522,12 +540,12 @@ document.addEventListener("DOMContentLoaded", function () {
     setTimeout(startAuto, 3000);
   });
 
-  // pauză autoplay când user-ul interacționează
+  // pauză autoplay când user-ul interacționează (hover / touch)
   wrap.addEventListener("mouseenter", stopAuto);
   wrap.addEventListener("mouseleave", startAuto);
   wrap.addEventListener("touchstart", stopAuto);
   wrap.addEventListener("touchend", startAuto);
 
-  // pornim autoplay global (desktop + mobil)
+  // PORNIM autoplay (desktop + mobil)
   startAuto();
 });
