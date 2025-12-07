@@ -1381,3 +1381,65 @@
     justify-content: center;
   }
 }
+
+/* =========================
+   MINI CAROUSEL ORIZONTAL
+========================= */
+
+.mini-carousel-section {
+  padding: 4rem 0;
+  text-align: center;
+}
+
+.mini-carousel-section .section-title {
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
+
+.mini-carousel-wrap {
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.mini-carousel-track {
+  display: flex;
+  gap: 1.5rem;
+  transition: transform 0.4s ease;
+}
+
+.mini-carousel-track img {
+  width: 260px;
+  height: 340px;
+  object-fit: cover;
+  border-radius: 1.5rem;
+  flex-shrink: 0;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+}
+
+/* Nav buttons */
+.mini-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  border: none;
+  font-size: 2rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+  z-index: 10;
+}
+
+.mini-prev { left: -20px; }
+.mini-next { right: -20px; }
+
+@media (max-width: 768px) {
+  .mini-carousel-track img {
+    width: 200px;
+    height: 260px;
+  }
+}

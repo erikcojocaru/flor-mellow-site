@@ -450,3 +450,24 @@ document.addEventListener("DOMContentLoaded", () => {
     modalMedia.addEventListener("touchend", onTouchEnd, { passive: true });
   })();
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  const track = document.querySelector(".mini-carousel-track");
+  const prev = document.querySelector(".mini-prev");
+  const next = document.querySelector(".mini-next");
+
+  if (!track || !prev || !next) return;
+
+  let index = 0;
+  const step = 280;
+
+  next.addEventListener("click", () => {
+    index++;
+    track.style.transform = `translateX(-${index * step}px)`;
+  });
+
+  prev.addEventListener("click", () => {
+    index = Math.max(0, index - 1);
+    track.style.transform = `translateX(-${index * step}px)`;
+  });
+});
