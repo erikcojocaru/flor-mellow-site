@@ -1,3 +1,65 @@
+
+// ======================
+// Price helpers (buchete)
+// ======================
+const BOUQUET_PRICE_MAP = {
+    "XS": { price: 130, old: 169 },
+    "S":  { price: 189, old: 249 },
+    "M":  { price: 239, old: 319 },
+    "L":  { price: 319, old: 429 },
+    "XL": { price: 500, old: 649 },
+    "KING": { price: 500, old: 649 }
+};
+
+function normalizePriceNumber(raw) {
+    if (raw === null || raw === undefined) return null;
+    const s = String(raw).trim();
+    if (!s || s === "--") return null;
+    // extract first number (handles "189", "189 RON", "de la 189 RON")
+    const m = s.replace(",", ".").match(/(\d+(\.\d+)?)/);
+    if (!m) return null;
+    const n = Number(m[1]);
+    return Number.isFinite(n) ? n : null;
+}
+
+function formatPriceForDisplay(raw) {
+    const n = normalizePriceNumber(raw);
+    if (n === null) return "--";
+    // show integers, no decimals
+    return String(Math.round(n));
+}
+
+function renderPriceHTML(newRaw, oldRaw) {
+    const newN = normalizePriceNumber(newRaw);
+    const oldN = normalizePriceNumber(oldRaw);
+
+    // If no price, return null to keep existing content
+    if (newN === null) return null;
+
+    const newText = `de la ${Math.round(newN)} RON`;
+    const oldText = (oldN !== null && oldN > newN) ? `${Math.round(oldN)} RON` : null;
+
+    if (oldText) {
+        return `<div class="price-stack"><span class="price-old">${oldText}</span><span class="price-new">${newText}</span></div>`;
+    }
+    return `<span class="price-new">${newText}</span>`;
+}
+
+function inferBouquetSize(card) {
+    // Prefer explicit pill text (XS/S/M/L/XL)
+    const pill = card.querySelector?.(".size-pill")?.textContent?.trim()?.toUpperCase();
+    if (pill && BOUQUET_PRICE_MAP[pill]) return pill;
+
+    // Fallback: infer from images path / title
+    const blob = `${card.dataset.images || ""} ${card.dataset.img || ""} ${card.dataset.title || ""}`.toUpperCase();
+    if (blob.includes("BOUQUET SIZE XS") || blob.includes("BOUQUET SIZE  XS") || blob.includes("BOUQUET SIZE XS/") || blob.includes("BOUQUET SIZE XS\\")) return "XS";
+    if (blob.includes("BOUQUET SIZE XL") || blob.includes("BOUQUET SIZE  XL")) return "XL";
+    if (blob.includes("BOUQUET SIZE L") || blob.includes("BOUQUET SIZE  L")) return "L";
+    if (blob.includes("BOUQUET SIZE M") || blob.includes("BOUQUET WITH PEONIES M")) return "M";
+    if (blob.includes("BOUQUET SIZE S") || blob.includes("BOUQUET SIZE S NR") || blob.includes("BOUQUET SIZE S NR")) return "S";
+    if (blob.includes("KING")) return "KING";
+    return null;
+}
 // ======================
 // WhatsApp helper
 // ======================
@@ -137,6 +199,48 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     
+
+    
+    function applyBouquetPricing() {
+        document.querySelectorAll('.product-card').forEach((card) => {
+            const blob = `${card.dataset.images || ""} ${card.dataset.img || ""} ${card.dataset.title || ""}`.toUpperCase();
+            const isBouquet = (card.dataset.category || "").toLowerCase() === "buchete" || blob.includes("BOUQUET");
+            if (!isBouquet) return;
+
+            const size = inferBouquetSize(card);
+            if (!size) return;
+
+            const map = BOUQUET_PRICE_MAP[size];
+
+            const cur = card.dataset.price || "";
+            const curN = normalizePriceNumber(cur);
+            if (curN === null) {
+                card.dataset.price = String(map.price);
+            } else {
+                // keep existing numeric price if set
+                card.dataset.price = String(Math.round(curN));
+            }
+
+            const oldCur = card.dataset.oldPrice || card.getAttribute("data-old-price") || "";
+            const oldN = normalizePriceNumber(oldCur);
+            if (oldN === null) {
+                card.dataset.oldPrice = String(map.old);
+                card.setAttribute("data-old-price", String(map.old));
+            } else {
+                card.dataset.oldPrice = String(Math.round(oldN));
+                card.setAttribute("data-old-price", String(Math.round(oldN)));
+            }
+        });
+    }
+
+            const oldCur = (card.dataset.oldPrice || card.getAttribute("data-old-price") || "").trim();
+            if (!oldCur) {
+                card.dataset.oldPrice = String(map.old);
+                card.setAttribute("data-old-price", String(map.old));
+            }
+        });
+    }
+
     function applyCardPriceRendering() {
         document.querySelectorAll(".product-card").forEach((card) => {
             const priceDiv = card.querySelector(".product-price");
@@ -153,6 +257,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    applyBouquetPricing();
     applyCardPriceRendering();
 
 // Atașează modalul la toate cardurile de produs (index + catalog)

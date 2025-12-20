@@ -666,9 +666,17 @@ section {
     line-height: 1.1;
 }
 
-.price-old{color:#9aa0a6;text-decoration:line-through;font-size:.9em;}
+.price-old {
+    color: #9aa0a6;
+    text-decoration: line-through;
+    font-weight: 600;
+    font-size: 0.82rem;
+}
 
-.price-new{color:#c1121f;font-weight:800;}
+.price-new {
+    color: #b91c1c;
+    font-weight: 700;
+}
 
 .product-btn {
     padding: 7px 12px;
