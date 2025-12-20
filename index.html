@@ -24,7 +24,7 @@
 <!-- Font Awesome pentru iconițe -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
 <!-- CSS extern -->
-<link href="style.css" rel="stylesheet"/>
+<link href="assets/css/style.css" rel="stylesheet"/>
 <!-- Forțăm light mode -->
 <style>
             @media (prefers-color-scheme: dark) {
@@ -205,16 +205,15 @@
 </a>
 </div>
 </div>
-<!-- aici poți păstra grila mare sau doar câteva best-sellers;
-               momentan las exact ce aveai (3 slider-e) ca să nu stric nimic -->
+
 <div class="catalog-frame">
 <!-- SLIDER 1 -->
 <div class="product-slider" data-slider="">
 <div class="product-grid">
 <!-- toate cardurile tale exact ca înainte -->
-<!-- ... (am lăsat grila completă, n-am modificat datele produselor) ... -->
-<!-- pentru a nu-ți rupe layout-ul, păstrez tot ce ai trimis anterior -->
-<!-- ********** ÎNCEPUT CARDURI (identic cu varianta ta) ********** -->
+
+
+
 <!-- 1. Bloom Deluxe Box M -->
 <article class="product-card" data-desc="Cutie cadou medie, bogată și elegantă, perfectă pentru surprize premium." data-images="Flor-Mellow/Box M size/Box M size-1.jpeg|Flor-Mellow/Box M size/Box M size-2.jpeg|Flor-Mellow/Box M size/Box M size-3.jpeg|Flor-Mellow/Box M size/Box M size-4.jpeg|Flor-Mellow/Box M size/Box M size-5.jpeg|Flor-Mellow/Box M size/Box M size-6.jpeg|Flor-Mellow/Box M size/Box M size-7.jpeg|Flor-Mellow/Box M size/Box M size-8.jpeg" data-img="Flor-Mellow/Box M size/Box M size-5.jpeg" data-price="de la -- RON" data-title="Bloom Deluxe Box M">
 <div class="product-badge product-badge--featured">FEATURED</div>
@@ -238,7 +237,7 @@
 </div>
 </article>
 <!-- 2. Grand Blush Bouquet L -->
-<article class="product-card" data-desc="Buchet mare, bogat și elegant, cu impact vizual puternic." data-images="Flor-Mellow/Bouquet Size L/Bouquet Size L - 1.jpeg|Flor-Mellow/Bouquet Size L/Bouquet Size L - 2.jpeg|Flor-Mellow/Bouquet Size L/Bouquet Size L - 3.jpeg|Flor-Mellow/Bouquet Size L/Bouquet Size L - 4.jpeg|Flor-Mellow/Bouquet Size L/Bouquet Size L - 5.jpeg" data-img="Flor-Mellow/Bouquet Size L/Bouquet Size L - 5.jpeg" data-price="de la -- RON" data-title="Grand Blush Bouquet L">
+<article class="product-card" data-desc="Buchet mare, bogat și elegant, cu impact vizual puternic." data-images="Flor-Mellow/Bouquet Size L/Bouquet Size L - 1.jpeg|Flor-Mellow/Bouquet Size L/Bouquet Size L - 2.jpeg|Flor-Mellow/Bouquet Size L/Bouquet Size L - 3.jpeg|Flor-Mellow/Bouquet Size L/Bouquet Size L - 4.jpeg|Flor-Mellow/Bouquet Size L/Bouquet Size L - 5.jpeg" data-img="Flor-Mellow/Bouquet Size L/Bouquet Size L - 5.jpeg" data-old-price="249" data-price="189" data-title="Grand Blush Bouquet L">
 <div class="product-badge product-badge--best">BEST SELLER</div>
 <div class="product-img-wrap">
 <img alt="Grand Blush Bouquet L buchet mare din bezele" src="Flor-Mellow/Bouquet Size L/Bouquet Size L - 5.jpeg"/>
@@ -254,13 +253,13 @@
                                             impact vizual puternic.
                                         </p>
 <div class="product-meta">
-<div class="product-price">de la -- RON</div>
+<div class="product-price"><span class="price-old">249 RON</span><span class="price-new">de la 189 RON</span></div>
 <button class="product-btn" type="button">Detalii</button>
 </div>
 </div>
 </article>
 <!-- 3. Harmony Bloom Bouquet M -->
-<article class="product-card" data-desc="Buchet mediu echilibrat, elegant și extrem de versatil." data-images="Flor-Mellow/Bouquet Size M/Bouquet Size M - 1.jpeg|Flor-Mellow/Bouquet Size M/Bouquet Size M - 2.jpeg|Flor-Mellow/Bouquet Size M/Bouquet Size M - 3.jpeg|Flor-Mellow/Bouquet Size M/Bouquet Size M - 4.jpeg|Flor-Mellow/Bouquet Size M/Bouquet Size M - 5.jpeg" data-img="Flor-Mellow/Bouquet Size M/Bouquet Size M - 3.jpeg" data-price="de la -- RON" data-title="Harmony Bloom Bouquet M">
+<article class="product-card" data-desc="Buchet mediu echilibrat, elegant și extrem de versatil." data-images="Flor-Mellow/Bouquet Size M/Bouquet Size M - 1.jpeg|Flor-Mellow/Bouquet Size M/Bouquet Size M - 2.jpeg|Flor-Mellow/Bouquet Size M/Bouquet Size M - 3.jpeg|Flor-Mellow/Bouquet Size M/Bouquet Size M - 4.jpeg|Flor-Mellow/Bouquet Size M/Bouquet Size M - 5.jpeg" data-img="Flor-Mellow/Bouquet Size M/Bouquet Size M - 3.jpeg" data-old-price="319" data-price="239" data-title="Harmony Bloom Bouquet M">
 <div class="product-badge product-badge--best">BEST VALUE</div>
 <div class="product-img-wrap">
 <img alt="Harmony Bloom Bouquet M buchet mediu din bezele" src="Flor-Mellow/Bouquet Size M/Bouquet Size M - 3.jpeg"/>
@@ -276,13 +275,13 @@
                                             cadouri corporate rafinate.
                                         </p>
 <div class="product-meta">
-<div class="product-price">de la -- RON</div>
+<div class="product-price"><span class="price-old">319 RON</span><span class="price-new">de la 239 RON</span></div>
 <button class="product-btn" type="button">Detalii</button>
 </div>
 </div>
 </article>
 <!-- 4. Lilac Harmony -->
-<article class="product-card" data-desc="Buchet sofisticat în nuanțe de lila, crem și piersică, cu aer rafinat." data-images="Flor-Mellow/Bouquet Size S nr10/Bouquet Size S nr10-1.jpeg|Flor-Mellow/Bouquet Size S nr10/Bouquet Size S nr10-2.jpeg|Flor-Mellow/Bouquet Size S nr10/Bouquet Size S nr10-3.jpeg|Flor-Mellow/Bouquet Size S nr10/Bouquet Size S nr10-4.jpeg" data-img="Flor-Mellow/Bouquet Size S nr10/Bouquet Size S nr10-2.jpeg" data-price="de la -- RON" data-title="Lilac Harmony">
+<article class="product-card" data-desc="Buchet sofisticat în nuanțe de lila, crem și piersică, cu aer rafinat." data-images="Flor-Mellow/Bouquet Size S nr10/Bouquet Size S nr10-1.jpeg|Flor-Mellow/Bouquet Size S nr10/Bouquet Size S nr10-2.jpeg|Flor-Mellow/Bouquet Size S nr10/Bouquet Size S nr10-3.jpeg|Flor-Mellow/Bouquet Size S nr10/Bouquet Size S nr10-4.jpeg" data-img="Flor-Mellow/Bouquet Size S nr10/Bouquet Size S nr10-2.jpeg" data-old-price="319" data-price="239" data-title="Lilac Harmony">
 <div class="product-badge product-badge--featured">FEATURED</div>
 <div class="product-img-wrap">
 <img alt="Lilac Harmony buchet mic lila pastel" src="Flor-Mellow/Bouquet Size S nr10/Bouquet Size S nr10-2.jpeg"/>
@@ -298,13 +297,13 @@
                                             gesturi memorabile.
                                         </p>
 <div class="product-meta">
-<div class="product-price">de la -- RON</div>
+<div class="product-price"><span class="price-old">319 RON</span><span class="price-new">de la 239 RON</span></div>
 <button class="product-btn" type="button">Detalii</button>
 </div>
 </div>
 </article>
 <!-- 5. Blush Teddy -->
-<article class="product-card" data-desc="Buchet din bezele cu ursuleț de pluș inclus, ideal pentru cadouri dulci și jucăușe." data-images="Flor-Mellow/Bouquet size S/Bouquet Size S - 1.jpeg|Flor-Mellow/Bouquet size S/Bouquet Size S - 2.jpeg|Flor-Mellow/Bouquet size S/Bouquet Size S - 3.jpeg|Flor-Mellow/Bouquet size S/Bouquet Size S - 4.jpeg" data-img="Flor-Mellow/Bouquet size S/Bouquet Size S - 1.jpeg" data-price="de la -- RON" data-title="Blush Teddy">
+<article class="product-card" data-desc="Buchet din bezele cu ursuleț de pluș inclus, ideal pentru cadouri dulci și jucăușe." data-images="Flor-Mellow/Bouquet size S/Bouquet Size S - 1.jpeg|Flor-Mellow/Bouquet size S/Bouquet Size S - 2.jpeg|Flor-Mellow/Bouquet size S/Bouquet Size S - 3.jpeg|Flor-Mellow/Bouquet size S/Bouquet Size S - 4.jpeg" data-img="Flor-Mellow/Bouquet size S/Bouquet Size S - 1.jpeg" data-old-price="249" data-price="189" data-title="Blush Teddy">
 <div class="product-badge product-badge--new">NOU</div>
 <div class="product-img-wrap">
 <img alt="Blush Teddy buchet cu ursuleț de pluș" src="Flor-Mellow/Bouquet size S/Bouquet Size S - 1.jpeg"/>
@@ -320,13 +319,13 @@
                                             jucăușe și emoționale.
                                         </p>
 <div class="product-meta">
-<div class="product-price">de la -- RON</div>
+<div class="product-price"><span class="price-old">249 RON</span><span class="price-new">de la 189 RON</span></div>
 <button class="product-btn" type="button">Detalii</button>
 </div>
 </div>
 </article>
 <!-- 6. Grand Blush Bouquet L (a doua apariție, cum l-ai enumerat în listă) -->
-<article class="product-card" data-desc="Buchet mare, bogat și elegant, cu impact vizual puternic." data-images="Flor-Mellow/Bouquet Size L/Bouquet Size L - 1.jpeg|Flor-Mellow/Bouquet Size L/Bouquet Size L - 2.jpeg|Flor-Mellow/Bouquet Size L/Bouquet Size L - 3.jpeg|Flor-Mellow/Bouquet Size L/Bouquet Size L - 4.jpeg|Flor-Mellow/Bouquet Size L/Bouquet Size L - 5.jpeg" data-img="Flor-Mellow/Bouquet Size L/Bouquet Size L - 5.jpeg" data-price="de la -- RON" data-title="Grand Blush Bouquet L">
+<article class="product-card" data-desc="Buchet mare, bogat și elegant, cu impact vizual puternic." data-images="Flor-Mellow/Bouquet Size L/Bouquet Size L - 1.jpeg|Flor-Mellow/Bouquet Size L/Bouquet Size L - 2.jpeg|Flor-Mellow/Bouquet Size L/Bouquet Size L - 3.jpeg|Flor-Mellow/Bouquet Size L/Bouquet Size L - 4.jpeg|Flor-Mellow/Bouquet Size L/Bouquet Size L - 5.jpeg" data-img="Flor-Mellow/Bouquet Size L/Bouquet Size L - 5.jpeg" data-old-price="249" data-price="189" data-title="Grand Blush Bouquet L">
 <div class="product-badge product-badge--best">BEST SELLER</div>
 <div class="product-img-wrap">
 <img alt="Grand Blush Bouquet L buchet mare din bezele" src="Flor-Mellow/Bouquet Size L/Bouquet Size L - 5.jpeg"/>
@@ -342,7 +341,7 @@
                                             pagină.
                                         </p>
 <div class="product-meta">
-<div class="product-price">de la -- RON</div>
+<div class="product-price"><span class="price-old">249 RON</span><span class="price-new">de la 189 RON</span></div>
 <button class="product-btn" type="button">Detalii</button>
 </div>
 </div>
@@ -370,7 +369,7 @@
 </div>
 </article>
 <!-- 8. Peach Blossom Mellow -->
-<article class="product-card" data-desc="Buchet comestibil în nuanțe calde de piersică și roz pudrat, ultra feminin și delicat." data-images="Flor-Mellow/Bouquet Size S nr14/Bouquet Size S nr14-1.jpeg|Flor-Mellow/Bouquet Size S nr14/Bouquet Size S nr14-2.jpeg|Flor-Mellow/Bouquet Size S nr14/Bouquet Size S nr14-3.jpeg|Flor-Mellow/Bouquet Size S nr14/Bouquet Size S nr14-4.jpeg" data-img="Flor-Mellow/Bouquet Size S nr14/Bouquet Size S nr14-1.jpeg" data-price="de la -- RON" data-title="Peach Blossom Mellow">
+<article class="product-card" data-desc="Buchet comestibil în nuanțe calde de piersică și roz pudrat, ultra feminin și delicat." data-images="Flor-Mellow/Bouquet Size S nr14/Bouquet Size S nr14-1.jpeg|Flor-Mellow/Bouquet Size S nr14/Bouquet Size S nr14-2.jpeg|Flor-Mellow/Bouquet Size S nr14/Bouquet Size S nr14-3.jpeg|Flor-Mellow/Bouquet Size S nr14/Bouquet Size S nr14-4.jpeg" data-img="Flor-Mellow/Bouquet Size S nr14/Bouquet Size S nr14-1.jpeg" data-old-price="249" data-price="189" data-title="Peach Blossom Mellow">
 <div class="product-img-wrap">
 <img alt="Peach Blossom Mellow buchet pastel piersică" src="Flor-Mellow/Bouquet Size S nr14/Bouquet Size S nr14-1.jpeg"/>
 </div>
@@ -385,7 +384,7 @@
                                             delicate și super fotogenice.
                                         </p>
 <div class="product-meta">
-<div class="product-price">de la -- RON</div>
+<div class="product-price"><span class="price-old">249 RON</span><span class="price-new">de la 189 RON</span></div>
 <button class="product-btn" type="button">Detalii</button>
 </div>
 </div>
@@ -413,8 +412,7 @@
 </div>
 </article>
 <!-- (restul cardurilor rămân EXACT ca în codul tău inițial) -->
-<!-- NU le mai copiez aici ca să nu-ți explodeze chatul,
-                     dar tu le poți lăsa neschimbate în index.html, sub primul card. -->
+
 <!-- ********** SFÂRȘIT CARDURI ********** -->
 </div>
 <div class="product-dots" data-dots=""></div>
@@ -657,7 +655,7 @@
 <div class="product-dots" data-dots=""></div>
 </div>
 <!-- SLIDER 2 + 3 exact ca înainte -->
-<!-- ... copiază tot ce aveai deja pentru al doilea și al treilea slider ... -->
+
 </div>
 </div>
 </section>
@@ -889,6 +887,6 @@
 </div>
 </div>
 <!-- JS extern -->
-<script defer="" src="script.js"></script>
+<script defer="" src="assets/js/script.js"></script>
 </body>
 </html>

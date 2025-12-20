@@ -118,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (modalWhatsAppBtn) {
             modalWhatsAppBtn.onclick = () => {
-                window.openWhatsApp(`Bună, mă interesează produsul „${title}” (de la ${price || priceTextFallback.trim()}). Putem discuta detaliile?`);
+                window.openWhatsApp(`Bună, mă interesează produsul „${title}” (${price}). Putem discuta detaliile?`);
             };
         }
 
@@ -171,39 +171,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    
     // ======================
-    // Pricing: apply bouquet size prices (only for buchete)
-    // ======================
-    (function applyBouquetPrices() {
-        const sizePrices = {
-            XS: { price: 130, old: 169 },
-            S: { price: 189, old: 249 },
-            M: { price: 239, old: 319 },
-            L: { price: 319, old: 429 },
-            XL: { price: 500, old: 649 },
-            KING: { price: 500, old: 649 } // treat KING as XL
-        };
-
-        document.querySelectorAll(".product-card").forEach((card) => {
-            const category = (card.dataset.category || "").toLowerCase();
-            if (category !== "buchete") return;
-
-            const size = (card.dataset.size || card.querySelector(".size-pill")?.textContent || "").trim().toUpperCase();
-            const cfg = sizePrices[size];
-            if (!cfg) return;
-
-            card.dataset.price = String(cfg.price);
-            card.dataset.oldPrice = String(cfg.old);
-
-            const priceEl = card.querySelector(".product-price");
-            if (priceEl) {
-                priceEl.innerHTML = `<span class="price-old">${cfg.old} RON</span><span class="price-new">de la ${cfg.price} RON</span>`;
-            }
-        });
-    })();
-
-// ======================
     // Randomizare produse (index + catalog)
     // ======================
     (function randomizeProductCards() {
