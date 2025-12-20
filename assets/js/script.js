@@ -87,11 +87,41 @@ document.addEventListener("DOMContentLoaded", () => {
         renderModalImage();
     };
 
+    
+    function formatPriceForDisplay(raw) {
+        if (raw === undefined || raw === null) return "";
+        const numeric = String(raw).replace(/[^0-9]/g, "");
+        if (!numeric) return "";
+        return numeric.replace(/^0+/, "") || "0";
+    }
+
+    function renderPriceHTML(newRaw, oldRaw) {
+        const newPrice = formatPriceForDisplay(newRaw);
+        const oldPrice = formatPriceForDisplay(oldRaw);
+
+        if (!newPrice && !oldPrice) return "";
+
+        if (oldPrice && newPrice) {
+            return `
+                <span class="price-old">${oldPrice} RON</span>
+                <span class="price-new">de la ${newPrice} RON</span>
+            `;
+        }
+
+        if (newPrice) {
+            return `<span class="price-new">de la ${newPrice} RON</span>`;
+        }
+
+        return "";
+    }
+
     function openModalFromCard(card) {
         if (!modal) return;
 
         const title = card.dataset.title || card.querySelector(".product-name")?.textContent || "Buchet Flor Mellow";
-        const price = card.dataset.price || card.querySelector(".product-price")?.textContent || "";
+        const priceRaw = card.dataset.price || card.querySelector(".product-price")?.textContent || "";
+        const oldPriceRaw = card.dataset.oldPrice || card.dataset.oldPrice || card.getAttribute("data-old-price") || "";
+        const price = formatPriceForDisplay(priceRaw);
         const desc = card.dataset.desc || card.querySelector(".product-desc")?.textContent || "";
 
         const imagesAttr = card.dataset.images;
@@ -111,12 +141,12 @@ document.addEventListener("DOMContentLoaded", () => {
         modalImageIndex = 0;
 
         if (modalTitle) modalTitle.textContent = title;
-        if (modalPrice) modalPrice.textContent = price;
+        if (modalPrice) modalPrice.innerHTML = renderPriceHTML(priceRaw, oldPriceRaw);
         if (modalDesc) modalDesc.textContent = desc;
 
         if (modalWhatsAppBtn) {
             modalWhatsAppBtn.onclick = () => {
-                window.openWhatsApp(`Bună, mă interesează produsul „${title}” (${price}). Putem discuta detaliile?`);
+                window.openWhatsApp(`Bună, mă interesează produsul „${title}” (${price} RON). Putem discuta detaliile?`);
             };
         }
 
@@ -134,7 +164,26 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Atașează modalul la toate cardurile de produs (index + catalog)
+    
+    function applyCardPriceRendering() {
+        document.querySelectorAll(".product-card").forEach((card) => {
+            const priceDiv = card.querySelector(".product-price");
+            if (!priceDiv) return;
+
+            const newRaw = card.dataset.price || "";
+            const oldRaw = card.dataset.oldPrice || card.getAttribute("data-old-price") || "";
+
+            // If the HTML already contains spans, leave it.
+            if (priceDiv.querySelector(".price-new") || priceDiv.querySelector(".price-old")) return;
+
+            const html = renderPriceHTML(newRaw, oldRaw);
+            if (html) priceDiv.innerHTML = html;
+        });
+    }
+
+    applyCardPriceRendering();
+
+// Atașează modalul la toate cardurile de produs (index + catalog)
     const productCards = document.querySelectorAll(".product-card");
     productCards.forEach((card) => {
         card.addEventListener("click", (e) => {

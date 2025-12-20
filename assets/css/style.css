@@ -660,6 +660,22 @@ section {
 .product-price {
     font-weight: 600;
     font-size: 0.95rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    line-height: 1.1;
+}
+
+.price-old {
+    color: #9aa0a6;
+    text-decoration: line-through;
+    font-weight: 500;
+    font-size: 0.86rem;
+}
+
+.price-new {
+    color: #c1121f;
+    font-weight: 700;
 }
 
 .product-btn {
