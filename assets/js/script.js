@@ -91,9 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!modal) return;
 
         const title = card.dataset.title || card.querySelector(".product-name")?.textContent || "Buchet Flor Mellow";
-        const priceRaw = card.dataset.price || card.querySelector(".product-price")?.textContent || "";
-        const oldPriceRaw = card.dataset.oldPrice || card.dataset.oldPrice || card.getAttribute("data-old-price") || "";
-        const price = formatPriceForDisplay(priceRaw);
+        const price = card.dataset.price || card.querySelector(".product-price")?.textContent || "";
         const desc = card.dataset.desc || card.querySelector(".product-desc")?.textContent || "";
 
         const imagesAttr = card.dataset.images;
@@ -113,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
         modalImageIndex = 0;
 
         if (modalTitle) modalTitle.textContent = title;
-        if (modalPrice) modalPrice.innerHTML = renderPriceHTML(priceRaw, oldPriceRaw);
+        if (modalPrice) modalPrice.textContent = price;
         if (modalDesc) modalDesc.textContent = desc;
 
         if (modalWhatsAppBtn) {
@@ -136,26 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    
-    function applyCardPriceRendering() {
-        document.querySelectorAll(".product-card").forEach((card) => {
-            const priceDiv = card.querySelector(".product-price");
-            if (!priceDiv) return;
-
-            const newRaw = card.dataset.price || "";
-            const oldRaw = card.dataset.oldPrice || card.getAttribute("data-old-price") || "";
-
-            // If the HTML already contains spans, leave it.
-            if (priceDiv.querySelector(".price-new") || priceDiv.querySelector(".price-old")) return;
-
-            const html = renderPriceHTML(newRaw, oldRaw);
-            if (html) priceDiv.innerHTML = html;
-        });
-    }
-
-    applyCardPriceRendering();
-
-// Atașează modalul la toate cardurile de produs (index + catalog)
+    // Atașează modalul la toate cardurile de produs (index + catalog)
     const productCards = document.querySelectorAll(".product-card");
     productCards.forEach((card) => {
         card.addEventListener("click", (e) => {
