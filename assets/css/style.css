@@ -667,7 +667,7 @@ section {
 }
 
 .price-old {
-    color: #9aa0a6;
+    color: rgba(220, 38, 38, 0.78);
     text-decoration: line-through;
     font-weight: 600;
     font-size: 0.82rem;
