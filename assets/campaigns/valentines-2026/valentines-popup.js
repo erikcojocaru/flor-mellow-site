@@ -1,53 +1,36 @@
-/* FlorMellow - Valentines Popup (2026)
-   File: assets/campaigns/valentines-2026/valentines-popup.js */
+/* =========================================
+   Flor Mellow — Valentine's Popup (2026)
+   Production-ready
+   - shows on EVERY refresh (no localStorage)
+   - ESC / backdrop / X close
+   - scroll lock
+   - focus trap (TAB stays inside)
+   - responsive background image swap
+   ========================================= */
 
 (() => {
   "use strict";
 
-  // guard (avoid double-inject if script included twice)
+  // Guard: avoid double-init if script included twice
   if (window.__fmVday2026Loaded) return;
   window.__fmVday2026Loaded = true;
 
   const CFG = {
-    // file paths (your exact structure)
     imgDesktop: "assets/campaigns/valentines-2026/popup-desktop.jpg",
     imgMobile:  "assets/campaigns/valentines-2026/popup-mobile.jpg",
 
-    // links
+    // CHANGE THIS:
     whatsappUrl: "https://wa.me/40XXXXXXXXXX?text=Salut%20Flor%20Mellow!%20Vreau%20s%C4%83%20comand%20din%20colec%C8%9Bia%20Valentine%E2%80%99s%202026.",
     collectionUrl: "catalog.html#valentines-2026",
 
-    // ✅ IMPORTANT: show on every refresh
-    showEveryRefresh: true,
-
-    // optional: campaign window (set null to disable)
-    startDate: null, // "2026-01-20"
-    endDate: null    // "2026-02-15"
+    openDelayMs: 450
   };
 
-  const now = new Date();
+  const qs = (sel, root = document) => root.querySelector(sel);
 
-  function withinCampaignWindow() {
-    if (!CFG.startDate && !CFG.endDate) return true;
-    const t = now.getTime();
-    if (CFG.startDate) {
-      const s = new Date(CFG.startDate + "T00:00:00").getTime();
-      if (t < s) return false;
-    }
-    if (CFG.endDate) {
-      const e = new Date(CFG.endDate + "T23:59:59").getTime();
-      if (t > e) return false;
-    }
-    return true;
-  }
-
-  function isMobile() {
-    return window.matchMedia("(max-width: 640px)").matches;
-  }
-
-  function getVariant() {
-    return isMobile() ? "mobile" : "desktop";
-  }
+  const isMobile = () => window.matchMedia("(max-width: 640px)").matches;
+  const getVariant = () => (isMobile() ? "mobile" : "desktop");
+  const getBg = () => (getVariant() === "mobile" ? CFG.imgMobile : CFG.imgDesktop);
 
   function buildOrnSvg() {
     const gold = (getComputedStyle(document.documentElement).getPropertyValue("--fm-vday-gold") || "#d7b56d").trim();
@@ -69,21 +52,47 @@
     `;
   }
 
-  function createPopup() {
-    const variant = getVariant();
-    const bg = variant === "mobile" ? CFG.imgMobile : CFG.imgDesktop;
+  function lockScroll(lock) {
+    document.body.classList.toggle("fm-vday-lock", !!lock);
+  }
 
+  function getFocusable(root) {
+    return Array.from(
+      root.querySelectorAll(
+        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      )
+    ).filter(el => el.offsetParent !== null);
+  }
+
+  function trapTab(e, root) {
+    if (e.key !== "Tab") return;
+    const focusables = getFocusable(root);
+    if (!focusables.length) return;
+
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
+
+  function createOverlay() {
     const overlay = document.createElement("div");
     overlay.className = "fm-vday-overlay";
     overlay.setAttribute("role", "dialog");
     overlay.setAttribute("aria-modal", "true");
-    overlay.setAttribute("aria-label", "Promoție Valentine’s");
+    overlay.setAttribute("aria-label", "Valentine’s — Flor Mellow");
 
     overlay.innerHTML = `
-      <div class="fm-vday-modal" data-variant="${variant}">
-        <div class="fm-vday-media" style="background-image:url('${bg}')"></div>
+      <div class="fm-vday-modal" data-variant="${getVariant()}">
+        <div class="fm-vday-media" style="background-image:url('${getBg()}')"></div>
 
-        <button class="fm-vday-close" type="button" aria-label="Închide">×</button>
+        <button class="fm-vday-close" type="button" aria-label="Închide popup">×</button>
 
         <div class="fm-vday-content">
           <div class="fm-vday-titleblock">
@@ -93,7 +102,7 @@
             <div class="fm-vday-tag">Colecție limitată • Comandă rapid</div>
           </div>
 
-          <div class="fm-vday-cta" aria-label="Acțiuni">
+          <div class="fm-vday-cta">
             <a class="fm-vday-btn fm-vday-btn--wa" href="${CFG.whatsappUrl}" target="_blank" rel="noopener">
               ${buildWhatsAppSvg()}
               Comandă pe WhatsApp
@@ -106,67 +115,79 @@
       </div>
     `;
 
-    // prevent clicks inside modal from closing overlay
-    const modal = overlay.querySelector(".fm-vday-modal");
-    modal.addEventListener("click", (e) => e.stopPropagation());
+    // Prevent clicks inside modal from closing
+    qs(".fm-vday-modal", overlay).addEventListener("click", (e) => e.stopPropagation());
 
     return overlay;
   }
 
   function setVariant(overlay) {
-    const modal = overlay.querySelector(".fm-vday-modal");
-    const media = overlay.querySelector(".fm-vday-media");
-    const variant = getVariant();
-    modal.setAttribute("data-variant", variant);
-    media.style.backgroundImage = `url('${variant === "mobile" ? CFG.imgMobile : CFG.imgDesktop}')`;
+    const modal = qs(".fm-vday-modal", overlay);
+    const media = qs(".fm-vday-media", overlay);
+    modal.setAttribute("data-variant", getVariant());
+    media.style.backgroundImage = `url('${getBg()}')`;
   }
 
   function openPopup() {
-    if (document.querySelector(".fm-vday-overlay")) return;
+    if (qs(".fm-vday-overlay")) return;
 
-    document.body.classList.add("fm-vday-lock");
-    const overlay = createPopup();
+    const overlay = createOverlay();
     document.body.appendChild(overlay);
 
-    const closeBtn = overlay.querySelector(".fm-vday-close");
+    // open animation
+    requestAnimationFrame(() => overlay.classList.add("is-open"));
+
+    lockScroll(true);
+
+    const closeBtn = qs(".fm-vday-close", overlay);
+    const modal = qs(".fm-vday-modal", overlay);
+    const focusables = getFocusable(modal);
+
+    const prevFocus = document.activeElement;
+    (focusables[0] || closeBtn).focus?.();
 
     const onEsc = (e) => {
-      if (e.key === "Escape") closePopup(overlay);
+      if (e.key === "Escape") closePopup(overlay, prevFocus);
+      trapTab(e, modal);
     };
-    const onResize = () => setVariant(overlay);
-    const onOverlayClick = () => closePopup(overlay);
 
-    closeBtn.addEventListener("click", () => closePopup(overlay));
+    const onResize = () => setVariant(overlay);
+
+    const onOverlayClick = () => closePopup(overlay, prevFocus);
+
+    closeBtn.addEventListener("click", () => closePopup(overlay, prevFocus));
     overlay.addEventListener("click", onOverlayClick);
-    window.addEventListener("keydown", onEsc);
+    window.addEventListener("keydown", onEsc, true);
     window.addEventListener("resize", onResize);
     window.addEventListener("orientationchange", onResize);
 
     overlay.__fmHandlers = { onEsc, onResize, onOverlayClick };
-
-    setVariant(overlay);
   }
 
-  function closePopup(overlay) {
+  function closePopup(overlay, prevFocus) {
     if (!overlay) return;
+
+    overlay.classList.remove("is-open");
 
     const h = overlay.__fmHandlers;
     if (h) {
-      window.removeEventListener("keydown", h.onEsc);
+      window.removeEventListener("keydown", h.onEsc, true);
       window.removeEventListener("resize", h.onResize);
       window.removeEventListener("orientationchange", h.onResize);
       overlay.removeEventListener("click", h.onOverlayClick);
     }
 
-    overlay.remove();
-    document.body.classList.remove("fm-vday-lock");
+    lockScroll(false);
+
+    // wait for fade
+    window.setTimeout(() => {
+      overlay.remove();
+      prevFocus?.focus?.();
+    }, 180);
   }
 
   function boot() {
-    if (!withinCampaignWindow()) return;
-
-    // ✅ show on every refresh
-    window.setTimeout(openPopup, 600);
+    window.setTimeout(openPopup, CFG.openDelayMs);
   }
 
   if (document.readyState === "loading") {
