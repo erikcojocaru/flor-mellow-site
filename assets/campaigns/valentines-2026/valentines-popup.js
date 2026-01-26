@@ -1,35 +1,20 @@
-/* =====================================================
-   Flor Mellow — Valentine's Popup (Classic / Full Image)
-   - Same look as "last photo"
-   - Thin outline handled by CSS
-   - Close works always (capture delegation)
-   - Close: X, backdrop, ESC
-   - Shows every refresh (no storage)
-   ===================================================== */
-
 (() => {
   "use strict";
 
-  // Remove any old instances from previous scripts
   document.querySelectorAll(".vday-overlay").forEach(el => el.remove());
-
   if (window.__vdayPopupLoaded) return;
   window.__vdayPopupLoaded = true;
 
   const CFG = {
     imgDesktop: "assets/campaigns/valentines-2026/popup-desktop.jpg",
     imgMobile:  "assets/campaigns/valentines-2026/popup-mobile.jpg",
-
-    // CHANGE THIS:
     whatsappUrl: "https://wa.me/40XXXXXXXXXX?text=Salut%20Flor%20Mellow!%20Vreau%20s%C4%83%20comand%20din%20colec%C8%9Bia%20Valentine%E2%80%99s%202026.",
     collectionUrl: "catalog.html#valentines-2026",
-
-    openDelayMs: 350
+    openDelayMs: 250
   };
 
   const isMobile = () => window.matchMedia("(max-width: 640px)").matches;
   const bgForViewport = () => (isMobile() ? CFG.imgMobile : CFG.imgDesktop);
-
   const lockScroll = (lock) => document.body.classList.toggle("vday-lock", !!lock);
 
   function ornSvg() {
@@ -57,7 +42,6 @@
     overlay.className = "vday-overlay";
     overlay.setAttribute("role", "dialog");
     overlay.setAttribute("aria-modal", "true");
-    overlay.setAttribute("aria-label", "Valentine’s — Flor Mellow");
 
     overlay.innerHTML = `
       <div class="vday-modal" role="document">
@@ -73,15 +57,17 @@
             <p class="vday-tag">Colecție limitată • Comandă rapid</p>
           </div>
 
-          <div class="vday-cta-card">
-            <div class="vday-cta">
-              <a class="vday-btn vday-btn--wa" href="${CFG.whatsappUrl}" target="_blank" rel="noopener">
-                ${waSvg()}
-                Comandă pe WhatsApp
-              </a>
-              <a class="vday-btn vday-btn--primary" href="${CFG.collectionUrl}">
-                Vezi colecția
-              </a>
+          <div class="vday-cta-wrap">
+            <div class="vday-cta-card">
+              <div class="vday-cta">
+                <a class="vday-btn vday-btn--wa" href="${CFG.whatsappUrl}" target="_blank" rel="noopener">
+                  ${waSvg()}
+                  Comandă pe WhatsApp
+                </a>
+                <a class="vday-btn vday-btn--primary" href="${CFG.collectionUrl}">
+                  Vezi colecția
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -105,14 +91,12 @@
     lockScroll(true);
 
     const onClick = (e) => {
-      // close button
       if (e.target.closest("[data-vday-close]")) {
         e.preventDefault();
         e.stopPropagation();
         close(overlay);
         return;
       }
-      // click outside modal
       if (!e.target.closest(".vday-modal")) {
         close(overlay);
       }
@@ -124,20 +108,17 @@
 
     const onResize = () => setBg(overlay);
 
-    // CAPTURE makes it robust against other scripts
     document.addEventListener("click", onClick, true);
     window.addEventListener("keydown", onKey, true);
     window.addEventListener("resize", onResize);
     window.addEventListener("orientationchange", onResize);
 
     overlay.__vHandlers = { onClick, onKey, onResize };
-
     setBg(overlay);
   }
 
   function close(overlay) {
     if (!overlay) return;
-
     overlay.classList.remove("is-open");
     lockScroll(false);
 
@@ -148,13 +129,10 @@
       window.removeEventListener("resize", h.onResize);
       window.removeEventListener("orientationchange", h.onResize);
     }
-
     setTimeout(() => overlay.remove(), 160);
   }
 
-  function boot() {
-    setTimeout(open, CFG.openDelayMs);
-  }
+  function boot(){ setTimeout(open, CFG.openDelayMs); }
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", boot, { once: true });
