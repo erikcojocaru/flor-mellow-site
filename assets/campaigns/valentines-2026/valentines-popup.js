@@ -17,9 +17,8 @@
     whatsappUrl: "https://wa.me/40XXXXXXXXXX?text=Salut%20Flor%20Mellow!%20Vreau%20s%C4%83%20comand%20din%20colec%C8%9Bia%20Valentine%E2%80%99s%202026.",
     collectionUrl: "catalog.html#valentines-2026",
 
-    // show once logic
-    storageKey: "fm_vday_2026_dismissed_at",
-    dismissDays: 7, // after close: don't show again for N days
+    // ✅ IMPORTANT: show on every refresh
+    showEveryRefresh: true,
 
     // optional: campaign window (set null to disable)
     startDate: null, // "2026-01-20"
@@ -42,23 +41,6 @@
     return true;
   }
 
-  function isDismissedRecently() {
-    try {
-      const raw = localStorage.getItem(CFG.storageKey);
-      if (!raw) return false;
-      const ts = Number(raw);
-      if (!Number.isFinite(ts)) return false;
-      const ms = CFG.dismissDays * 24 * 60 * 60 * 1000;
-      return (Date.now() - ts) < ms;
-    } catch {
-      return false;
-    }
-  }
-
-  function setDismissedNow() {
-    try { localStorage.setItem(CFG.storageKey, String(Date.now())); } catch {}
-  }
-
   function isMobile() {
     return window.matchMedia("(max-width: 640px)").matches;
   }
@@ -68,19 +50,17 @@
   }
 
   function buildOrnSvg() {
-    // premium gold infinity underline (inline SVG)
+    const gold = (getComputedStyle(document.documentElement).getPropertyValue("--fm-vday-gold") || "#d7b56d").trim();
     return `
       <svg class="fm-vday-orn" viewBox="0 0 600 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <path d="M80 30c55-22 110-22 165 0s110 22 165 0 110-22 165 0"
-              fill="none" stroke="${getComputedStyle(document.documentElement).getPropertyValue('--fm-vday-gold') || '#d7b56d'}"
-              stroke-width="4" stroke-linecap="round" opacity="0.95"/>
-        <circle cx="300" cy="30" r="6" fill="${getComputedStyle(document.documentElement).getPropertyValue('--fm-vday-gold') || '#d7b56d'}" opacity="0.95"/>
+              fill="none" stroke="${gold}" stroke-width="4" stroke-linecap="round" opacity="0.95"/>
+        <circle cx="300" cy="30" r="6" fill="${gold}" opacity="0.95"/>
       </svg>
     `;
   }
 
   function buildWhatsAppSvg() {
-    // tiny inline WhatsApp icon (no external deps)
     return `
       <svg class="fm-vday-wa-ico" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <path fill="#22c55e" d="M16 3C9.4 3 4 8.2 4 14.6c0 2.3.7 4.4 1.9 6.2L4 29l8.4-1.8c1.1.3 2.3.5 3.6.5 6.6 0 12-5.2 12-11.6S22.6 3 16 3z"/>
@@ -126,7 +106,7 @@
       </div>
     `;
 
-    // Prevent clicks inside modal from closing overlay
+    // prevent clicks inside modal from closing overlay
     const modal = overlay.querySelector(".fm-vday-modal");
     modal.addEventListener("click", (e) => e.stopPropagation());
 
@@ -142,7 +122,6 @@
   }
 
   function openPopup() {
-    // If already open, do nothing
     if (document.querySelector(".fm-vday-overlay")) return;
 
     document.body.classList.add("fm-vday-lock");
@@ -154,12 +133,7 @@
     const onEsc = (e) => {
       if (e.key === "Escape") closePopup(overlay);
     };
-
-    const onResize = () => {
-      // keep it adaptive on resize / orientation change
-      setVariant(overlay);
-    };
-
+    const onResize = () => setVariant(overlay);
     const onOverlayClick = () => closePopup(overlay);
 
     closeBtn.addEventListener("click", () => closePopup(overlay));
@@ -168,17 +142,13 @@
     window.addEventListener("resize", onResize);
     window.addEventListener("orientationchange", onResize);
 
-    // store listeners refs on element for clean remove
     overlay.__fmHandlers = { onEsc, onResize, onOverlayClick };
 
-    // ensure correct variant on initial
     setVariant(overlay);
   }
 
   function closePopup(overlay) {
     if (!overlay) return;
-
-    setDismissedNow();
 
     const h = overlay.__fmHandlers;
     if (h) {
@@ -188,18 +158,14 @@
       overlay.removeEventListener("click", h.onOverlayClick);
     }
 
-    // remove overlay entirely (this fixes "text stays above site")
     overlay.remove();
-
     document.body.classList.remove("fm-vday-lock");
   }
 
-  // ---- BOOT ----
   function boot() {
     if (!withinCampaignWindow()) return;
-    if (isDismissedRecently()) return;
 
-    // show after page is stable
+    // ✅ show on every refresh
     window.setTimeout(openPopup, 600);
   }
 
