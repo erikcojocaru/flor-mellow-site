@@ -1,213 +1,210 @@
 /* FlorMellow - Valentines Popup (2026)
    File: assets/campaigns/valentines-2026/valentines-popup.js */
 
-(function () {
+(() => {
   "use strict";
 
-  // =========================
-  // CONFIG (edit here only)
-  // =========================
-  const CONFIG = {
-    // assets (your existing filenames)
-    desktopImage: "assets/campaigns/valentines-2026/popup-desktop.jpg",
-    mobileImage: "assets/campaigns/valentines-2026/popup-mobile.jpg",
+  // guard (avoid double-inject if script included twice)
+  if (window.__fmVday2026Loaded) return;
+  window.__fmVday2026Loaded = true;
 
-    // behaviour
-    showDelayMs: 700,
-    dismissDays: 3, // don't show again for X days after closing
+  const CFG = {
+    // file paths (your exact structure)
+    imgDesktop: "assets/campaigns/valentines-2026/popup-desktop.jpg",
+    imgMobile:  "assets/campaigns/valentines-2026/popup-mobile.jpg",
 
     // links
-    collectionUrl: "catalog.html#valentines-2026", // change to your real anchor/section
-    waPhone: "407XXXXXXXX", // << put your WhatsApp number here (no +, no spaces)
-    waText: "Bună! Vreau să comand din colecția Valentine’s 🌹",
+    whatsappUrl: "https://wa.me/40XXXXXXXXXX?text=Salut%20Flor%20Mellow!%20Vreau%20s%C4%83%20comand%20din%20colec%C8%9Bia%20Valentine%E2%80%99s%202026.",
+    collectionUrl: "catalog.html#valentines-2026",
 
-    // texts
-    titleWord: "Valentine’s",
-    subtitle: "vine după colț",
-    tagline: "Colecție limitată • Comandă rapid",
+    // show once logic
+    storageKey: "fm_vday_2026_dismissed_at",
+    dismissDays: 7, // after close: don't show again for N days
 
-    // responsive switch
-    mobileBreakpoint: 760
+    // optional: campaign window (set null to disable)
+    startDate: null, // "2026-01-20"
+    endDate: null    // "2026-02-15"
   };
 
-  const STORAGE_KEY = "fm_vday_2026_dismiss_until";
-  let overlayEl = null;
-  let modalEl = null;
+  const now = new Date();
 
-  function nowTs() { return Date.now(); }
-
-  function getDismissUntil() {
-    const v = localStorage.getItem(STORAGE_KEY);
-    const n = v ? Number(v) : 0;
-    return Number.isFinite(n) ? n : 0;
+  function withinCampaignWindow() {
+    if (!CFG.startDate && !CFG.endDate) return true;
+    const t = now.getTime();
+    if (CFG.startDate) {
+      const s = new Date(CFG.startDate + "T00:00:00").getTime();
+      if (t < s) return false;
+    }
+    if (CFG.endDate) {
+      const e = new Date(CFG.endDate + "T23:59:59").getTime();
+      if (t > e) return false;
+    }
+    return true;
   }
 
-  function setDismissForDays(days) {
-    const ms = days * 24 * 60 * 60 * 1000;
-    localStorage.setItem(STORAGE_KEY, String(nowTs() + ms));
-  }
-
-  function isDismissed() {
-    return getDismissUntil() > nowTs();
-  }
-
-  function isMobileVariant() {
-    return window.innerWidth <= CONFIG.mobileBreakpoint;
-  }
-
-  function buildWhatsAppUrl() {
-    const text = encodeURIComponent(CONFIG.waText || "");
-    return `https://wa.me/${CONFIG.waPhone}?text=${text}`;
-  }
-
-  function ornamentSVG() {
-    // simple "infinity" gold flourish (no external SVG needed)
-    return `
-      <svg class="fm-vday-orn" viewBox="0 0 520 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M55 30c55-40 110-40 165 0s110 40 165 0 110-40 165 0"
-              stroke="rgba(215,181,109,.95)" stroke-width="4" stroke-linecap="round"/>
-        <circle cx="260" cy="30" r="6" fill="rgba(215,181,109,.95)"/>
-      </svg>
-    `;
-  }
-
-  function waIconSVG() {
-    return `
-      <svg class="fm-vday-wa-ic" viewBox="0 0 32 32" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-        <path fill="#22c55e" d="M16 3C9.4 3 4 8.1 4 14.5c0 2.5.8 4.8 2.2 6.7L5 29l8-1.9c1.8 1 3.9 1.6 6 1.6 6.6 0 12-5.1 12-11.5S22.6 3 16 3z"/>
-        <path fill="#fff" d="M12.7 10.2c-.3-.6-.6-.6-.9-.6h-.8c-.3 0-.7.1-1 .5-.3.4-1.3 1.3-1.3 3.2s1.4 3.7 1.6 3.9c.2.3 2.8 4.4 6.9 6 3.4 1.3 4.1 1 4.9.9.8-.1 2.5-1 2.9-2 .3-1 .3-1.8.2-2-.1-.2-.3-.3-.7-.5-.4-.2-2.5-1.2-2.9-1.4-.4-.1-.7-.2-1 .2-.3.4-1.1 1.4-1.4 1.7-.3.3-.5.3-.9.1-.4-.2-1.7-.6-3.2-2-1.2-1.1-2-2.4-2.2-2.8-.2-.4 0-.6.2-.8.2-.2.4-.5.6-.7.2-.2.3-.4.4-.6.1-.2.1-.5 0-.7-.1-.2-.9-2.2-1.2-2.9z"/>
-      </svg>
-    `;
-  }
-
-  function removePopup() {
-    if (!overlayEl) return;
-
-    // remove listeners safely
-    document.removeEventListener("keydown", onKeyDown, true);
-    window.removeEventListener("resize", onResize, { passive: true });
-    window.removeEventListener("orientationchange", onResize, { passive: true });
-
-    // remove DOM
-    overlayEl.remove();
-    overlayEl = null;
-    modalEl = null;
-
-    // unlock scroll
-    document.body.classList.remove("fm-vday-lock");
-  }
-
-  function closePopup() {
-    // remember dismissal
-    setDismissForDays(CONFIG.dismissDays);
-
-    // small fade out
-    if (modalEl) modalEl.style.opacity = "0";
-    if (overlayEl) overlayEl.style.opacity = "0";
-    setTimeout(removePopup, 120);
-  }
-
-  function onKeyDown(e) {
-    if (e.key === "Escape") closePopup();
-  }
-
-  function onOverlayClick(e) {
-    // close only if clicking outside modal
-    if (e.target === overlayEl) closePopup();
-  }
-
-  function setVariantAssets() {
-    if (!modalEl) return;
-    const variant = isMobileVariant() ? "mobile" : "desktop";
-    modalEl.setAttribute("data-variant", variant);
-
-    const media = modalEl.querySelector(".fm-vday-media");
-    if (media) {
-      media.style.backgroundImage = `url('${variant === "mobile" ? CONFIG.mobileImage : CONFIG.desktopImage}')`;
+  function isDismissedRecently() {
+    try {
+      const raw = localStorage.getItem(CFG.storageKey);
+      if (!raw) return false;
+      const ts = Number(raw);
+      if (!Number.isFinite(ts)) return false;
+      const ms = CFG.dismissDays * 24 * 60 * 60 * 1000;
+      return (Date.now() - ts) < ms;
+    } catch {
+      return false;
     }
   }
 
-  function onResize() {
-    // Keep it adaptive: switch between desktop/mobile popup variant
-    setVariantAssets();
+  function setDismissedNow() {
+    try { localStorage.setItem(CFG.storageKey, String(Date.now())); } catch {}
   }
 
-  function mountPopup() {
-    if (overlayEl) return; // prevent duplicates
-    if (isDismissed()) return;
+  function isMobile() {
+    return window.matchMedia("(max-width: 640px)").matches;
+  }
 
-    document.body.classList.add("fm-vday-lock");
+  function getVariant() {
+    return isMobile() ? "mobile" : "desktop";
+  }
 
-    overlayEl = document.createElement("div");
-    overlayEl.className = "fm-vday-overlay";
-    overlayEl.setAttribute("role", "dialog");
-    overlayEl.setAttribute("aria-modal", "true");
-    overlayEl.addEventListener("click", onOverlayClick);
+  function buildOrnSvg() {
+    // premium gold infinity underline (inline SVG)
+    return `
+      <svg class="fm-vday-orn" viewBox="0 0 600 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M80 30c55-22 110-22 165 0s110 22 165 0 110-22 165 0"
+              fill="none" stroke="${getComputedStyle(document.documentElement).getPropertyValue('--fm-vday-gold') || '#d7b56d'}"
+              stroke-width="4" stroke-linecap="round" opacity="0.95"/>
+        <circle cx="300" cy="30" r="6" fill="${getComputedStyle(document.documentElement).getPropertyValue('--fm-vday-gold') || '#d7b56d'}" opacity="0.95"/>
+      </svg>
+    `;
+  }
 
-    modalEl = document.createElement("div");
-    modalEl.className = "fm-vday-modal";
+  function buildWhatsAppSvg() {
+    // tiny inline WhatsApp icon (no external deps)
+    return `
+      <svg class="fm-vday-wa-ico" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path fill="#22c55e" d="M16 3C9.4 3 4 8.2 4 14.6c0 2.3.7 4.4 1.9 6.2L4 29l8.4-1.8c1.1.3 2.3.5 3.6.5 6.6 0 12-5.2 12-11.6S22.6 3 16 3z"/>
+        <path fill="#fff" d="M12.7 10.2c-.3-.7-.6-.7-.9-.7h-.8c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8 0 1.7 1.2 3.3 1.4 3.5.2.2 2.4 3.8 5.9 5.2 2.9 1.1 3.5.9 4.1.8.6-.1 2-0.8 2.3-1.6.3-.8.3-1.4.2-1.6-.1-.2-.3-.3-.7-.5l-1.8-.9c-.4-.2-.7-.2-1 .2-.3.4-1.1 1.4-1.3 1.7-.2.3-.5.3-.9.1-.4-.2-1.7-.6-3.2-2-.4-.4-1-1.1-1.2-1.5-.2-.4 0-.6.2-.8.2-.2.4-.5.6-.7.2-.2.3-.4.4-.6.1-.2 0-.5-.1-.7l-.9-2.3z"/>
+      </svg>
+    `;
+  }
 
-    const waUrl = buildWhatsAppUrl();
+  function createPopup() {
+    const variant = getVariant();
+    const bg = variant === "mobile" ? CFG.imgMobile : CFG.imgDesktop;
 
-    modalEl.innerHTML = `
-      <div class="fm-vday-media"></div>
+    const overlay = document.createElement("div");
+    overlay.className = "fm-vday-overlay";
+    overlay.setAttribute("role", "dialog");
+    overlay.setAttribute("aria-modal", "true");
+    overlay.setAttribute("aria-label", "Promoție Valentine’s");
 
-      <button class="fm-vday-close" type="button" aria-label="Închide">×</button>
+    overlay.innerHTML = `
+      <div class="fm-vday-modal" data-variant="${variant}">
+        <div class="fm-vday-media" style="background-image:url('${bg}')"></div>
 
-      <div class="fm-vday-content">
-        <div class="fm-vday-titleblock">
-          <div class="fm-vday-titleglass">
-            <div class="fm-vday-title">
-              <span class="fm-vday-title-word">${CONFIG.titleWord}</span>
-            </div>
-            <div class="fm-vday-sub">${CONFIG.subtitle}</div>
-            ${ornamentSVG()}
-            <div class="fm-vday-tag">${CONFIG.tagline}</div>
+        <button class="fm-vday-close" type="button" aria-label="Închide">×</button>
+
+        <div class="fm-vday-content">
+          <div class="fm-vday-titleblock">
+            <div class="fm-vday-title">Valentine’s</div>
+            <div class="fm-vday-sub">vine după colț</div>
+            ${buildOrnSvg()}
+            <div class="fm-vday-tag">Colecție limitată • Comandă rapid</div>
           </div>
-        </div>
 
-        <div class="fm-vday-cta">
-          <a class="fm-vday-btn fm-vday-btn--wa" href="${waUrl}" target="_blank" rel="noopener">
-            ${waIconSVG()}
-            Comandă pe WhatsApp
-          </a>
-          <a class="fm-vday-btn fm-vday-btn--primary" href="${CONFIG.collectionUrl}">
-            Vezi colecția
-          </a>
+          <div class="fm-vday-cta" aria-label="Acțiuni">
+            <a class="fm-vday-btn fm-vday-btn--wa" href="${CFG.whatsappUrl}" target="_blank" rel="noopener">
+              ${buildWhatsAppSvg()}
+              Comandă pe WhatsApp
+            </a>
+            <a class="fm-vday-btn fm-vday-btn--primary" href="${CFG.collectionUrl}">
+              Vezi colecția
+            </a>
+          </div>
         </div>
       </div>
     `;
 
-    overlayEl.appendChild(modalEl);
-    document.body.appendChild(overlayEl);
+    // Prevent clicks inside modal from closing overlay
+    const modal = overlay.querySelector(".fm-vday-modal");
+    modal.addEventListener("click", (e) => e.stopPropagation());
 
-    // Set variant + image
-    setVariantAssets();
-
-    // Events
-    modalEl.querySelector(".fm-vday-close").addEventListener("click", closePopup);
-    document.addEventListener("keydown", onKeyDown, true);
-
-    window.addEventListener("resize", onResize, { passive: true });
-    window.addEventListener("orientationchange", onResize, { passive: true });
-
-    // Important: stop clicks inside modal from closing
-    modalEl.addEventListener("click", (e) => e.stopPropagation());
+    return overlay;
   }
 
+  function setVariant(overlay) {
+    const modal = overlay.querySelector(".fm-vday-modal");
+    const media = overlay.querySelector(".fm-vday-media");
+    const variant = getVariant();
+    modal.setAttribute("data-variant", variant);
+    media.style.backgroundImage = `url('${variant === "mobile" ? CFG.imgMobile : CFG.imgDesktop}')`;
+  }
+
+  function openPopup() {
+    // If already open, do nothing
+    if (document.querySelector(".fm-vday-overlay")) return;
+
+    document.body.classList.add("fm-vday-lock");
+    const overlay = createPopup();
+    document.body.appendChild(overlay);
+
+    const closeBtn = overlay.querySelector(".fm-vday-close");
+
+    const onEsc = (e) => {
+      if (e.key === "Escape") closePopup(overlay);
+    };
+
+    const onResize = () => {
+      // keep it adaptive on resize / orientation change
+      setVariant(overlay);
+    };
+
+    const onOverlayClick = () => closePopup(overlay);
+
+    closeBtn.addEventListener("click", () => closePopup(overlay));
+    overlay.addEventListener("click", onOverlayClick);
+    window.addEventListener("keydown", onEsc);
+    window.addEventListener("resize", onResize);
+    window.addEventListener("orientationchange", onResize);
+
+    // store listeners refs on element for clean remove
+    overlay.__fmHandlers = { onEsc, onResize, onOverlayClick };
+
+    // ensure correct variant on initial
+    setVariant(overlay);
+  }
+
+  function closePopup(overlay) {
+    if (!overlay) return;
+
+    setDismissedNow();
+
+    const h = overlay.__fmHandlers;
+    if (h) {
+      window.removeEventListener("keydown", h.onEsc);
+      window.removeEventListener("resize", h.onResize);
+      window.removeEventListener("orientationchange", h.onResize);
+      overlay.removeEventListener("click", h.onOverlayClick);
+    }
+
+    // remove overlay entirely (this fixes "text stays above site")
+    overlay.remove();
+
+    document.body.classList.remove("fm-vday-lock");
+  }
+
+  // ---- BOOT ----
   function boot() {
-    if (isDismissed()) return;
+    if (!withinCampaignWindow()) return;
+    if (isDismissedRecently()) return;
 
-    // delay so page loads first
-    window.setTimeout(() => {
-      // double check not dismissed during delay
-      if (!isDismissed()) mountPopup();
-    }, CONFIG.showDelayMs);
+    // show after page is stable
+    window.setTimeout(openPopup, 600);
   }
 
-  // Start
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", boot);
+    document.addEventListener("DOMContentLoaded", boot, { once: true });
   } else {
     boot();
   }
