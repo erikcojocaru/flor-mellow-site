@@ -1,6 +1,6 @@
 /* =========================================
    Flor Mellow — Valentine's Popup (2026)
-   Production-ready / Mobile-first
+   Production-ready / No overlay over product
    ========================================= */
 
 :root{
@@ -12,15 +12,13 @@
 
   --fm-vday-radius: 28px;
   --fm-vday-shadow: 0 30px 90px rgba(0,0,0,.35);
-  --fm-vday-border: rgba(255,255,255,.26);
+  --fm-vday-border: rgba(255,255,255,.22);
 
   --fm-vday-overlay: rgba(0,0,0,.42);
 }
 
 /* lock scroll when popup open */
-body.fm-vday-lock{
-  overflow: hidden;
-}
+body.fm-vday-lock{ overflow: hidden; }
 
 /* overlay */
 .fm-vday-overlay{
@@ -31,23 +29,19 @@ body.fm-vday-lock{
   place-items: center;
   padding: 18px;
   background: var(--fm-vday-overlay);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 
-/* modal */
+/* modal shell */
 .fm-vday-modal{
   position: relative;
-  width: min(92vw, 460px);
+  width: min(94vw, 520px);
   border-radius: var(--fm-vday-radius);
   overflow: hidden;
   box-shadow: var(--fm-vday-shadow);
   border: 1px solid var(--fm-vday-border);
-  background: rgba(255,255,255,.08);
-
-  /* IMPORTANT: avoid weird "glass blocks" */
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
+  background: rgba(255,255,255,.10);
 
   transform: translateY(10px) scale(.985);
   opacity: 0;
@@ -59,91 +53,90 @@ body.fm-vday-lock{
   opacity: 1;
 }
 
-/* kill any pseudo-elements (prevents random blur rectangles) */
+/* IMPORTANT: kill any pseudo-elements to avoid weird blur blocks */
 .fm-vday-modal::before,
 .fm-vday-modal::after{
   content: none !important;
 }
 
+/* layout container */
+.fm-vday-inner{
+  display: grid;
+  grid-template-rows: auto auto;
+}
+
 /* image area */
 .fm-vday-media{
   width: 100%;
-  height: 62vh;
-  min-height: 520px;
-  max-height: 680px;
+  height: 56vh;
+  min-height: 420px;
+  max-height: 560px;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
-/* content overlay */
+/* content area (separate from image, so product stays visible) */
 .fm-vday-content{
-  position: absolute;
-  inset: 0;
-  display: grid;
-  align-content: end;
+  background: rgba(255,255,255,.16);
+  border-top: 1px solid rgba(255,255,255,.18);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   padding: 18px;
-  gap: 14px;
 }
 
-/* top close button */
+/* close button */
 .fm-vday-close{
   position: absolute;
   top: calc(14px + env(safe-area-inset-top));
   right: 14px;
-
   width: 44px;
   height: 44px;
   border-radius: 999px;
 
   background: rgba(0,0,0,.35);
   border: 1px solid rgba(255,255,255,.22);
-
   color: rgba(255,255,255,.95);
   font-size: 22px;
   line-height: 1;
 
   display: grid;
   place-items: center;
-
   cursor: pointer;
+
   box-shadow: 0 12px 28px rgba(0,0,0,.28);
 
-  /* IMPORTANT: no backdrop blur for this */
+  /* no weird blur */
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
-
 .fm-vday-close:active{ transform: scale(.98); }
 
 /* title block */
 .fm-vday-titleblock{
-  position: relative;
-  border-radius: 22px;
+  border-radius: 18px;
   padding: 14px 14px 10px;
-  background: linear-gradient(to bottom, rgba(255,255,255,.20), rgba(255,255,255,0));
+  background: linear-gradient(to bottom, rgba(255,255,255,.22), rgba(255,255,255,0));
 }
 
-/* premium "Valentine’s" */
+/* premium title */
 .fm-vday-title{
   font-family: "Fraunces","Playfair Display","Georgia",serif;
   font-weight: 650;
-  letter-spacing: .4px;
+  letter-spacing: .35px;
   line-height: .95;
   color: var(--fm-vday-burgundy);
 
-  /* cleaner stroke (not cartoon) */
-  -webkit-text-stroke: 1.2px rgba(255,255,255,.88);
+  -webkit-text-stroke: 1.15px rgba(255,255,255,.86);
   paint-order: stroke fill;
 
   text-shadow:
-    0 10px 22px rgba(0,0,0,.22),
-    0 2px 0 rgba(0,0,0,.08);
+    0 10px 22px rgba(0,0,0,.18),
+    0 2px 0 rgba(0,0,0,.06);
 
-  font-size: clamp(40px, 9vw, 72px);
+  font-size: clamp(42px, 9vw, 72px);
 }
 
-/* fallback if text-stroke unsupported */
 @supports not (-webkit-text-stroke: 1px white){
   .fm-vday-title{
     text-shadow:
@@ -151,7 +144,7 @@ body.fm-vday-lock{
        1px -1px 0 rgba(255,255,255,.9),
       -1px  1px 0 rgba(255,255,255,.9),
        1px  1px 0 rgba(255,255,255,.9),
-       0 10px 22px rgba(0,0,0,.22);
+       0 10px 22px rgba(0,0,0,.18);
   }
 }
 
@@ -159,35 +152,36 @@ body.fm-vday-lock{
   margin-top: 6px;
   font-family: "DM Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   font-size: 22px;
-  font-weight: 800;
-  letter-spacing: .2px;
+  font-weight: 850;
+  letter-spacing: .18px;
   color: rgba(255,255,255,.92);
-  text-shadow: 0 10px 24px rgba(0,0,0,.35);
+  text-shadow: 0 10px 24px rgba(0,0,0,.32);
 }
 
 .fm-vday-orn{
-  width: 180px;
+  width: 190px;
   height: 22px;
   display: block;
   margin: 8px 0 6px;
   opacity: .95;
-  filter: drop-shadow(0 10px 18px rgba(0,0,0,.25));
+  filter: drop-shadow(0 10px 18px rgba(0,0,0,.22));
 }
 
 .fm-vday-tag{
   font-family: "DM Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   font-size: 13px;
-  font-weight: 750;
+  font-weight: 780;
   letter-spacing: .12em;
   text-transform: uppercase;
-  color: rgba(255,255,255,.85);
-  text-shadow: 0 10px 22px rgba(0,0,0,.35);
+  color: rgba(255,255,255,.86);
+  text-shadow: 0 10px 22px rgba(0,0,0,.30);
 }
 
 /* CTA */
 .fm-vday-cta{
   display: grid;
   gap: 12px;
+  margin-top: 12px;
   padding-bottom: calc(10px + env(safe-area-inset-bottom));
 }
 
@@ -197,21 +191,20 @@ body.fm-vday-lock{
   justify-content: center;
   gap: 12px;
 
-  padding: 14px 16px;
+  padding: 16px 18px;
   border-radius: 18px;
 
   font-family: "DM Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  font-size: 18px;
-  font-weight: 750;
+  font-size: 19px;
+  font-weight: 780;
 
   text-decoration: none;
   user-select: none;
 
   border: 1px solid rgba(0,0,0,.10);
-  box-shadow: 0 18px 40px rgba(0,0,0,.18);
+  box-shadow: 0 18px 40px rgba(0,0,0,.16);
   transition: transform .12s ease, filter .12s ease;
 }
-
 .fm-vday-btn:active{ transform: translateY(1px); }
 
 .fm-vday-btn--wa{
@@ -219,47 +212,57 @@ body.fm-vday-lock{
   color: rgba(0,0,0,.78);
 }
 
-.fm-vday-wa-ico{
-  width: 22px;
-  height: 22px;
-  flex: 0 0 auto;
-}
+.fm-vday-wa-ico{ width: 22px; height: 22px; flex: 0 0 auto; }
 
 .fm-vday-btn--primary{
-  background: linear-gradient(135deg, rgba(122,15,39,.92), rgba(122,15,39,.72));
-  color: rgba(255,255,255,.95);
-  border-color: rgba(255,255,255,.20);
+  background: linear-gradient(135deg, rgba(122,15,39,.94), rgba(122,15,39,.72));
+  color: rgba(255,255,255,.96);
+  border-color: rgba(255,255,255,.18);
 }
 
 .fm-vday-btn:hover{ filter: brightness(1.02); }
 
-/* Desktop tuning (wider modal, slightly lower image) */
+/* Mobile: make a bit bigger */
+@media (max-width: 640px){
+  .fm-vday-modal{ width: min(94vw, 520px); }
+  .fm-vday-media{
+    height: 58vh;
+    min-height: 460px;
+    max-height: 620px;
+  }
+}
+
+/* Desktop: premium 2-column layout (no empty space, no text over product) */
 @media (min-width: 900px){
   .fm-vday-modal{
-    width: min(840px, 92vw);
+    width: min(980px, 92vw);
     border-radius: 34px;
   }
+
+  .fm-vday-inner{
+    grid-template-columns: 1.25fr .75fr;
+    grid-template-rows: none;
+  }
+
   .fm-vday-media{
     height: min(78vh, 720px);
-    min-height: 620px;
+    min-height: 640px;
+    max-height: 740px;
   }
+
   .fm-vday-content{
-    padding: 22px;
+    display: grid;
+    align-content: center;
+    gap: 14px;
+    padding: 26px;
   }
-  .fm-vday-title{
-    font-size: clamp(56px, 4.8vw, 92px);
-  }
-  .fm-vday-sub{
-    font-size: 28px;
-  }
-  .fm-vday-cta{
-    grid-template-columns: 1fr 1fr;
-  }
+
+  .fm-vday-title{ font-size: clamp(56px, 4.6vw, 92px); }
+  .fm-vday-sub{ font-size: 28px; }
+  .fm-vday-cta{ margin-top: 16px; }
 }
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce){
-  .fm-vday-modal{
-    transition: none;
-  }
+  .fm-vday-modal{ transition: none; }
 }

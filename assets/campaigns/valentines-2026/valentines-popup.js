@@ -4,14 +4,13 @@
    - shows on EVERY refresh (no localStorage)
    - ESC / backdrop / X close
    - scroll lock
-   - focus trap (TAB stays inside)
+   - focus trap
    - responsive background image swap
    ========================================= */
 
 (() => {
   "use strict";
 
-  // Guard: avoid double-init if script included twice
   if (window.__fmVday2026Loaded) return;
   window.__fmVday2026Loaded = true;
 
@@ -27,7 +26,6 @@
   };
 
   const qs = (sel, root = document) => root.querySelector(sel);
-
   const isMobile = () => window.matchMedia("(max-width: 640px)").matches;
   const getVariant = () => (isMobile() ? "mobile" : "desktop");
   const getBg = () => (getVariant() === "mobile" ? CFG.imgMobile : CFG.imgDesktop);
@@ -66,18 +64,15 @@
 
   function trapTab(e, root) {
     if (e.key !== "Tab") return;
-    const focusables = getFocusable(root);
-    if (!focusables.length) return;
-
-    const first = focusables[0];
-    const last = focusables[focusables.length - 1];
+    const f = getFocusable(root);
+    if (!f.length) return;
+    const first = f[0];
+    const last = f[f.length - 1];
 
     if (e.shiftKey && document.activeElement === first) {
-      e.preventDefault();
-      last.focus();
+      e.preventDefault(); last.focus();
     } else if (!e.shiftKey && document.activeElement === last) {
-      e.preventDefault();
-      first.focus();
+      e.preventDefault(); first.focus();
     }
   }
 
@@ -90,34 +85,35 @@
 
     overlay.innerHTML = `
       <div class="fm-vday-modal" data-variant="${getVariant()}">
-        <div class="fm-vday-media" style="background-image:url('${getBg()}')"></div>
-
         <button class="fm-vday-close" type="button" aria-label="Închide popup">×</button>
 
-        <div class="fm-vday-content">
-          <div class="fm-vday-titleblock">
-            <div class="fm-vday-title">Valentine’s</div>
-            <div class="fm-vday-sub">vine după colț</div>
-            ${buildOrnSvg()}
-            <div class="fm-vday-tag">Colecție limitată • Comandă rapid</div>
-          </div>
+        <div class="fm-vday-inner">
+          <div class="fm-vday-media" style="background-image:url('${getBg()}')"></div>
 
-          <div class="fm-vday-cta">
-            <a class="fm-vday-btn fm-vday-btn--wa" href="${CFG.whatsappUrl}" target="_blank" rel="noopener">
-              ${buildWhatsAppSvg()}
-              Comandă pe WhatsApp
-            </a>
-            <a class="fm-vday-btn fm-vday-btn--primary" href="${CFG.collectionUrl}">
-              Vezi colecția
-            </a>
+          <div class="fm-vday-content">
+            <div class="fm-vday-titleblock">
+              <div class="fm-vday-title">Valentine’s</div>
+              <div class="fm-vday-sub">vine după colț</div>
+              ${buildOrnSvg()}
+              <div class="fm-vday-tag">Colecție limitată • Comandă rapid</div>
+            </div>
+
+            <div class="fm-vday-cta">
+              <a class="fm-vday-btn fm-vday-btn--wa" href="${CFG.whatsappUrl}" target="_blank" rel="noopener">
+                ${buildWhatsAppSvg()}
+                Comandă pe WhatsApp
+              </a>
+              <a class="fm-vday-btn fm-vday-btn--primary" href="${CFG.collectionUrl}">
+                Vezi colecția
+              </a>
+            </div>
           </div>
         </div>
       </div>
     `;
 
-    // Prevent clicks inside modal from closing
+    // click inside modal doesn't close
     qs(".fm-vday-modal", overlay).addEventListener("click", (e) => e.stopPropagation());
-
     return overlay;
   }
 
@@ -134,34 +130,34 @@
     const overlay = createOverlay();
     document.body.appendChild(overlay);
 
-    // open animation
     requestAnimationFrame(() => overlay.classList.add("is-open"));
 
     lockScroll(true);
 
     const closeBtn = qs(".fm-vday-close", overlay);
     const modal = qs(".fm-vday-modal", overlay);
-    const focusables = getFocusable(modal);
 
     const prevFocus = document.activeElement;
-    (focusables[0] || closeBtn).focus?.();
+    (closeBtn || modal).focus?.();
 
-    const onEsc = (e) => {
+    const onKey = (e) => {
       if (e.key === "Escape") closePopup(overlay, prevFocus);
       trapTab(e, modal);
     };
 
     const onResize = () => setVariant(overlay);
-
     const onOverlayClick = () => closePopup(overlay, prevFocus);
 
     closeBtn.addEventListener("click", () => closePopup(overlay, prevFocus));
     overlay.addEventListener("click", onOverlayClick);
-    window.addEventListener("keydown", onEsc, true);
+
+    window.addEventListener("keydown", onKey, true);
     window.addEventListener("resize", onResize);
     window.addEventListener("orientationchange", onResize);
 
-    overlay.__fmHandlers = { onEsc, onResize, onOverlayClick };
+    overlay.__fmHandlers = { onKey, onResize, onOverlayClick };
+
+    setVariant(overlay);
   }
 
   function closePopup(overlay, prevFocus) {
@@ -171,7 +167,7 @@
 
     const h = overlay.__fmHandlers;
     if (h) {
-      window.removeEventListener("keydown", h.onEsc, true);
+      window.removeEventListener("keydown", h.onKey, true);
       window.removeEventListener("resize", h.onResize);
       window.removeEventListener("orientationchange", h.onResize);
       overlay.removeEventListener("click", h.onOverlayClick);
@@ -179,7 +175,6 @@
 
     lockScroll(false);
 
-    // wait for fade
     window.setTimeout(() => {
       overlay.remove();
       prevFocus?.focus?.();
