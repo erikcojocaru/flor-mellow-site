@@ -249,3 +249,37 @@ body.fmv-lock{ overflow: hidden; }
 @media (prefers-reduced-motion: reduce){
   .fmv-modal{ transition: none; }
 }
+/* ====== HOTFIX PREMIUM OVERRIDES ====== */
+
+/* 1) Desktop: keep Cupid visible */
+@media (min-width: 900px){
+  .fmv-img{
+    object-position: 18% center !important; /* mută focalizarea spre stânga */
+  }
+}
+
+/* 2) Make right panel premium (opaque enough) */
+.fmv-content{
+  background: rgba(255,255,255,.22) !important;
+  border-left: 1px solid rgba(255,255,255,.18) !important;
+}
+
+/* 3) Mobile: modal must stay inside viewport and be centered */
+@media (max-width: 760px){
+  .fmv-overlay{
+    padding: 12px !important;
+    align-items: center !important;
+  }
+  .fmv-modal{
+    max-height: 92vh !important;
+    overflow: hidden !important;
+  }
+  .fmv-media{
+    height: 52vh !important;      /* reduce ca să nu împingă contentul în afara ecranului */
+    min-height: 380px !important;
+    max-height: 520px !important;
+  }
+  .fmv-content{
+    padding: 16px !important;
+  }
+}
