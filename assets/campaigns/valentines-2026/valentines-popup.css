@@ -16,12 +16,12 @@
 
 /* Backdrop */
 .fm-vday-backdrop{
-  position: fixed;
+  position: fixed !important;
   inset: 0;
   background: var(--fm-vday-overlay);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  z-index: 99999;
+  z-index: 99999 !important;
   display: grid;
   place-items: center;
   padding: 16px;
@@ -31,7 +31,7 @@
 .fm-vday-modal{
   width: min(1100px, 96vw);
   aspect-ratio: 16 / 10;
-  position: relative;
+  position: relative !important;
   border-radius: var(--fm-vday-radius);
   overflow: hidden;
   box-shadow: var(--fm-vday-shadow);
