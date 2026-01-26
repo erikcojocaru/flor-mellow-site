@@ -2,7 +2,7 @@
   const overlay = document.getElementById("fmv-overlay");
   if (!overlay) return;
 
-  // === CONFIG: schimbi tu datele când vrei ===
+  // === CONFIG: setezi perioada aici ===
   const START = "2026-01-20"; // YYYY-MM-DD
   const END   = "2026-02-15"; // YYYY-MM-DD
 
@@ -34,6 +34,6 @@
     if (e.key === "Escape" && overlay.classList.contains("is-open")) close();
   });
 
-  // Apare la fiecare deschidere/refresh
+  // Arată după un mic delay (ca să nu pară “agresiv”)
   setTimeout(open, 350);
 })();
