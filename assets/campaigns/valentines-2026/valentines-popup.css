@@ -1,0 +1,114 @@
+/* Valentines Popup – Flor Mellow (isolated campaign file) */
+
+.fm-vday-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 12, 0.65);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999999;
+  padding: 18px;
+}
+
+.fm-vday-modal {
+  position: relative;
+  width: min(980px, 96vw);
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 25px 90px rgba(0,0,0,0.55);
+  background: #fff;
+}
+
+.fm-vday-media {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.fm-vday-ui {
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  bottom: 18px;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  align-items: center;
+  pointer-events: none; /* only buttons clickable */
+}
+
+.fm-vday-ui * { pointer-events: auto; }
+
+.fm-vday-badge {
+  position: absolute;
+  left: 18px;
+  top: 18px;
+  background: rgba(255,255,255,0.82);
+  border: 1px solid rgba(255,255,255,0.55);
+  backdrop-filter: blur(6px);
+  padding: 10px 12px;
+  border-radius: 14px;
+  font-family: inherit;
+  font-weight: 600;
+  color: #3a2f35;
+}
+
+.fm-vday-title {
+  display: block;
+  font-size: 14px;
+  letter-spacing: 0.2px;
+}
+
+.fm-vday-sub {
+  display: block;
+  font-size: 12px;
+  opacity: 0.75;
+  margin-top: 2px;
+}
+
+.fm-vday-btn {
+  border: 0;
+  padding: 12px 14px;
+  border-radius: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .08s ease, opacity .08s ease;
+}
+
+.fm-vday-btn:hover { transform: translateY(-1px); }
+
+.fm-vday-btn.primary {
+  background: #e63b6f;
+  color: #fff;
+}
+
+.fm-vday-btn.secondary {
+  background: rgba(255,255,255,0.92);
+  color: #2a2026;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+.fm-vday-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.35);
+  background: rgba(0,0,0,0.30);
+  color: #fff;
+  font-size: 20px;
+  line-height: 42px;
+  text-align: center;
+  cursor: pointer;
+}
+
+/* Mobile: make modal narrower & buttons stack */
+@media (max-width: 640px) {
+  .fm-vday-modal { width: min(520px, 96vw); }
+  .fm-vday-ui { left: 14px; right: 14px; bottom: 14px; flex-direction: column; align-items: stretch; }
+  .fm-vday-btn { width: 100%; }
+}
