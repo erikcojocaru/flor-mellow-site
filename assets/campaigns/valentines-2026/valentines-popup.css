@@ -1,244 +1,75 @@
-:root{
-  --fm-gold: #d8b46a;
-  --fm-gold-2:#f3dc9b;
-  --fm-red:  #7b1a23;
-  --fm-red-2:#b3273a;
-  --fm-cream:#f6efe6;
-}
-
-.fmv-overlay{
-  position:fixed; inset:0; z-index:999999;
-  display:none;
-  align-items:center; justify-content:center;
-  padding:18px;
-  background: rgba(12,12,14,.62);
-  backdrop-filter: blur(6px);
-}
-.fmv-overlay.is-open{ display:flex; }
-
-.fmv-modal{
-  width:min(1120px, 96vw);
-  border-radius:26px;
-  overflow:hidden;
-  position:relative;
-  box-shadow: 0 28px 120px rgba(0,0,0,.55);
-  background: transparent;
-}
-
-.fmv-stage{
-  position:relative;
-  width:100%;
-  aspect-ratio: 1536 / 1024;
-  background:#f2d7df;
-}
-
-.fmv-bg{
-  position:absolute; inset:0;
-  width:100%; height:100%;
-  object-fit:cover;
-  transform: scale(1.01);
-}
-
-/* Close */
-.fmv-close{
-  position:absolute; top:16px; right:16px;
-  width:44px; height:44px;
-  border-radius:14px;
-  border: 1px solid rgba(255,255,255,.28);
-  background: rgba(0,0,0,.22);
-  color:#fff;
-  font-size:24px;
-  cursor:pointer;
-  z-index:20;
-  transition: transform .15s ease, background .15s ease;
-}
-.fmv-close:hover{ transform: translateY(-1px); background: rgba(0,0,0,.28); }
-
-/* HERO (desktop) */
-.fmv-hero{
-  position:absolute;
-  top:58px;
-  left:50%;
-  transform: translateX(-5%);
-  width:min(760px, 70%);
-  text-align:center;
-  z-index:10;
-
-  padding:16px 20px 12px;
-  border-radius:24px;
-
-  /* foarte discret, doar ca să iasă textul */
-  background: radial-gradient(closest-side, rgba(0,0,0,.18), rgba(0,0,0,0));
-  filter: drop-shadow(0 12px 28px rgba(0,0,0,.18));
-}
-
-.fmv-titleScript{
-  font-family:"Great Vibes", cursive;
-  font-size:86px;
-  line-height:1;
-  color:#6d1b24;
-  text-shadow:
-    0 2px 0 rgba(255,255,255,.18),
-    0 10px 26px rgba(0,0,0,.28);
-  letter-spacing:.5px;
-}
-
-.fmv-titleSerif{
-  margin-top:6px;
-  font-family:"Playfair Display", serif;
-  font-size:54px;
-  line-height:1.05;
-  color: rgba(255,255,255,.94);
-  text-shadow:
-    0 2px 0 rgba(0,0,0,.18),
-    0 10px 22px rgba(0,0,0,.22);
-  letter-spacing:.35px;
-}
-
-/* ornament gold */
-.fmv-ornament{
-  width:240px;
-  height:14px;
-  margin:14px auto 10px;
-  position:relative;
-}
-.fmv-ornament::before{
-  content:"";
-  position:absolute; inset:0;
-  background: linear-gradient(90deg, transparent, var(--fm-gold), var(--fm-gold-2), var(--fm-gold), transparent);
-  height:2px;
-  top:6px;
-  border-radius:999px;
-  box-shadow: 0 0 12px rgba(216,180,106,.45);
-}
-.fmv-ornament::after{
-  content:"✦";
-  position:absolute;
-  left:50%; top:-3px;
-  transform: translateX(-50%);
-  color: var(--fm-gold-2);
-  font-size:14px;
-  text-shadow: 0 0 10px rgba(216,180,106,.55);
-}
-
-.fmv-sub{
-  font-family:"Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial;
-  font-size:13px;
-  font-weight:700;
-  color: rgba(255,255,255,.86);
-  letter-spacing:.08em;
-  text-transform: uppercase;
-  text-shadow: 0 10px 22px rgba(0,0,0,.30);
-}
-
-/* ACTION BAR (desktop) */
-.fmv-actions{
-  position:absolute;
-  left:50%;
-  transform: translateX(-50%);
-  bottom:26px;
-  z-index:15;
-
-  display:flex;
-  gap:16px;
-  align-items:center;
-  justify-content:center;
-
-  padding:14px 16px;
-  border-radius:999px;
-
-  background: rgba(255,255,255,.18);
-  border: 1px solid rgba(216,180,106,.35);
-  box-shadow:
-    0 18px 40px rgba(0,0,0,.22),
-    inset 0 1px 0 rgba(255,255,255,.25);
-  backdrop-filter: blur(10px);
-}
-
-.fmv-btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-
-  height:52px;
-  padding:0 22px;
-  border-radius:999px;
-
-  font-family:"Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial;
-  font-weight:800;
-  font-size:15px;
-  letter-spacing:.01em;
-  text-decoration:none;
-  user-select:none;
-
-  transition: transform .15s ease, filter .15s ease, box-shadow .15s ease;
-}
-
-.fmv-btn--ghost{
-  color: #2b2b2b;
-  background: linear-gradient(180deg, rgba(246,239,230,.95), rgba(244,235,224,.88));
-  border: 1px solid rgba(216,180,106,.55);
-  box-shadow:
-    0 10px 22px rgba(0,0,0,.16),
-    inset 0 1px 0 rgba(255,255,255,.8);
-}
-
-.fmv-btn--primary{
-  color: #fff;
-  background: linear-gradient(180deg, var(--fm-red-2), var(--fm-red));
-  border: 1px solid rgba(216,180,106,.60);
-  box-shadow:
-    0 12px 26px rgba(0,0,0,.22),
-    inset 0 1px 0 rgba(255,255,255,.18);
-  position:relative;
-}
-.fmv-btn--primary::after{
-  content:"";
-  position:absolute; inset:2px;
-  border-radius:999px;
-  border: 1px solid rgba(243,220,155,.35);
-  pointer-events:none;
-}
-
-.fmv-btn:hover{ transform: translateY(-1px); filter: brightness(1.02); }
-.fmv-btn:active{ transform: translateY(0px) scale(.99); }
-
-.fmv-waDot{
-  width:10px; height:10px;
-  border-radius:999px;
-  background:#25D366;
-  box-shadow: 0 0 0 3px rgba(37,211,102,.18);
-}
-
-/* MOBILE (aici e “aranjarea mișto”) */
 @media (max-width: 720px){
   .fmv-modal{ width:min(560px, 96vw); border-radius:22px; }
   .fmv-stage{ aspect-ratio: 600 / 1200; } /* vertical */
 
-  /* Textul sus, cu panel discret pentru contrast */
+  /* === HERO: mutat SUS-DREAPTA ca să NU intre peste față === */
   .fmv-hero{
-    top:18px;
-    left:50%;
-    transform: translateX(-50%);
-    width: min(520px, 90%);
-    padding:14px 14px 12px;
-    border-radius:22px;
-    background: linear-gradient(180deg, rgba(0,0,0,.28), rgba(0,0,0,.00));
-    filter: none;
-  }
-  .fmv-titleScript{ font-size:70px; }
-  .fmv-titleSerif{ font-size:40px; }
-  .fmv-sub{ font-size:12px; }
+    top: 16px;
+    left: auto;
+    right: 14px;
+    transform: none;
 
-  /* Butoane jos, pe coloană, mai premium și ușor de apăsat */
-  .fmv-actions{
-    bottom:14px;
-    flex-direction:column;
-    border-radius:22px;
-    padding:12px;
-    gap:10px;
-    width: min(420px, 92%);
+    width: min(360px, 64%);
+    text-align: right;
+
+    padding: 14px 14px 12px;
+    border-radius: 20px;
+
+    /* panel premium pentru contrast */
+    background: linear-gradient(180deg,
+      rgba(20, 14, 18, .42),
+      rgba(20, 14, 18, .18)
+    );
+    border: 1px solid rgba(216,180,106,.28);
+    box-shadow:
+      0 18px 40px rgba(0,0,0,.22),
+      inset 0 1px 0 rgba(255,255,255,.10);
+    backdrop-filter: blur(8px);
   }
+
+  .fmv-titleScript{
+    font-size: 62px;
+    color: #6d1b24;
+    text-shadow:
+      0 2px 0 rgba(255,255,255,.20),
+      0 10px 24px rgba(0,0,0,.35);
+  }
+
+  .fmv-titleSerif{
+    font-size: 38px;
+    color: rgba(255,255,255,.96);
+    text-shadow:
+      0 2px 0 rgba(0,0,0,.30),
+      0 10px 24px rgba(0,0,0,.35);
+  }
+
+  /* ornament centrat pe zona de text (dreapta) */
+  .fmv-ornament{
+    width: 190px;
+    margin: 12px 0 10px auto; /* se duce spre dreapta */
+  }
+
+  .fmv-sub{
+    font-size: 11px;
+    color: rgba(255,255,255,.90);
+    text-shadow: 0 8px 18px rgba(0,0,0,.40);
+  }
+
+  /* === ACTIONS: jos pe coloană, dar mai îngust și mai “safe” === */
+  .fmv-actions{
+    bottom: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    flex-direction: column;
+    border-radius: 18px;
+    padding: 12px;
+    gap: 10px;
+    width: min(420px, 92%);
+
+    background: rgba(255,255,255,.16);
+    border: 1px solid rgba(216,180,106,.32);
+    backdrop-filter: blur(10px);
+  }
+
   .fmv-btn{ width:100%; height:54px; font-size:15px; }
 }
