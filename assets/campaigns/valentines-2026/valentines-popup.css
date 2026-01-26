@@ -1,251 +1,287 @@
-/* Flor Mellow - Valentine's Popup 2026 */
-:root {
-  --fm-vday-radius: 26px;
-  --fm-vday-shadow: 0 18px 60px rgba(0,0,0,.35);
-  --fm-vday-gold: #d7b56d;
-  --fm-vday-burgundy: rgba(124,18,33,.92);
-  --fm-vday-ivory: rgba(255,248,240,.96);
+/* FlorMellow - Valentines Popup (2026) */
+/* File: assets/campaigns/valentines-2026/valentines-popup.css */
+
+:root{
+  --fm-vday-burgundy:#6b1f2a;
+  --fm-vday-burgundy-2:#8a2a36;
+  --fm-vday-cream:#f7efe6;
+  --fm-vday-ivory:#fff8f0;
+  --fm-vday-gold:#d7b56d;
+  --fm-vday-shadow: 0 18px 70px rgba(0,0,0,.55);
 }
 
-/* Lock body scroll when modal open */
 body.fm-vday-lock {
   overflow: hidden !important;
   touch-action: none;
 }
 
-/* Backdrop */
-.fm-vday-backdrop {
+.fm-vday-overlay{
   position: fixed;
   inset: 0;
-  z-index: 99999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: clamp(10px, 2.2vw, 28px);
-  background: rgba(0,0,0,.52);
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  padding: clamp(10px, 2.5vw, 28px);
+  background: rgba(0,0,0,.55);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 }
 
-/* Dialog */
-.fm-vday-dialog {
+.fm-vday-modal{
   position: relative;
-  width: min(1100px, calc(100vw - 24px));
-  max-height: calc(100vh - 24px);
-  border-radius: var(--fm-vday-radius);
+  width: min(1040px, 94vw);
+  max-height: 92vh;
+  border-radius: 26px;
   overflow: hidden;
   box-shadow: var(--fm-vday-shadow);
-  background: #f7f1f4;
-  transform: translateZ(0);
+  transform: translateY(6px);
+  animation: fmVdayIn .22s ease-out forwards;
+  background: #111;
 }
 
-/* Image (desktop) */
-.fm-vday-hero {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9; /* desktop layout */
-  background-size: cover;
+/* Desktop aspect: wide card */
+.fm-vday-modal[data-variant="desktop"]{
+  aspect-ratio: 16 / 9;
+}
+
+/* Mobile aspect: tall card */
+.fm-vday-modal[data-variant="mobile"]{
+  width: min(520px, 92vw);
+  aspect-ratio: 3 / 5.3;
+  border-radius: 30px;
+}
+
+@keyframes fmVdayIn{
+  to { transform: translateY(0); }
+}
+
+/* Background image */
+.fm-vday-media{
+  position: absolute;
+  inset: 0;
   background-position: center;
   background-repeat: no-repeat;
+  background-size: cover; /* desktop default */
+  filter: saturate(1.03) contrast(1.02);
 }
 
-/* Image (mobile) */
-@media (max-width: 768px) {
-  .fm-vday-dialog {
-    width: min(560px, calc(100vw - 18px));
-    border-radius: 22px;
-  }
-  .fm-vday-hero {
-    aspect-ratio: 2 / 3; /* mobile layout */
-  }
+/* Keep full image visible on mobile */
+.fm-vday-modal[data-variant="mobile"] .fm-vday-media{
+  background-size: cover;
+  /* optional: if your mobile JPG is already perfect framing, keep cover.
+     If you want NO crop at all, change to contain:
+     background-size: contain; background-color: #f3dbe4;
+  */
 }
 
 /* Close button */
-.fm-vday-close {
+.fm-vday-close{
   position: absolute;
   top: 14px;
   right: 14px;
-  width: 42px;
-  height: 42px;
-  border-radius: 14px;
+  z-index: 4;
+  width: 44px;
+  height: 44px;
   border: 0;
+  border-radius: 14px;
   cursor: pointer;
+  color: #fff;
+  background: rgba(30,30,30,.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 10px 24px rgba(0,0,0,.25);
   display: grid;
   place-items: center;
-  background: rgba(0,0,0,.28);
-  color: rgba(255,255,255,.92);
-  box-shadow: 0 10px 26px rgba(0,0,0,.25);
-  transition: transform .12s ease, background .12s ease;
-  z-index: 4;
+  font-size: 22px;
+  line-height: 1;
 }
-.fm-vday-close:hover { transform: scale(1.03); background: rgba(0,0,0,.36); }
-.fm-vday-close:active { transform: scale(.98); }
+.fm-vday-close:hover{ background: rgba(30,30,30,.5); }
+.fm-vday-close:active{ transform: scale(.98); }
+
+/* Content wrapper */
+.fm-vday-content{
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: grid;
+  pointer-events: none; /* only buttons clickable below */
+}
+
+/* Desktop: title top-right area, CTAs bottom-right */
+.fm-vday-modal[data-variant="desktop"] .fm-vday-content{
+  grid-template-rows: 1fr auto;
+  padding: clamp(18px, 2.2vw, 30px);
+}
+
+/* Mobile: push content to bottom (avoid face overlap) */
+.fm-vday-modal[data-variant="mobile"] .fm-vday-content{
+  grid-template-rows: 1fr auto;
+  padding: 18px;
+}
 
 /* Title block */
-.fm-vday-titlewrap {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  top: clamp(24px, 3.2vw, 44px); /* desktop top */
-  width: min(88%, 820px);
+.fm-vday-titleblock{
+  align-self: start;
+  justify-self: end;
+  width: min(560px, 70%);
+  padding-top: clamp(10px, 2vh, 26px);
   text-align: center;
-  z-index: 2;
 }
 
-/* On mobile move title DOWN so it doesn't cover Cupid face */
-@media (max-width: 768px) {
-  .fm-vday-titlewrap {
-    top: 38vh; /* adjust if needed: 34-42vh */
-    width: min(92%, 520px);
-  }
+/* On mobile we place the title block LOWER (not on the face) */
+.fm-vday-modal[data-variant="mobile"] .fm-vday-titleblock{
+  align-self: end;
+  justify-self: center;
+  width: 100%;
+  margin-bottom: 138px; /* leaves room for CTA panel */
+  padding-top: 0;
 }
 
-/* Title lines */
-.fm-vday-title {
-  font-family: "Fraunces","Playfair Display",serif;
+/* Premium typography (fallback safe) */
+.fm-vday-title{
+  font-family: "Fraunces", "Playfair Display", "Georgia", serif;
   font-weight: 600;
-  letter-spacing: -0.02em;
-  font-size: clamp(44px, 6vw, 78px);
-  line-height: 1.02;
+  letter-spacing: .5px;
   color: var(--fm-vday-burgundy);
-  text-shadow: 0 2px 10px rgba(0,0,0,.25);
+  text-shadow: 0 10px 24px rgba(0,0,0,.25);
+  font-size: clamp(38px, 5.2vw, 78px);
+  line-height: .95;
 }
 
-@media (max-width: 768px) {
-  .fm-vday-title {
-    font-size: clamp(38px, 9vw, 54px);
-    color: var(--fm-vday-ivory);
-    -webkit-text-stroke: 0.9px rgba(215,181,109,.55);
-    text-shadow: 0 2px 12px rgba(0,0,0,.38);
-  }
-}
-
-/* Subtitle */
-.fm-vday-subtitle {
-  margin-top: 10px;
-  font-family: "Fraunces","Playfair Display",serif;
+.fm-vday-sub{
+  margin-top: 6px;
+  font-family: "Fraunces", "Playfair Display", "Georgia", serif;
   font-weight: 600;
-  letter-spacing: -0.01em;
-  font-size: clamp(26px, 3.6vw, 46px);
-  color: rgba(255,255,255,.94);
-  text-shadow: 0 2px 12px rgba(0,0,0,.30);
+  color: var(--fm-vday-ivory);
+  text-shadow: 0 10px 24px rgba(0,0,0,.40);
+  font-size: clamp(22px, 3.1vw, 44px);
 }
 
-/* Gold ornament line */
-.fm-vday-orn {
-  margin: 12px auto 0;
-  width: min(62%, 520px);
-  height: 2px;
-  background: linear-gradient(to right, transparent, var(--fm-vday-gold), transparent);
-  border-radius: 999px;
-  box-shadow: 0 2px 10px rgba(0,0,0,.18);
-  position: relative;
-}
-.fm-vday-orn::after{
-  content:"";
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  width:10px;height:10px;border-radius:999px;
-  background: var(--fm-vday-gold);
-  box-shadow: 0 0 0 3px rgba(215,181,109,.25);
-}
-
-/* Micro line */
-.fm-vday-micro {
+.fm-vday-tag{
   margin-top: 10px;
-  font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  font-size: 12px;
-  letter-spacing: .16em;
+  font-family: "DM Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-weight: 600;
+  font-size: clamp(12px, 1.2vw, 15px);
+  letter-spacing: .14em;
   text-transform: uppercase;
-  color: rgba(255,255,255,.86);
-  text-shadow: 0 2px 10px rgba(0,0,0,.25);
+  color: rgba(255,255,255,.9);
+  text-shadow: 0 8px 18px rgba(0,0,0,.35);
 }
 
-@media (max-width: 768px) {
-  /* Add subtle blur plate behind title only on mobile for readability */
-  .fm-vday-titlewrap {
-    padding: 12px 14px;
-    border-radius: 18px;
-    background: rgba(255,255,255,.10);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 10px 28px rgba(0,0,0,.18);
-    border: 1px solid rgba(255,255,255,.18);
-  }
+/* Gold ornament underline */
+.fm-vday-orn{
+  margin: 12px auto 0;
+  width: min(320px, 60%);
+  height: 18px;
+  opacity: .95;
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,.25));
 }
 
-/* Buttons container */
-.fm-vday-actions {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: clamp(14px, 2.6vw, 22px);
+/* CTA panel */
+.fm-vday-cta{
+  align-self: end;
+  justify-self: end;
+  pointer-events: auto;
   display: flex;
   gap: 14px;
   align-items: center;
-  justify-content: center;
-  z-index: 3;
-  width: min(86%, 820px);
+
+  padding: 14px 14px;
+  border-radius: 22px;
+
+  background: rgba(255,255,255,.10);
+  border: 1px solid rgba(255,255,255,.16);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 18px 44px rgba(0,0,0,.28);
 }
 
-@media (max-width: 768px) {
-  .fm-vday-actions {
-    flex-direction: column;
-    gap: 12px;
-    width: min(92%, 520px);
-    bottom: 16px;
-  }
+/* Desktop position */
+.fm-vday-modal[data-variant="desktop"] .fm-vday-cta{
+  margin: 0 10px 10px 0;
 }
 
-/* Premium buttons style */
-.fm-vday-btn {
+/* Mobile: full-width CTA at bottom, stacked buttons */
+.fm-vday-modal[data-variant="mobile"] .fm-vday-cta{
+  width: calc(100% - 6px);
+  justify-self: center;
+  margin: 0 0 6px 0;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px 14px 16px;
+}
+
+/* Buttons */
+.fm-vday-btn{
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  text-decoration: none;
+  user-select: none;
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 14px 22px;
+
+  height: 52px;
+  padding: 0 22px;
   border-radius: 999px;
-  text-decoration: none;
-  font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  font-weight: 600;
-  letter-spacing: .01em;
-  box-shadow: 0 12px 24px rgba(0,0,0,.20);
-  border: 1px solid rgba(215,181,109,.55);
-  transition: transform .12s ease, filter .12s ease;
-  user-select: none;
-}
-.fm-vday-btn:hover { transform: translateY(-1px); filter: brightness(1.03); }
-.fm-vday-btn:active { transform: translateY(0px) scale(.99); }
 
-/* WhatsApp button (ivory) */
-.fm-vday-btn--wa {
-  background: rgba(255, 248, 240, .92);
-  color: rgba(45,45,45,.92);
+  font-family: "DM Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+
+  transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
 }
 
-/* Collection button (burgundy) */
-.fm-vday-btn--col {
-  background: linear-gradient(180deg, rgba(160,20,44,.92), rgba(105,14,30,.95));
-  color: rgba(255,255,255,.95);
+.fm-vday-btn:active{ transform: translateY(1px) scale(.995); }
+
+/* WhatsApp premium (cream + gold) */
+.fm-vday-btn--wa{
+  color: #2f241f;
+  background: linear-gradient(180deg, #fff7ef 0%, #f1e2d6 100%);
+  border: 1px solid rgba(215,181,109,.75);
+  box-shadow: 0 10px 26px rgba(0,0,0,.20);
 }
 
-/* WhatsApp icon */
-.fm-vday-wa-dot {
-  width: 22px;
-  height: 22px;
+.fm-vday-btn--wa .fm-vday-dot{
+  width: 10px;
+  height: 10px;
   border-radius: 999px;
-  background: rgba(37,211,102,.20);
-  border: 1px solid rgba(37,211,102,.55);
-  display: grid;
-  place-items: center;
-}
-.fm-vday-wa-dot svg {
-  width: 14px;
-  height: 14px;
-  fill: rgba(37,211,102,.95);
+  background: #22c55e;
+  box-shadow: 0 0 0 4px rgba(34,197,94,.18);
 }
 
-/* Prevent accidental selection / tap highlight */
-.fm-vday-btn, .fm-vday-close { -webkit-tap-highlight-color: transparent; }
+/* Collection premium (burgundy + gold) */
+.fm-vday-btn--primary{
+  color: var(--fm-vday-ivory);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.12) 0%, rgba(255,255,255,0) 40%),
+    linear-gradient(180deg, var(--fm-vday-burgundy-2) 0%, var(--fm-vday-burgundy) 100%);
+  border: 1px solid rgba(215,181,109,.75);
+  box-shadow: 0 14px 30px rgba(0,0,0,.28);
+}
+
+.fm-vday-btn:hover{
+  filter: brightness(1.02);
+  box-shadow: 0 16px 34px rgba(0,0,0,.28);
+}
+
+/* Mobile button widths */
+.fm-vday-modal[data-variant="mobile"] .fm-vday-btn{
+  width: 100%;
+  height: 58px;
+  font-size: 17px;
+}
+
+/* Make the close button bigger on mobile */
+@media (max-width: 520px){
+  .fm-vday-close{
+    width: 48px;
+    height: 48px;
+    border-radius: 16px;
+    top: 12px;
+    right: 12px;
+  }
+}
