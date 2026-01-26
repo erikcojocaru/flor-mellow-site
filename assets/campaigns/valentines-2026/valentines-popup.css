@@ -1,114 +1,170 @@
-/* Valentines Popup – Flor Mellow (isolated campaign file) */
+/* Flor Mellow — Valentine’s Popup (Seasonal, isolated) */
 
 .fm-vday-overlay {
   position: fixed;
   inset: 0;
+  z-index: 999999;
   background: rgba(10, 10, 12, 0.65);
   backdrop-filter: blur(2px);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 999999;
   padding: 18px;
 }
 
 .fm-vday-modal {
   position: relative;
-  width: min(980px, 96vw);
-  border-radius: 22px;
+  width: min(1100px, 96vw);
+  border-radius: 26px;
   overflow: hidden;
-  box-shadow: 0 25px 90px rgba(0,0,0,0.55);
-  background: #fff;
+  box-shadow: 0 30px 120px rgba(0,0,0,0.55);
+  background: rgba(255,255,255,0.02);
 }
 
+/* Image */
 .fm-vday-media {
   width: 100%;
   height: auto;
   display: block;
 }
 
-.fm-vday-ui {
-  position: absolute;
-  left: 22px;
-  right: 22px;
-  bottom: 18px;
-  display: flex;
-  gap: 10px;
-  justify-content: flex-end;
-  align-items: center;
-  pointer-events: none; /* only buttons clickable */
-}
-
-.fm-vday-ui * { pointer-events: auto; }
-
-.fm-vday-badge {
-  position: absolute;
-  left: 18px;
-  top: 18px;
-  background: rgba(255,255,255,0.82);
-  border: 1px solid rgba(255,255,255,0.55);
-  backdrop-filter: blur(6px);
-  padding: 10px 12px;
-  border-radius: 14px;
-  font-family: inherit;
-  font-weight: 600;
-  color: #3a2f35;
-}
-
-.fm-vday-title {
-  display: block;
-  font-size: 14px;
-  letter-spacing: 0.2px;
-}
-
-.fm-vday-sub {
-  display: block;
-  font-size: 12px;
-  opacity: 0.75;
-  margin-top: 2px;
-}
-
-.fm-vday-btn {
-  border: 0;
-  padding: 12px 14px;
-  border-radius: 14px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: transform .08s ease, opacity .08s ease;
-}
-
-.fm-vday-btn:hover { transform: translateY(-1px); }
-
-.fm-vday-btn.primary {
-  background: #e63b6f;
-  color: #fff;
-}
-
-.fm-vday-btn.secondary {
-  background: rgba(255,255,255,0.92);
-  color: #2a2026;
-  border: 1px solid rgba(0,0,0,0.08);
-}
-
+/* Close button */
 .fm-vday-close {
   position: absolute;
-  top: 14px;
-  right: 14px;
-  width: 42px;
-  height: 42px;
+  top: 16px;
+  right: 16px;
+  width: 44px;
+  height: 44px;
   border-radius: 14px;
   border: 1px solid rgba(255,255,255,0.35);
   background: rgba(0,0,0,0.30);
   color: #fff;
-  font-size: 20px;
+  font-size: 22px;
   line-height: 42px;
   text-align: center;
   cursor: pointer;
+  transition: transform .12s ease, opacity .12s ease;
 }
 
-/* Mobile: make modal narrower & buttons stack */
+.fm-vday-close:hover { transform: translateY(-1px); }
+.fm-vday-close:active { transform: translateY(0); opacity: 0.85; }
+
+/* Headline (center-right, premium) */
+.fm-vday-headline {
+  position: absolute;
+  top: 84px;
+  left: 60%;
+  transform: translateX(-50%);
+  width: min(720px, 68vw);
+  text-align: center;
+  pointer-events: none;
+  text-shadow: 0 8px 26px rgba(0,0,0,0.22);
+}
+
+.fm-vday-headline .vday-main {
+  font-family: "Fraunces", "Playfair Display", Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(42px, 4.2vw, 74px);
+  letter-spacing: 0.3px;
+  line-height: 1.05;
+  margin: 0;
+}
+
+.fm-vday-headline .vday-main .red {
+  color: #e63b6f; /* premium rose */
+}
+
+.fm-vday-headline .vday-main .ivory {
+  color: rgba(255,255,255,0.92); /* elegant white/ivory */
+}
+
+.fm-vday-headline .vday-ornament {
+  display: inline-block;
+  margin-top: 10px;
+  width: 160px;
+  height: 10px;
+  opacity: 0.85;
+}
+
+.fm-vday-headline .vday-sub {
+  margin-top: 10px;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 14px;
+  color: rgba(255,255,255,0.82);
+  letter-spacing: 0.2px;
+}
+
+/* Buttons container */
+.fm-vday-ui {
+  position: absolute;
+  right: 26px;
+  bottom: 22px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* Buttons premium */
+.fm-vday-btn {
+  border: 0;
+  border-radius: 999px;
+  padding: 12px 18px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  cursor: pointer;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.20);
+  transition: transform .12s ease, opacity .12s ease, filter .12s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.fm-vday-btn:hover { transform: translateY(-2px); }
+.fm-vday-btn:active { transform: translateY(0); opacity: 0.92; }
+
+.fm-vday-btn.primary {
+  background: linear-gradient(180deg, #ff4b7d 0%, #e63b6f 55%, #cf2e5f 100%);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.18);
+}
+
+.fm-vday-btn.secondary {
+  background: rgba(255,255,255,0.78);
+  backdrop-filter: blur(10px);
+  color: rgba(35, 25, 32, 0.92);
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+/* Small WhatsApp icon style */
+.fm-vday-wa-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 99px;
+  background: #25D366;
+  box-shadow: 0 0 0 4px rgba(37, 211, 102, 0.18);
+}
+
+/* Mobile */
 @media (max-width: 640px) {
   .fm-vday-modal { width: min(520px, 96vw); }
-  .fm-vday-ui { left: 14px; right: 14px; bottom: 14px; flex-direction: column; align-items: stretch; }
-  .fm-vday-btn { width: 100%; }
+
+  .fm-vday-headline {
+    top: 36px;
+    left: 50%;
+    width: min(520px, 88vw);
+  }
+
+  .fm-vday-ui {
+    left: 14px;
+    right: 14px;
+    bottom: 14px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .fm-vday-btn { width: 100%; justify-content: center; }
+
+  .fm-vday-close { top: 12px; right: 12px; }
 }
