@@ -1,172 +1,214 @@
-/* FlorMellow - Valentines Popup (2026) */
-/* File: assets/campaigns/valentines-2026/valentines-popup.js */
+/* FlorMellow - Valentines Popup (2026)
+   File: assets/campaigns/valentines-2026/valentines-popup.js */
 
 (function () {
   "use strict";
 
-  // === CONFIG ===
-  const CAMPAIGN_BASE = "assets/campaigns/valentines-2026";
-  const IMG_DESKTOP = `${CAMPAIGN_BASE}/popup-desktop.jpg`;
-  const IMG_MOBILE  = `${CAMPAIGN_BASE}/popup-mobile.jpg`;
+  // =========================
+  // CONFIG (edit here only)
+  // =========================
+  const CONFIG = {
+    // assets (your existing filenames)
+    desktopImage: "assets/campaigns/valentines-2026/popup-desktop.jpg",
+    mobileImage: "assets/campaigns/valentines-2026/popup-mobile.jpg",
 
-  // Change these if you want:
-  const WHATSAPP_URL = "https://wa.me/40700000000?text=Salut!%20Vreau%20sa%20comand%20din%20colectia%20Valentine%E2%80%99s%20Flor%20Mellow.";
-  const COLLECTION_URL = "catalog.html#valentines"; // or "catalog.html" if you prefer
+    // behaviour
+    showDelayMs: 700,
+    dismissDays: 3, // don't show again for X days after closing
 
-  // show on every new open (NO localStorage gating)
-  const SHOULD_AUTOSHOW = true;
+    // links
+    collectionUrl: "catalog.html#valentines-2026", // change to your real anchor/section
+    waPhone: "407XXXXXXXX", // << put your WhatsApp number here (no +, no spaces)
+    waText: "Bună! Vreau să comand din colecția Valentine’s 🌹",
 
-  // === INTERNALS ===
-  const OVERLAY_ID = "fm-vday-overlay";
+    // texts
+    titleWord: "Valentine’s",
+    subtitle: "vine după colț",
+    tagline: "Colecție limitată • Comandă rapid",
 
-  function isMobile() {
-    return window.matchMedia("(max-width: 768px)").matches;
+    // responsive switch
+    mobileBreakpoint: 760
+  };
+
+  const STORAGE_KEY = "fm_vday_2026_dismiss_until";
+  let overlayEl = null;
+  let modalEl = null;
+
+  function nowTs() { return Date.now(); }
+
+  function getDismissUntil() {
+    const v = localStorage.getItem(STORAGE_KEY);
+    const n = v ? Number(v) : 0;
+    return Number.isFinite(n) ? n : 0;
   }
 
-  function qs(sel, root = document) { return root.querySelector(sel); }
+  function setDismissForDays(days) {
+    const ms = days * 24 * 60 * 60 * 1000;
+    localStorage.setItem(STORAGE_KEY, String(nowTs() + ms));
+  }
 
-  function lockScroll() { document.body.classList.add("fm-vday-lock"); }
-  function unlockScroll() { document.body.classList.remove("fm-vday-lock"); }
+  function isDismissed() {
+    return getDismissUntil() > nowTs();
+  }
 
-  function buildOrnamentSVG() {
-    // lightweight gold ornament
+  function isMobileVariant() {
+    return window.innerWidth <= CONFIG.mobileBreakpoint;
+  }
+
+  function buildWhatsAppUrl() {
+    const text = encodeURIComponent(CONFIG.waText || "");
+    return `https://wa.me/${CONFIG.waPhone}?text=${text}`;
+  }
+
+  function ornamentSVG() {
+    // simple "infinity" gold flourish (no external SVG needed)
     return `
-      <svg class="fm-vday-orn" viewBox="0 0 400 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M30 30c55 0 55-16 110-16s55 16 110 16 55-16 110-16"
-              fill="none" stroke="rgba(215,181,109,.95)" stroke-width="4" stroke-linecap="round"/>
-        <path d="M170 30c15 0 15 10 30 10s15-10 30-10"
-              fill="none" stroke="rgba(215,181,109,.95)" stroke-width="4" stroke-linecap="round"/>
-        <circle cx="200" cy="30" r="6" fill="rgba(215,181,109,.95)"/>
+      <svg class="fm-vday-orn" viewBox="0 0 520 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M55 30c55-40 110-40 165 0s110 40 165 0 110-40 165 0"
+              stroke="rgba(215,181,109,.95)" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="260" cy="30" r="6" fill="rgba(215,181,109,.95)"/>
       </svg>
     `;
   }
 
-  function popupMarkup() {
+  function waIconSVG() {
     return `
-      <div id="${OVERLAY_ID}" class="fm-vday-overlay" role="dialog" aria-modal="true" aria-label="Promo Valentine">
-        <div class="fm-vday-modal" data-variant="${isMobile() ? "mobile" : "desktop"}">
-          <button type="button" class="fm-vday-close" aria-label="Închide">×</button>
-
-          <div class="fm-vday-media"></div>
-
-          <div class="fm-vday-content">
-            <div class="fm-vday-titleblock">
-              <div class="fm-vday-title">Valentine’s</div>
-              <div class="fm-vday-sub">vine după colț</div>
-              ${buildOrnamentSVG()}
-              <div class="fm-vday-tag">Colecție limitată • Comandă rapid</div>
-            </div>
-
-            <div class="fm-vday-cta">
-              <a class="fm-vday-btn fm-vday-btn--wa" href="${WHATSAPP_URL}" target="_blank" rel="noopener">
-                <span class="fm-vday-dot"></span>
-                Comandă pe WhatsApp
-              </a>
-              <a class="fm-vday-btn fm-vday-btn--primary" href="${COLLECTION_URL}">
-                Vezi colecția
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
+      <svg class="fm-vday-wa-ic" viewBox="0 0 32 32" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#22c55e" d="M16 3C9.4 3 4 8.1 4 14.5c0 2.5.8 4.8 2.2 6.7L5 29l8-1.9c1.8 1 3.9 1.6 6 1.6 6.6 0 12-5.1 12-11.5S22.6 3 16 3z"/>
+        <path fill="#fff" d="M12.7 10.2c-.3-.6-.6-.6-.9-.6h-.8c-.3 0-.7.1-1 .5-.3.4-1.3 1.3-1.3 3.2s1.4 3.7 1.6 3.9c.2.3 2.8 4.4 6.9 6 3.4 1.3 4.1 1 4.9.9.8-.1 2.5-1 2.9-2 .3-1 .3-1.8.2-2-.1-.2-.3-.3-.7-.5-.4-.2-2.5-1.2-2.9-1.4-.4-.1-.7-.2-1 .2-.3.4-1.1 1.4-1.4 1.7-.3.3-.5.3-.9.1-.4-.2-1.7-.6-3.2-2-1.2-1.1-2-2.4-2.2-2.8-.2-.4 0-.6.2-.8.2-.2.4-.5.6-.7.2-.2.3-.4.4-.6.1-.2.1-.5 0-.7-.1-.2-.9-2.2-1.2-2.9z"/>
+      </svg>
     `;
   }
 
-  function setBackground(modalEl) {
-    const media = qs(".fm-vday-media", modalEl);
-    const variant = modalEl.getAttribute("data-variant");
-    const img = (variant === "mobile") ? IMG_MOBILE : IMG_DESKTOP;
-    media.style.backgroundImage = `url("${img}")`;
-  }
-
-  function applyVariant(modalEl, nextVariant) {
-    const current = modalEl.getAttribute("data-variant");
-    if (current === nextVariant) return;
-
-    modalEl.setAttribute("data-variant", nextVariant);
-    setBackground(modalEl);
-  }
-
   function removePopup() {
-    const overlay = document.getElementById(OVERLAY_ID);
-    if (!overlay) return;
+    if (!overlayEl) return;
 
-    overlay.remove();
-    unlockScroll();
-
-    document.removeEventListener("keydown", onKeydown, true);
+    // remove listeners safely
+    document.removeEventListener("keydown", onKeyDown, true);
     window.removeEventListener("resize", onResize, { passive: true });
+    window.removeEventListener("orientationchange", onResize, { passive: true });
+
+    // remove DOM
+    overlayEl.remove();
+    overlayEl = null;
+    modalEl = null;
+
+    // unlock scroll
+    document.body.classList.remove("fm-vday-lock");
   }
 
-  function onKeydown(e) {
-    if (e.key === "Escape") removePopup();
+  function closePopup() {
+    // remember dismissal
+    setDismissForDays(CONFIG.dismissDays);
+
+    // small fade out
+    if (modalEl) modalEl.style.opacity = "0";
+    if (overlayEl) overlayEl.style.opacity = "0";
+    setTimeout(removePopup, 120);
   }
 
-  let resizeT = null;
+  function onKeyDown(e) {
+    if (e.key === "Escape") closePopup();
+  }
+
+  function onOverlayClick(e) {
+    // close only if clicking outside modal
+    if (e.target === overlayEl) closePopup();
+  }
+
+  function setVariantAssets() {
+    if (!modalEl) return;
+    const variant = isMobileVariant() ? "mobile" : "desktop";
+    modalEl.setAttribute("data-variant", variant);
+
+    const media = modalEl.querySelector(".fm-vday-media");
+    if (media) {
+      media.style.backgroundImage = `url('${variant === "mobile" ? CONFIG.mobileImage : CONFIG.desktopImage}')`;
+    }
+  }
+
   function onResize() {
-    // Debounce + adapt variant + keep it responsive
-    clearTimeout(resizeT);
-    resizeT = setTimeout(() => {
-      const overlay = document.getElementById(OVERLAY_ID);
-      if (!overlay) return;
-
-      const modal = qs(".fm-vday-modal", overlay);
-      const nextVariant = isMobile() ? "mobile" : "desktop";
-      applyVariant(modal, nextVariant);
-    }, 120);
+    // Keep it adaptive: switch between desktop/mobile popup variant
+    setVariantAssets();
   }
 
-  function showPopup() {
-    // Prevent duplicates
-    if (document.getElementById(OVERLAY_ID)) return;
+  function mountPopup() {
+    if (overlayEl) return; // prevent duplicates
+    if (isDismissed()) return;
 
-    lockScroll();
-    document.body.insertAdjacentHTML("beforeend", popupMarkup());
+    document.body.classList.add("fm-vday-lock");
 
-    const overlay = document.getElementById(OVERLAY_ID);
-    const modal = qs(".fm-vday-modal", overlay);
-    const closeBtn = qs(".fm-vday-close", overlay);
+    overlayEl = document.createElement("div");
+    overlayEl.className = "fm-vday-overlay";
+    overlayEl.setAttribute("role", "dialog");
+    overlayEl.setAttribute("aria-modal", "true");
+    overlayEl.addEventListener("click", onOverlayClick);
 
-    setBackground(modal);
+    modalEl = document.createElement("div");
+    modalEl.className = "fm-vday-modal";
 
-    // Close: X
-    closeBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      removePopup();
-    });
+    const waUrl = buildWhatsAppUrl();
 
-    // Close: click outside card
-    overlay.addEventListener("click", (e) => {
-      if (e.target === overlay) removePopup();
-    });
+    modalEl.innerHTML = `
+      <div class="fm-vday-media"></div>
 
-    // Close: ESC
-    document.addEventListener("keydown", onKeydown, true);
+      <button class="fm-vday-close" type="button" aria-label="Închide">×</button>
 
-    // Responsive: change variant on resize
+      <div class="fm-vday-content">
+        <div class="fm-vday-titleblock">
+          <div class="fm-vday-titleglass">
+            <div class="fm-vday-title">
+              <span class="fm-vday-title-word">${CONFIG.titleWord}</span>
+            </div>
+            <div class="fm-vday-sub">${CONFIG.subtitle}</div>
+            ${ornamentSVG()}
+            <div class="fm-vday-tag">${CONFIG.tagline}</div>
+          </div>
+        </div>
+
+        <div class="fm-vday-cta">
+          <a class="fm-vday-btn fm-vday-btn--wa" href="${waUrl}" target="_blank" rel="noopener">
+            ${waIconSVG()}
+            Comandă pe WhatsApp
+          </a>
+          <a class="fm-vday-btn fm-vday-btn--primary" href="${CONFIG.collectionUrl}">
+            Vezi colecția
+          </a>
+        </div>
+      </div>
+    `;
+
+    overlayEl.appendChild(modalEl);
+    document.body.appendChild(overlayEl);
+
+    // Set variant + image
+    setVariantAssets();
+
+    // Events
+    modalEl.querySelector(".fm-vday-close").addEventListener("click", closePopup);
+    document.addEventListener("keydown", onKeyDown, true);
+
     window.addEventListener("resize", onResize, { passive: true });
+    window.addEventListener("orientationchange", onResize, { passive: true });
+
+    // Important: stop clicks inside modal from closing
+    modalEl.addEventListener("click", (e) => e.stopPropagation());
   }
 
-  function init() {
-    if (!SHOULD_AUTOSHOW) return;
+  function boot() {
+    if (isDismissed()) return;
 
-    // Run on index.html and catalog.html (and also if paths differ)
-    const path = (location.pathname || "").toLowerCase();
-    const allowed =
-      path.endsWith("/") ||
-      path.endsWith("/index.html") ||
-      path.endsWith("/catalog.html") ||
-      path.endsWith("/index") ||
-      path.endsWith("/catalog");
-
-    // If your GitHub Pages path is like /flor-mellow-site/index.html, still works via endsWith
-    if (allowed) showPopup();
+    // delay so page loads first
+    window.setTimeout(() => {
+      // double check not dismissed during delay
+      if (!isDismissed()) mountPopup();
+    }, CONFIG.showDelayMs);
   }
 
+  // Start
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
+    document.addEventListener("DOMContentLoaded", boot);
   } else {
-    init();
+    boot();
   }
-
 })();
