@@ -1,244 +1,306 @@
+/* === FlorMellow Valentines Popup 2026 === */
+
 :root{
-  --fm-gold: #d8b46a;
-  --fm-gold-2:#f3dc9b;
-  --fm-red:  #7b1a23;
-  --fm-red-2:#b3273a;
-  --fm-cream:#f6efe6;
+  --fm-vday-radius: 28px;
+  --fm-vday-shadow: 0 30px 90px rgba(0,0,0,.35);
+  --fm-vday-overlay: rgba(10,10,12,.55);
+
+  --fm-gold: #d7b56d;
+  --fm-ivory: rgba(255, 245, 235, .92);
+  --fm-wine: #7a0f1b;
+  --fm-wine-2: #a3192a;
+
+  --fm-text: rgba(255,255,255,.95);
+  --fm-text-soft: rgba(255,255,255,.80);
 }
 
-.fmv-overlay{
-  position:fixed; inset:0; z-index:999999;
-  display:none;
-  align-items:center; justify-content:center;
-  padding:18px;
-  background: rgba(12,12,14,.62);
-  backdrop-filter: blur(6px);
-}
-.fmv-overlay.is-open{ display:flex; }
-
-.fmv-modal{
-  width:min(1120px, 96vw);
-  border-radius:26px;
-  overflow:hidden;
-  position:relative;
-  box-shadow: 0 28px 120px rgba(0,0,0,.55);
-  background: transparent;
+/* Backdrop */
+.fm-vday-backdrop{
+  position: fixed;
+  inset: 0;
+  background: var(--fm-vday-overlay);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 99999;
+  display: grid;
+  place-items: center;
+  padding: 16px;
 }
 
-.fmv-stage{
-  position:relative;
-  width:100%;
-  aspect-ratio: 1536 / 1024;
-  background:#f2d7df;
+/* Modal */
+.fm-vday-modal{
+  width: min(1100px, 96vw);
+  aspect-ratio: 16 / 10;
+  position: relative;
+  border-radius: var(--fm-vday-radius);
+  overflow: hidden;
+  box-shadow: var(--fm-vday-shadow);
+  transform: translateY(6px);
+  opacity: 0;
+  animation: fmVdayIn .22s ease-out forwards;
 }
 
-.fmv-bg{
-  position:absolute; inset:0;
-  width:100%; height:100%;
-  object-fit:cover;
-  transform: scale(1.01);
+@keyframes fmVdayIn{
+  to { transform: translateY(0); opacity: 1; }
 }
 
-/* Close */
-.fmv-close{
-  position:absolute; top:16px; right:16px;
-  width:44px; height:44px;
-  border-radius:14px;
-  border: 1px solid rgba(255,255,255,.28);
-  background: rgba(0,0,0,.22);
-  color:#fff;
-  font-size:24px;
-  cursor:pointer;
-  z-index:20;
-  transition: transform .15s ease, background .15s ease;
-}
-.fmv-close:hover{ transform: translateY(-1px); background: rgba(0,0,0,.28); }
-
-/* HERO (desktop) */
-.fmv-hero{
-  position:absolute;
-  top:58px;
-  left:50%;
-  transform: translateX(-5%);
-  width:min(760px, 70%);
-  text-align:center;
-  z-index:10;
-
-  padding:16px 20px 12px;
-  border-radius:24px;
-
-  /* foarte discret, doar ca să iasă textul */
-  background: radial-gradient(closest-side, rgba(0,0,0,.18), rgba(0,0,0,0));
-  filter: drop-shadow(0 12px 28px rgba(0,0,0,.18));
+/* Background image layer (responsive cover) */
+.fm-vday-bg{
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  transform: scale(1.01); /* avoid 1px gaps on some browsers */
 }
 
-.fmv-titleScript{
-  font-family:"Great Vibes", cursive;
-  font-size:86px;
-  line-height:1;
-  color:#6d1b24;
-  text-shadow:
-    0 2px 0 rgba(255,255,255,.18),
-    0 10px 26px rgba(0,0,0,.28);
-  letter-spacing:.5px;
+/* Soft vignette for readability */
+.fm-vday-vignette{
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(1200px 700px at 70% 20%, rgba(0,0,0,.00) 0%, rgba(0,0,0,.18) 65%, rgba(0,0,0,.25) 100%),
+    linear-gradient(to bottom, rgba(0,0,0,.12), rgba(0,0,0,.12));
+  pointer-events: none;
 }
 
-.fmv-titleSerif{
-  margin-top:6px;
-  font-family:"Playfair Display", serif;
-  font-size:54px;
-  line-height:1.05;
-  color: rgba(255,255,255,.94);
-  text-shadow:
-    0 2px 0 rgba(0,0,0,.18),
-    0 10px 22px rgba(0,0,0,.22);
-  letter-spacing:.35px;
-}
-
-/* ornament gold */
-.fmv-ornament{
-  width:240px;
-  height:14px;
-  margin:14px auto 10px;
-  position:relative;
-}
-.fmv-ornament::before{
-  content:"";
-  position:absolute; inset:0;
-  background: linear-gradient(90deg, transparent, var(--fm-gold), var(--fm-gold-2), var(--fm-gold), transparent);
-  height:2px;
-  top:6px;
-  border-radius:999px;
-  box-shadow: 0 0 12px rgba(216,180,106,.45);
-}
-.fmv-ornament::after{
-  content:"✦";
-  position:absolute;
-  left:50%; top:-3px;
-  transform: translateX(-50%);
-  color: var(--fm-gold-2);
-  font-size:14px;
-  text-shadow: 0 0 10px rgba(216,180,106,.55);
-}
-
-.fmv-sub{
-  font-family:"Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial;
-  font-size:13px;
-  font-weight:700;
-  color: rgba(255,255,255,.86);
-  letter-spacing:.08em;
-  text-transform: uppercase;
-  text-shadow: 0 10px 22px rgba(0,0,0,.30);
-}
-
-/* ACTION BAR (desktop) */
-.fmv-actions{
-  position:absolute;
-  left:50%;
-  transform: translateX(-50%);
-  bottom:26px;
-  z-index:15;
-
-  display:flex;
-  gap:16px;
-  align-items:center;
-  justify-content:center;
-
-  padding:14px 16px;
-  border-radius:999px;
-
-  background: rgba(255,255,255,.18);
-  border: 1px solid rgba(216,180,106,.35);
-  box-shadow:
-    0 18px 40px rgba(0,0,0,.22),
-    inset 0 1px 0 rgba(255,255,255,.25);
-  backdrop-filter: blur(10px);
-}
-
-.fmv-btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-
-  height:52px;
-  padding:0 22px;
-  border-radius:999px;
-
-  font-family:"Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial;
-  font-weight:800;
-  font-size:15px;
-  letter-spacing:.01em;
-  text-decoration:none;
-  user-select:none;
-
-  transition: transform .15s ease, filter .15s ease, box-shadow .15s ease;
-}
-
-.fmv-btn--ghost{
-  color: #2b2b2b;
-  background: linear-gradient(180deg, rgba(246,239,230,.95), rgba(244,235,224,.88));
-  border: 1px solid rgba(216,180,106,.55);
-  box-shadow:
-    0 10px 22px rgba(0,0,0,.16),
-    inset 0 1px 0 rgba(255,255,255,.8);
-}
-
-.fmv-btn--primary{
+/* Close button */
+.fm-vday-close{
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.25);
+  background: rgba(0,0,0,.25);
   color: #fff;
-  background: linear-gradient(180deg, var(--fm-red-2), var(--fm-red));
-  border: 1px solid rgba(216,180,106,.60);
-  box-shadow:
-    0 12px 26px rgba(0,0,0,.22),
-    inset 0 1px 0 rgba(255,255,255,.18);
-  position:relative;
+  font-size: 22px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: transform .12s ease, background .12s ease;
+  z-index: 5;
 }
-.fmv-btn--primary::after{
+
+.fm-vday-close:hover{ transform: scale(1.04); background: rgba(0,0,0,.35); }
+
+/* Content wrapper */
+.fm-vday-content{
+  position: absolute;
+  inset: 0;
+  padding: 32px;
+  display: grid;
+  grid-template-rows: 1fr auto;
+}
+
+/* Title area */
+.fm-vday-hero{
+  position: relative;
+  align-self: start;
+  justify-self: center;
+  text-align: center;
+  margin-top: clamp(18px, 3.2vw, 30px);
+  z-index: 3;
+  max-width: 72%;
+}
+
+/* Big script word (Valentine’s) */
+.fm-vday-title{
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: .5px;
+  font-size: clamp(46px, 5.6vw, 86px);
+  line-height: 1.02;
+  color: rgba(124, 18, 33, .88); /* wine */
+  text-shadow:
+    0 2px 10px rgba(0,0,0,.25),
+    0 0 1px rgba(0,0,0,.35);
+}
+
+/* Second line */
+.fm-vday-subtitle{
+  margin: 8px 0 0;
+  font-weight: 600;
+  font-size: clamp(28px, 3.2vw, 46px);
+  color: rgba(255,255,255,.92);
+  text-shadow: 0 2px 10px rgba(0,0,0,.28);
+}
+
+/* Underline flourish */
+.fm-vday-flourish{
+  margin: 14px auto 0;
+  width: min(420px, 60%);
+  height: 14px;
+  position: relative;
+  opacity: .95;
+}
+
+.fm-vday-flourish:before{
   content:"";
-  position:absolute; inset:2px;
-  border-radius:999px;
-  border: 1px solid rgba(243,220,155,.35);
-  pointer-events:none;
+  position:absolute;
+  left:0; right:0; top:50%;
+  height: 2px;
+  transform: translateY(-50%);
+  background: linear-gradient(to right, transparent, var(--fm-gold), transparent);
 }
 
-.fmv-btn:hover{ transform: translateY(-1px); filter: brightness(1.02); }
-.fmv-btn:active{ transform: translateY(0px) scale(.99); }
-
-.fmv-waDot{
-  width:10px; height:10px;
-  border-radius:999px;
-  background:#25D366;
-  box-shadow: 0 0 0 3px rgba(37,211,102,.18);
+.fm-vday-flourish:after{
+  content:"";
+  position:absolute;
+  left:50%; top:50%;
+  width: 10px; height: 10px;
+  transform: translate(-50%,-50%) rotate(45deg);
+  background: var(--fm-gold);
+  border-radius: 2px;
+  box-shadow: 0 0 0 2px rgba(0,0,0,.12);
 }
 
-/* MOBILE (aici e “aranjarea mișto”) */
-@media (max-width: 720px){
-  .fmv-modal{ width:min(560px, 96vw); border-radius:22px; }
-  .fmv-stage{ aspect-ratio: 600 / 1200; } /* vertical */
+/* Micro line */
+.fm-vday-micro{
+  margin: 10px 0 0;
+  font-size: clamp(12px, 1.2vw, 14px);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.82);
+  text-shadow: 0 2px 10px rgba(0,0,0,.25);
+}
 
-  /* Textul sus, cu panel discret pentru contrast */
-  .fmv-hero{
-    top:18px;
-    left:50%;
-    transform: translateX(-50%);
-    width: min(520px, 90%);
-    padding:14px 14px 12px;
-    border-radius:22px;
-    background: linear-gradient(180deg, rgba(0,0,0,.28), rgba(0,0,0,.00));
-    filter: none;
-  }
-  .fmv-titleScript{ font-size:70px; }
-  .fmv-titleSerif{ font-size:40px; }
-  .fmv-sub{ font-size:12px; }
+/* CTA panel */
+.fm-vday-cta{
+  align-self: end;
+  justify-self: center;
+  width: min(760px, 92%);
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  border-radius: 22px;
+  background: rgba(255,255,255,.10);
+  border: 1px solid rgba(255,255,255,.16);
+  box-shadow: 0 14px 40px rgba(0,0,0,.20);
+  z-index: 4;
+}
 
-  /* Butoane jos, pe coloană, mai premium și ușor de apăsat */
-  .fmv-actions{
-    bottom:14px;
-    flex-direction:column;
-    border-radius:22px;
-    padding:12px;
-    gap:10px;
-    width: min(420px, 92%);
+/* Buttons base */
+.fm-vday-btn{
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 20px;
+  min-width: 240px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 16px;
+  transition: transform .12s ease, filter .12s ease, box-shadow .12s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.fm-vday-btn:hover{ transform: translateY(-1px); filter: brightness(1.02); }
+.fm-vday-btn:active{ transform: translateY(0px) scale(.99); }
+
+/* WhatsApp button (ivory + gold edge) */
+.fm-vday-btn-wa{
+  background: var(--fm-ivory);
+  color: rgba(20,20,20,.92);
+  box-shadow:
+    0 12px 28px rgba(0,0,0,.18),
+    inset 0 0 0 2px rgba(215,181,109,.55);
+}
+
+.fm-vday-wa-dot{
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #2ee06b;
+  box-shadow: 0 0 0 4px rgba(46,224,107,.18);
+}
+
+/* Collection button (wine + gold edge) */
+.fm-vday-btn-collection{
+  background: linear-gradient(180deg, var(--fm-wine-2), var(--fm-wine));
+  color: rgba(255,255,255,.96);
+  box-shadow:
+    0 12px 28px rgba(0,0,0,.22),
+    inset 0 0 0 2px rgba(215,181,109,.55);
+}
+
+.fm-vday-btn-collection:hover{
+  box-shadow:
+    0 16px 34px rgba(0,0,0,.26),
+    inset 0 0 0 2px rgba(215,181,109,.65);
+}
+
+/* Accessibility: reduce motion */
+@media (prefers-reduced-motion: reduce){
+  .fm-vday-modal{ animation: none; opacity: 1; transform: none; }
+  .fm-vday-btn{ transition: none; }
+}
+
+/* ===== MOBILE RULES =====
+   Fix: text should NOT cover Cupid's face.
+   We push hero block lower and compress typography.
+*/
+@media (max-width: 860px){
+  .fm-vday-modal{
+    width: min(520px, 96vw);
+    aspect-ratio: 3 / 5; /* tall popup */
+    border-radius: 26px;
   }
-  .fmv-btn{ width:100%; height:54px; font-size:15px; }
+
+  .fm-vday-content{
+    padding: 18px;
+  }
+
+  /* HERO moved down */
+  .fm-vday-hero{
+    max-width: 92%;
+    margin-top: clamp(140px, 24vh, 200px); /* << key fix */
+  }
+
+  .fm-vday-title{
+    font-size: clamp(34px, 10vw, 52px);
+    text-shadow: 0 2px 12px rgba(0,0,0,.30);
+  }
+
+  .fm-vday-subtitle{
+    font-size: clamp(22px, 7.2vw, 34px);
+  }
+
+  .fm-vday-micro{
+    font-size: 12px;
+    letter-spacing: .14em;
+  }
+
+  .fm-vday-cta{
+    width: 100%;
+    flex-direction: column;
+    gap: 12px;
+    padding: 14px;
+    border-radius: 20px;
+  }
+
+  .fm-vday-btn{
+    width: 100%;
+    min-width: 0;
+    padding: 16px 18px;
+    font-size: 16px;
+  }
+}
+
+/* Ultra-small phones */
+@media (max-width: 380px){
+  .fm-vday-hero{
+    margin-top: clamp(150px, 26vh, 220px);
+  }
+  .fm-vday-title{ font-size: 34px; }
+  .fm-vday-subtitle{ font-size: 22px; }
 }
