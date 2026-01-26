@@ -1,144 +1,138 @@
-/* =========================================
-   Flor Mellow — Valentine's Popup (2026)
-   Production-ready / No overlay over product
-   ========================================= */
+/* =====================================================
+   Flor Mellow — Valentine's Popup (2026) — Premium Stable
+   - No backdrop-filter (consistent across incognito)
+   - Image <img> with object-fit (no weird crops)
+   - Content card separate (product stays visible)
+   - Close button always clickable
+   ===================================================== */
 
 :root{
-  --fm-vday-z: 9999;
+  --fmv-z: 99999;
 
-  --fm-vday-burgundy: #7a0f27;
-  --fm-vday-cream: #f6efe3;
-  --fm-vday-gold: #d7b56d;
+  --fmv-burgundy: #7a0f27;
+  --fmv-cream: #f6efe3;
+  --fmv-gold: #d7b56d;
 
-  --fm-vday-radius: 28px;
-  --fm-vday-shadow: 0 30px 90px rgba(0,0,0,.35);
-  --fm-vday-border: rgba(255,255,255,.22);
-
-  --fm-vday-overlay: rgba(0,0,0,.42);
+  --fmv-overlay: rgba(0,0,0,.50);
+  --fmv-radius: 28px;
+  --fmv-shadow: 0 30px 90px rgba(0,0,0,.40);
+  --fmv-border: rgba(255,255,255,.20);
 }
 
-/* lock scroll when popup open */
-body.fm-vday-lock{ overflow: hidden; }
+body.fmv-lock{ overflow: hidden; }
 
-/* overlay */
-.fm-vday-overlay{
+.fmv-overlay{
   position: fixed;
   inset: 0;
-  z-index: var(--fm-vday-z);
+  z-index: var(--fmv-z);
   display: grid;
   place-items: center;
   padding: 18px;
-  background: var(--fm-vday-overlay);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  background: var(--fmv-overlay);
 }
 
-/* modal shell */
-.fm-vday-modal{
+.fmv-modal{
   position: relative;
-  width: min(94vw, 520px);
-  border-radius: var(--fm-vday-radius);
+  width: min(980px, 92vw);
+  border-radius: var(--fmv-radius);
   overflow: hidden;
-  box-shadow: var(--fm-vday-shadow);
-  border: 1px solid var(--fm-vday-border);
-  background: rgba(255,255,255,.10);
+  background: rgba(255,255,255,.08);
+  border: 1px solid var(--fmv-border);
+  box-shadow: var(--fmv-shadow);
 
   transform: translateY(10px) scale(.985);
   opacity: 0;
-  transition: transform .22s ease, opacity .22s ease;
+  transition: transform .20s ease, opacity .20s ease;
 }
 
-.fm-vday-overlay.is-open .fm-vday-modal{
+.fmv-overlay.is-open .fmv-modal{
   transform: translateY(0) scale(1);
   opacity: 1;
 }
 
-/* IMPORTANT: kill any pseudo-elements to avoid weird blur blocks */
-.fm-vday-modal::before,
-.fm-vday-modal::after{
-  content: none !important;
-}
-
-/* layout container */
-.fm-vday-inner{
+/* Layout:
+   Desktop: image left, content right
+   Mobile: stack image + content
+*/
+.fmv-grid{
   display: grid;
-  grid-template-rows: auto auto;
+  grid-template-columns: 1.35fr .65fr;
+  min-height: 520px;
 }
 
-/* image area */
-.fm-vday-media{
+@media (max-width: 760px){
+  .fmv-modal{ width: min(520px, 94vw); }
+  .fmv-grid{ grid-template-columns: 1fr; }
+}
+
+/* IMAGE */
+.fmv-media{
+  position: relative;
+  background: rgba(255,255,255,.06);
+}
+
+.fmv-img{
   width: 100%;
-  height: 56vh;
-  min-height: 420px;
-  max-height: 560px;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
 }
 
-/* content area (separate from image, so product stays visible) */
-.fm-vday-content{
-  background: rgba(255,255,255,.16);
-  border-top: 1px solid rgba(255,255,255,.18);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  padding: 18px;
+/* Make sure image doesn't shrink too much on mobile */
+@media (max-width: 760px){
+  .fmv-media{
+    height: 58vh;
+    min-height: 480px;
+    max-height: 640px;
+  }
 }
 
-/* close button */
-.fm-vday-close{
-  position: absolute;
-  top: calc(14px + env(safe-area-inset-top));
-  right: 14px;
-  width: 44px;
-  height: 44px;
-  border-radius: 999px;
-
-  background: rgba(0,0,0,.35);
-  border: 1px solid rgba(255,255,255,.22);
-  color: rgba(255,255,255,.95);
-  font-size: 22px;
-  line-height: 1;
-
+/* CONTENT PANEL */
+.fmv-content{
+  position: relative;
+  padding: 26px 24px;
   display: grid;
-  place-items: center;
-  cursor: pointer;
+  align-content: center;
+  gap: 14px;
 
-  box-shadow: 0 12px 28px rgba(0,0,0,.28);
-
-  /* no weird blur */
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-}
-.fm-vday-close:active{ transform: scale(.98); }
-
-/* title block */
-.fm-vday-titleblock{
-  border-radius: 18px;
-  padding: 14px 14px 10px;
-  background: linear-gradient(to bottom, rgba(255,255,255,.22), rgba(255,255,255,0));
+  /* Stable premium glass-ish without blur */
+  background:
+    radial-gradient(1200px 500px at 10% 0%, rgba(255,255,255,.22), transparent 55%),
+    linear-gradient(to bottom, rgba(255,255,255,.14), rgba(255,255,255,.10));
+  border-left: 1px solid rgba(255,255,255,.14);
 }
 
-/* premium title */
-.fm-vday-title{
+@media (max-width: 760px){
+  .fmv-content{
+    border-left: none;
+    border-top: 1px solid rgba(255,255,255,.14);
+    padding: 18px;
+  }
+}
+
+/* Title block */
+.fmv-title{
   font-family: "Fraunces","Playfair Display","Georgia",serif;
   font-weight: 650;
   letter-spacing: .35px;
   line-height: .95;
-  color: var(--fm-vday-burgundy);
+  color: var(--fmv-burgundy);
 
-  -webkit-text-stroke: 1.15px rgba(255,255,255,.86);
+  /* Premium stroke but not cartoon */
+  -webkit-text-stroke: 1.1px rgba(255,255,255,.86);
   paint-order: stroke fill;
 
   text-shadow:
     0 10px 22px rgba(0,0,0,.18),
     0 2px 0 rgba(0,0,0,.06);
 
-  font-size: clamp(42px, 9vw, 72px);
+  font-size: clamp(44px, 4.8vw, 84px);
+  margin: 0;
 }
 
 @supports not (-webkit-text-stroke: 1px white){
-  .fm-vday-title{
+  .fmv-title{
     text-shadow:
       -1px -1px 0 rgba(255,255,255,.9),
        1px -1px 0 rgba(255,255,255,.9),
@@ -148,26 +142,24 @@ body.fm-vday-lock{ overflow: hidden; }
   }
 }
 
-.fm-vday-sub{
-  margin-top: 6px;
+.fmv-sub{
   font-family: "DM Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   font-size: 22px;
   font-weight: 850;
-  letter-spacing: .18px;
   color: rgba(255,255,255,.92);
   text-shadow: 0 10px 24px rgba(0,0,0,.32);
+  margin: 0;
 }
 
-.fm-vday-orn{
-  width: 190px;
+.fmv-orn{
+  width: 200px;
   height: 22px;
-  display: block;
-  margin: 8px 0 6px;
   opacity: .95;
   filter: drop-shadow(0 10px 18px rgba(0,0,0,.22));
+  margin: 8px 0 6px;
 }
 
-.fm-vday-tag{
+.fmv-tag{
   font-family: "DM Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   font-size: 13px;
   font-weight: 780;
@@ -175,94 +167,85 @@ body.fm-vday-lock{ overflow: hidden; }
   text-transform: uppercase;
   color: rgba(255,255,255,.86);
   text-shadow: 0 10px 22px rgba(0,0,0,.30);
+  margin: 0;
 }
 
-/* CTA */
-.fm-vday-cta{
+/* Buttons */
+.fmv-cta{
   display: grid;
   gap: 12px;
-  margin-top: 12px;
-  padding-bottom: calc(10px + env(safe-area-inset-bottom));
+  margin-top: 10px;
 }
 
-.fm-vday-btn{
+.fmv-btn{
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 12px;
-
   padding: 16px 18px;
   border-radius: 18px;
 
   font-family: "DM Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  font-size: 19px;
+  font-size: 18px;
   font-weight: 780;
 
   text-decoration: none;
   user-select: none;
-
   border: 1px solid rgba(0,0,0,.10);
   box-shadow: 0 18px 40px rgba(0,0,0,.16);
   transition: transform .12s ease, filter .12s ease;
 }
-.fm-vday-btn:active{ transform: translateY(1px); }
+.fmv-btn:active{ transform: translateY(1px); }
 
-.fm-vday-btn--wa{
-  background: var(--fm-vday-cream);
-  color: rgba(0,0,0,.78);
+.fmv-btn--wa{
+  background: var(--fmv-cream);
+  color: rgba(0,0,0,.80);
 }
 
-.fm-vday-wa-ico{ width: 22px; height: 22px; flex: 0 0 auto; }
-
-.fm-vday-btn--primary{
+.fmv-btn--primary{
   background: linear-gradient(135deg, rgba(122,15,39,.94), rgba(122,15,39,.72));
   color: rgba(255,255,255,.96);
   border-color: rgba(255,255,255,.18);
 }
 
-.fm-vday-btn:hover{ filter: brightness(1.02); }
+.fmv-btn:hover{ filter: brightness(1.02); }
 
-/* Mobile: make a bit bigger */
-@media (max-width: 640px){
-  .fm-vday-modal{ width: min(94vw, 520px); }
-  .fm-vday-media{
-    height: 58vh;
-    min-height: 460px;
-    max-height: 620px;
-  }
+.fmv-wa-ico{
+  width: 22px;
+  height: 22px;
+  flex: 0 0 auto;
 }
 
-/* Desktop: premium 2-column layout (no empty space, no text over product) */
-@media (min-width: 900px){
-  .fm-vday-modal{
-    width: min(980px, 92vw);
-    border-radius: 34px;
-  }
+/* Close button — ALWAYS clickable */
+.fmv-close{
+  position: absolute;
+  top: calc(14px + env(safe-area-inset-top));
+  right: 14px;
 
-  .fm-vday-inner{
-    grid-template-columns: 1.25fr .75fr;
-    grid-template-rows: none;
-  }
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
 
-  .fm-vday-media{
-    height: min(78vh, 720px);
-    min-height: 640px;
-    max-height: 740px;
-  }
+  background: rgba(0,0,0,.40);
+  border: 1px solid rgba(255,255,255,.22);
 
-  .fm-vday-content{
-    display: grid;
-    align-content: center;
-    gap: 14px;
-    padding: 26px;
-  }
+  color: rgba(255,255,255,.96);
+  font-size: 22px;
+  line-height: 1;
 
-  .fm-vday-title{ font-size: clamp(56px, 4.6vw, 92px); }
-  .fm-vday-sub{ font-size: 28px; }
-  .fm-vday-cta{ margin-top: 16px; }
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+
+  z-index: 20;
+  pointer-events: auto;
+
+  box-shadow: 0 12px 28px rgba(0,0,0,.28);
 }
+
+.fmv-close:active{ transform: scale(.98); }
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce){
-  .fm-vday-modal{ transition: none; }
+  .fmv-modal{ transition: none; }
 }
