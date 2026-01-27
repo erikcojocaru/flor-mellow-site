@@ -1,7 +1,6 @@
 /**
- * Flor Mellow – Valentine's Popup
- * Premium modal with full-image design
- * Production-ready, conflict-free implementation
+ * Flor Mellow – Valentine's Popup (Refined & Elegant)
+ * Clean, production-ready implementation
  */
 
 (function() {
@@ -13,7 +12,7 @@
   
   // Configuration
   const CONFIG = {
-    // Image paths (update these to match your folder structure)
+    // Image paths
     images: {
       desktop: 'assets/campaigns/valentines-2026/popup-desktop.jpg',
       mobile: 'assets/campaigns/valentines-2026/popup-mobile.jpg'
@@ -24,9 +23,9 @@
     collectionUrl: 'catalog.html#valentines-2026',
     
     // Timing
-    delayMs: 500, // Delay before showing popup (ms)
+    delayMs: 600,
     
-    // Breakpoint for mobile/desktop images
+    // Breakpoint
     mobileBreakpoint: 768
   };
   
@@ -35,14 +34,14 @@
   let eventHandlers = {};
   
   /**
-   * Utility: Check if viewport is mobile
+   * Check if viewport is mobile
    */
   function isMobile() {
     return window.innerWidth < CONFIG.mobileBreakpoint;
   }
   
   /**
-   * Get appropriate image based on viewport
+   * Get appropriate image
    */
   function getCurrentImage() {
     return isMobile() ? CONFIG.images.mobile : CONFIG.images.desktop;
@@ -82,7 +81,7 @@
           <img 
             class="vday-image" 
             src="${getCurrentImage()}" 
-            alt="Valentine's Day Collection"
+            alt="Colecția Valentine's 2026"
             loading="eager"
           />
           
@@ -101,6 +100,7 @@
                   class="vday-btn vday-btn--whatsapp"
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="Comandă pe WhatsApp"
                 >
                   ${getWhatsAppIcon()}
                   <span>Comandă pe WhatsApp</span>
@@ -108,6 +108,7 @@
                 <a 
                   href="${CONFIG.collectionUrl}" 
                   class="vday-btn vday-btn--primary"
+                  aria-label="Vezi colecția Valentine's"
                 >
                   Vezi colecția
                 </a>
@@ -119,7 +120,7 @@
         <button 
           class="vday-close" 
           type="button" 
-          aria-label="Închide"
+          aria-label="Închide popup"
           data-vday-close
         >×</button>
       </div>
@@ -137,7 +138,7 @@
     const img = popupElement.querySelector('.vday-image');
     if (img) {
       const newSrc = getCurrentImage();
-      if (img.src !== newSrc) {
+      if (img.src.indexOf(newSrc) === -1) {
         img.src = newSrc;
       }
     }
@@ -173,7 +174,7 @@
       }
       popupElement = null;
       eventHandlers = {};
-    }, 300);
+    }, 350);
   }
   
   /**
@@ -197,7 +198,7 @@
    * Handle keyboard events
    */
   function handleKeydown(event) {
-    if (event.key === 'Escape') {
+    if (event.key === 'Escape' || event.key === 'Esc') {
       closePopup();
     }
   }
@@ -228,7 +229,7 @@
     eventHandlers.handleKeydown = handleKeydown;
     eventHandlers.handleResize = handleResize;
     
-    // Add event listeners with capture phase for reliability
+    // Add event listeners with capture phase
     document.addEventListener('click', eventHandlers.handleClick, true);
     document.addEventListener('keydown', eventHandlers.handleKeydown);
     window.addEventListener('resize', eventHandlers.handleResize);
@@ -247,7 +248,7 @@
    * Initialize popup
    */
   function init() {
-    // Remove any existing popups (cleanup)
+    // Remove any existing popups
     document.querySelectorAll('.vday-overlay').forEach(el => el.remove());
     
     // Show popup after delay
@@ -263,7 +264,7 @@
     init();
   }
   
-  // Expose close method globally (optional, for manual control)
+  // Expose close method globally
   window.florVdayPopupClose = closePopup;
   
 })();
