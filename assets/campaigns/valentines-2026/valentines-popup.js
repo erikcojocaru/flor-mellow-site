@@ -1,62 +1,40 @@
 /**
- * Flor Mellow – Valentine's Popup (Refined & Elegant)
- * Clean, production-ready implementation
+ * Flor Mellow – Valentine's Popup (Ultra Elegant)
+ * Handwritten font, minimal design, premium aesthetic
  */
 
 (function() {
   'use strict';
   
-  // Prevent multiple initializations
   if (window.__florVdayPopupInit) return;
   window.__florVdayPopupInit = true;
   
-  // Configuration
   const CONFIG = {
-    // Image paths
     images: {
       desktop: 'assets/campaigns/valentines-2026/popup-desktop.jpg',
       mobile: 'assets/campaigns/valentines-2026/popup-mobile.jpg'
     },
-    
-    // Links
     whatsappUrl: 'https://wa.me/40XXXXXXXXXX?text=Salut%20Flor%20Mellow!%20Vreau%20s%C4%83%20comand%20din%20colec%C8%9Bia%20Valentine%E2%80%99s%202026.',
     collectionUrl: 'catalog.html#valentines-2026',
-    
-    // Timing
     delayMs: 600,
-    
-    // Breakpoint
     mobileBreakpoint: 768
   };
   
-  // State
   let popupElement = null;
   let eventHandlers = {};
   
-  /**
-   * Check if viewport is mobile
-   */
   function isMobile() {
     return window.innerWidth < CONFIG.mobileBreakpoint;
   }
   
-  /**
-   * Get appropriate image
-   */
   function getCurrentImage() {
     return isMobile() ? CONFIG.images.mobile : CONFIG.images.desktop;
   }
   
-  /**
-   * Lock/unlock body scroll
-   */
   function setBodyScroll(locked) {
     document.body.classList.toggle('vday-no-scroll', locked);
   }
   
-  /**
-   * WhatsApp icon SVG
-   */
   function getWhatsAppIcon() {
     return `
       <svg class="vday-icon-whatsapp" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -65,9 +43,6 @@
     `;
   }
   
-  /**
-   * Build popup HTML
-   */
   function buildPopup() {
     const overlay = document.createElement('div');
     overlay.className = 'vday-overlay';
@@ -93,26 +68,24 @@
               <p class="vday-tag">Colecție limitată • Comandă rapid</p>
             </div>
             
-            <div class="vday-cta-card">
-              <div class="vday-buttons">
-                <a 
-                  href="${CONFIG.whatsappUrl}" 
-                  class="vday-btn vday-btn--whatsapp"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Comandă pe WhatsApp"
-                >
-                  ${getWhatsAppIcon()}
-                  <span>Comandă pe WhatsApp</span>
-                </a>
-                <a 
-                  href="${CONFIG.collectionUrl}" 
-                  class="vday-btn vday-btn--primary"
-                  aria-label="Vezi colecția Valentine's"
-                >
-                  Vezi colecția
-                </a>
-              </div>
+            <div class="vday-buttons">
+              <a 
+                href="${CONFIG.whatsappUrl}" 
+                class="vday-btn vday-btn--whatsapp"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Comandă pe WhatsApp"
+              >
+                ${getWhatsAppIcon()}
+                <span>Comandă pe WhatsApp</span>
+              </a>
+              <a 
+                href="${CONFIG.collectionUrl}" 
+                class="vday-btn vday-btn--primary"
+                aria-label="Vezi colecția Valentine's"
+              >
+                Vezi colecția
+              </a>
             </div>
           </div>
         </div>
@@ -129,9 +102,6 @@
     return overlay;
   }
   
-  /**
-   * Update image based on viewport
-   */
   function updateImage() {
     if (!popupElement) return;
     
@@ -144,19 +114,12 @@
     }
   }
   
-  /**
-   * Close popup
-   */
   function closePopup() {
     if (!popupElement) return;
     
-    // Remove visibility class
     popupElement.classList.remove('is-visible');
-    
-    // Unlock scroll
     setBodyScroll(false);
     
-    // Remove event listeners
     if (eventHandlers.handleClick) {
       document.removeEventListener('click', eventHandlers.handleClick, true);
     }
@@ -167,74 +130,53 @@
       window.removeEventListener('resize', eventHandlers.handleResize);
     }
     
-    // Remove element after animation
     setTimeout(() => {
       if (popupElement && popupElement.parentNode) {
         popupElement.parentNode.removeChild(popupElement);
       }
       popupElement = null;
       eventHandlers = {};
-    }, 350);
+    }, 400);
   }
   
-  /**
-   * Handle click events
-   */
   function handleClick(event) {
-    // Close button clicked
     if (event.target.closest('[data-vday-close]')) {
       event.preventDefault();
       closePopup();
       return;
     }
     
-    // Click outside modal
     if (!event.target.closest('.vday-modal')) {
       closePopup();
     }
   }
   
-  /**
-   * Handle keyboard events
-   */
   function handleKeydown(event) {
     if (event.key === 'Escape' || event.key === 'Esc') {
       closePopup();
     }
   }
   
-  /**
-   * Handle resize events
-   */
   function handleResize() {
     updateImage();
   }
   
-  /**
-   * Open popup
-   */
   function openPopup() {
-    // Prevent multiple instances
     if (popupElement) return;
     
-    // Build and insert popup
     popupElement = buildPopup();
     document.body.appendChild(popupElement);
     
-    // Lock scroll
     setBodyScroll(true);
     
-    // Set up event handlers
     eventHandlers.handleClick = handleClick;
     eventHandlers.handleKeydown = handleKeydown;
     eventHandlers.handleResize = handleResize;
     
-    // Add event listeners with capture phase
     document.addEventListener('click', eventHandlers.handleClick, true);
     document.addEventListener('keydown', eventHandlers.handleKeydown);
     window.addEventListener('resize', eventHandlers.handleResize);
     
-    // Trigger animation
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         if (popupElement) {
@@ -244,27 +186,20 @@
     });
   }
   
-  /**
-   * Initialize popup
-   */
   function init() {
-    // Remove any existing popups
     document.querySelectorAll('.vday-overlay').forEach(el => el.remove());
     
-    // Show popup after delay
     setTimeout(() => {
       openPopup();
     }, CONFIG.delayMs);
   }
   
-  // Start when DOM is ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
     init();
   }
   
-  // Expose close method globally
   window.florVdayPopupClose = closePopup;
   
 })();
