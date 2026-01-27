@@ -1,142 +1,269 @@
-(() => {
-  "use strict";
+/**
+ * Flor Mellow – Valentine's Popup
+ * Premium modal with full-image design
+ * Production-ready, conflict-free implementation
+ */
 
-  document.querySelectorAll(".vday-overlay").forEach(el => el.remove());
-  if (window.__vdayPopupLoaded) return;
-  window.__vdayPopupLoaded = true;
-
-  const CFG = {
-    imgDesktop: "assets/campaigns/valentines-2026/popup-desktop.jpg",
-    imgMobile:  "assets/campaigns/valentines-2026/popup-mobile.jpg",
-    whatsappUrl: "https://wa.me/40XXXXXXXXXX?text=Salut%20Flor%20Mellow!%20Vreau%20s%C4%83%20comand%20din%20colec%C8%9Bia%20Valentine%E2%80%99s%202026.",
-    collectionUrl: "catalog.html#valentines-2026",
-    openDelayMs: 250
+(function() {
+  'use strict';
+  
+  // Prevent multiple initializations
+  if (window.__florVdayPopupInit) return;
+  window.__florVdayPopupInit = true;
+  
+  // Configuration
+  const CONFIG = {
+    // Image paths (update these to match your folder structure)
+    images: {
+      desktop: 'assets/campaigns/valentines-2026/popup-desktop.jpg',
+      mobile: 'assets/campaigns/valentines-2026/popup-mobile.jpg'
+    },
+    
+    // Links
+    whatsappUrl: 'https://wa.me/40XXXXXXXXXX?text=Salut%20Flor%20Mellow!%20Vreau%20s%C4%83%20comand%20din%20colec%C8%9Bia%20Valentine%E2%80%99s%202026.',
+    collectionUrl: 'catalog.html#valentines-2026',
+    
+    // Timing
+    delayMs: 500, // Delay before showing popup (ms)
+    
+    // Breakpoint for mobile/desktop images
+    mobileBreakpoint: 768
   };
-
-  const isMobile = () => window.matchMedia("(max-width: 640px)").matches;
-  const bgForViewport = () => (isMobile() ? CFG.imgMobile : CFG.imgDesktop);
-  const lockScroll = (lock) => document.body.classList.toggle("vday-lock", !!lock);
-
-  function ornSvg() {
-    const gold = (getComputedStyle(document.documentElement).getPropertyValue("--vday-gold") || "#d7b56d").trim();
+  
+  // State
+  let popupElement = null;
+  let eventHandlers = {};
+  
+  /**
+   * Utility: Check if viewport is mobile
+   */
+  function isMobile() {
+    return window.innerWidth < CONFIG.mobileBreakpoint;
+  }
+  
+  /**
+   * Get appropriate image based on viewport
+   */
+  function getCurrentImage() {
+    return isMobile() ? CONFIG.images.mobile : CONFIG.images.desktop;
+  }
+  
+  /**
+   * Lock/unlock body scroll
+   */
+  function setBodyScroll(locked) {
+    document.body.classList.toggle('vday-no-scroll', locked);
+  }
+  
+  /**
+   * WhatsApp icon SVG
+   */
+  function getWhatsAppIcon() {
     return `
-      <svg class="vday-orn" viewBox="0 0 600 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M80 30c55-22 110-22 165 0s110 22 165 0 110-22 165 0"
-              fill="none" stroke="${gold}" stroke-width="4" stroke-linecap="round" opacity="0.95"/>
-        <circle cx="300" cy="30" r="6" fill="${gold}" opacity="0.95"/>
+      <svg class="vday-icon-whatsapp" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" fill="currentColor"/>
       </svg>
     `;
   }
-
-  function waSvg() {
-    return `
-      <svg class="vday-wa-ico" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path fill="#22c55e" d="M16 3C9.4 3 4 8.2 4 14.6c0 2.3.7 4.4 1.9 6.2L4 29l8.4-1.8c1.1.3 2.3.5 3.6.5 6.6 0 12-5.2 12-11.6S22.6 3 16 3z"/>
-        <path fill="#fff" d="M12.7 10.2c-.3-.7-.6-.7-.9-.7h-.8c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8 0 1.7 1.2 3.3 1.4 3.5.2.2 2.4 3.8 5.9 5.2 2.9 1.1 3.5.9 4.1.8.6-.1 2-0.8 2.3-1.6.3-.8.3-1.4.2-1.6-.1-.2-.3-.3-.7-.5l-1.8-.9c-.4-.2-.7-.2-1 .2-.3.4-1.1 1.4-1.3 1.7-.2.3-.5.3-.9.1-.4-.2-1.7-.6-3.2-2-.4-.4-1-1.1-1.2-1.5-.2-.4 0-.6.2-.8.2-.2.4-.5.6-.7.2-.2.3-.4.4-.6.1-.2 0-.5-.1-.7l-.9-2.3z"/>
-      </svg>
-    `;
-  }
-
-  function build() {
-    const overlay = document.createElement("div");
-    overlay.className = "vday-overlay";
-    overlay.setAttribute("role", "dialog");
-    overlay.setAttribute("aria-modal", "true");
-
+  
+  /**
+   * Build popup HTML
+   */
+  function buildPopup() {
+    const overlay = document.createElement('div');
+    overlay.className = 'vday-overlay';
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+    overlay.setAttribute('aria-labelledby', 'vday-title');
+    
     overlay.innerHTML = `
       <div class="vday-modal" role="document">
-        <button class="vday-close" type="button" data-vday-close aria-label="Închide">×</button>
-
-        <div class="vday-media" style="background-image:url('${bgForViewport()}')"></div>
-
-        <div class="vday-content">
-          <div class="vday-titleblock">
-            <h2 class="vday-title">Valentine’s</h2>
-            <p class="vday-sub">vine după colț</p>
-            ${ornSvg()}
-            <p class="vday-tag">Colecție limitată • Comandă rapid</p>
-          </div>
-
-          <div class="vday-cta-wrap">
+        <div class="vday-image-container">
+          <img 
+            class="vday-image" 
+            src="${getCurrentImage()}" 
+            alt="Valentine's Day Collection"
+            loading="eager"
+          />
+          
+          <div class="vday-content">
+            <div class="vday-text-block">
+              <h2 id="vday-title" class="vday-title">Valentine's</h2>
+              <p class="vday-subtitle">vine după colț</p>
+              <div class="vday-divider"></div>
+              <p class="vday-tag">Colecție limitată • Comandă rapid</p>
+            </div>
+            
             <div class="vday-cta-card">
-              <div class="vday-cta">
-                <a class="vday-btn vday-btn--wa" href="${CFG.whatsappUrl}" target="_blank" rel="noopener">
-                  ${waSvg()}
-                  Comandă pe WhatsApp
+              <div class="vday-buttons">
+                <a 
+                  href="${CONFIG.whatsappUrl}" 
+                  class="vday-btn vday-btn--whatsapp"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  ${getWhatsAppIcon()}
+                  <span>Comandă pe WhatsApp</span>
                 </a>
-                <a class="vday-btn vday-btn--primary" href="${CFG.collectionUrl}">
+                <a 
+                  href="${CONFIG.collectionUrl}" 
+                  class="vday-btn vday-btn--primary"
+                >
                   Vezi colecția
                 </a>
               </div>
             </div>
           </div>
         </div>
+        
+        <button 
+          class="vday-close" 
+          type="button" 
+          aria-label="Închide"
+          data-vday-close
+        >×</button>
       </div>
     `;
+    
     return overlay;
   }
-
-  function setBg(overlay) {
-    const media = overlay.querySelector(".vday-media");
-    if (media) media.style.backgroundImage = `url('${bgForViewport()}')`;
-  }
-
-  function open() {
-    if (document.querySelector(".vday-overlay")) return;
-
-    const overlay = build();
-    document.body.appendChild(overlay);
-
-    requestAnimationFrame(() => overlay.classList.add("is-open"));
-    lockScroll(true);
-
-    const onClick = (e) => {
-      if (e.target.closest("[data-vday-close]")) {
-        e.preventDefault();
-        e.stopPropagation();
-        close(overlay);
-        return;
+  
+  /**
+   * Update image based on viewport
+   */
+  function updateImage() {
+    if (!popupElement) return;
+    
+    const img = popupElement.querySelector('.vday-image');
+    if (img) {
+      const newSrc = getCurrentImage();
+      if (img.src !== newSrc) {
+        img.src = newSrc;
       }
-      if (!e.target.closest(".vday-modal")) {
-        close(overlay);
-      }
-    };
-
-    const onKey = (e) => {
-      if (e.key === "Escape") close(overlay);
-    };
-
-    const onResize = () => setBg(overlay);
-
-    document.addEventListener("click", onClick, true);
-    window.addEventListener("keydown", onKey, true);
-    window.addEventListener("resize", onResize);
-    window.addEventListener("orientationchange", onResize);
-
-    overlay.__vHandlers = { onClick, onKey, onResize };
-    setBg(overlay);
-  }
-
-  function close(overlay) {
-    if (!overlay) return;
-    overlay.classList.remove("is-open");
-    lockScroll(false);
-
-    const h = overlay.__vHandlers;
-    if (h) {
-      document.removeEventListener("click", h.onClick, true);
-      window.removeEventListener("keydown", h.onKey, true);
-      window.removeEventListener("resize", h.onResize);
-      window.removeEventListener("orientationchange", h.onResize);
     }
-    setTimeout(() => overlay.remove(), 160);
   }
-
-  function boot(){ setTimeout(open, CFG.openDelayMs); }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", boot, { once: true });
+  
+  /**
+   * Close popup
+   */
+  function closePopup() {
+    if (!popupElement) return;
+    
+    // Remove visibility class
+    popupElement.classList.remove('is-visible');
+    
+    // Unlock scroll
+    setBodyScroll(false);
+    
+    // Remove event listeners
+    if (eventHandlers.handleClick) {
+      document.removeEventListener('click', eventHandlers.handleClick, true);
+    }
+    if (eventHandlers.handleKeydown) {
+      document.removeEventListener('keydown', eventHandlers.handleKeydown);
+    }
+    if (eventHandlers.handleResize) {
+      window.removeEventListener('resize', eventHandlers.handleResize);
+    }
+    
+    // Remove element after animation
+    setTimeout(() => {
+      if (popupElement && popupElement.parentNode) {
+        popupElement.parentNode.removeChild(popupElement);
+      }
+      popupElement = null;
+      eventHandlers = {};
+    }, 300);
+  }
+  
+  /**
+   * Handle click events
+   */
+  function handleClick(event) {
+    // Close button clicked
+    if (event.target.closest('[data-vday-close]')) {
+      event.preventDefault();
+      closePopup();
+      return;
+    }
+    
+    // Click outside modal
+    if (!event.target.closest('.vday-modal')) {
+      closePopup();
+    }
+  }
+  
+  /**
+   * Handle keyboard events
+   */
+  function handleKeydown(event) {
+    if (event.key === 'Escape') {
+      closePopup();
+    }
+  }
+  
+  /**
+   * Handle resize events
+   */
+  function handleResize() {
+    updateImage();
+  }
+  
+  /**
+   * Open popup
+   */
+  function openPopup() {
+    // Prevent multiple instances
+    if (popupElement) return;
+    
+    // Build and insert popup
+    popupElement = buildPopup();
+    document.body.appendChild(popupElement);
+    
+    // Lock scroll
+    setBodyScroll(true);
+    
+    // Set up event handlers
+    eventHandlers.handleClick = handleClick;
+    eventHandlers.handleKeydown = handleKeydown;
+    eventHandlers.handleResize = handleResize;
+    
+    // Add event listeners with capture phase for reliability
+    document.addEventListener('click', eventHandlers.handleClick, true);
+    document.addEventListener('keydown', eventHandlers.handleKeydown);
+    window.addEventListener('resize', eventHandlers.handleResize);
+    
+    // Trigger animation
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if (popupElement) {
+          popupElement.classList.add('is-visible');
+        }
+      });
+    });
+  }
+  
+  /**
+   * Initialize popup
+   */
+  function init() {
+    // Remove any existing popups (cleanup)
+    document.querySelectorAll('.vday-overlay').forEach(el => el.remove());
+    
+    // Show popup after delay
+    setTimeout(() => {
+      openPopup();
+    }, CONFIG.delayMs);
+  }
+  
+  // Start when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
   } else {
-    boot();
+    init();
   }
+  
+  // Expose close method globally (optional, for manual control)
+  window.florVdayPopupClose = closePopup;
+  
 })();
