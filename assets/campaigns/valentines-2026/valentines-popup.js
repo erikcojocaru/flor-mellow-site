@@ -43,6 +43,28 @@
     `;
   }
   
+  function getGoldenRibbon() {
+    return `
+      <div class="vday-ribbon">
+        <svg viewBox="0 0 200 40" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#c19a2f;stop-opacity:0.4" />
+              <stop offset="50%" style="stop-color:#d4af37;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#c19a2f;stop-opacity:0.4" />
+            </linearGradient>
+          </defs>
+          <!-- Elegant curved ribbon -->
+          <path d="M10,20 Q50,10 100,20 T190,20" stroke="url(#goldGradient)" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <path d="M10,22 Q50,12 100,22 T190,22" stroke="url(#goldGradient)" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.6"/>
+          <!-- Center ornament -->
+          <circle cx="100" cy="20" r="3" fill="#d4af37" opacity="0.9"/>
+          <circle cx="100" cy="20" r="1.5" fill="#f4e5c3" opacity="0.8"/>
+        </svg>
+      </div>
+    `;
+  }
+  
   function buildPopup() {
     const overlay = document.createElement('div');
     overlay.className = 'vday-overlay';
@@ -64,7 +86,7 @@
             <div class="vday-text-block">
               <h2 id="vday-title" class="vday-title">Valentine's</h2>
               <p class="vday-subtitle">vine după colț</p>
-              <div class="vday-divider"></div>
+              ${getGoldenRibbon()}
               <p class="vday-tag">Colecție limitată • Comandă rapid</p>
             </div>
             

@@ -92,7 +92,7 @@ body.vday-no-scroll {
   flex-direction: column;
   justify-content: space-between;
   
-  padding: 80px 20px 22px;
+  padding: 120px 20px 22px;
   
   /* Very subtle gradient - barely visible */
   background: linear-gradient(
@@ -156,18 +156,19 @@ body.vday-no-scroll {
   
   /* Using elegant script fonts */
   font-family: 'Great Vibes', 'Pinyon Script', 'Dancing Script', cursive;
-  font-size: clamp(56px, 14vw, 72px);
+  font-size: clamp(64px, 16vw, 84px);
   font-weight: 400;
   line-height: 1;
   letter-spacing: 0.02em;
   
   color: var(--vday-burgundy);
   
-  /* Elegant glow effect */
+  /* Stronger glow effect for better visibility */
   text-shadow: 
-    0 0 20px rgba(255, 255, 255, 0.8),
-    0 0 40px rgba(255, 255, 255, 0.6),
-    0 2px 4px rgba(0, 0, 0, 0.2);
+    0 0 30px rgba(255, 255, 255, 0.95),
+    0 0 60px rgba(255, 255, 255, 0.8),
+    0 3px 8px rgba(0, 0, 0, 0.3),
+    0 0 15px rgba(122, 15, 39, 0.4);
 }
 
 /* Subtitle - elegant serif italic */
@@ -175,12 +176,15 @@ body.vday-no-scroll {
   margin: 4px 0 0;
   
   font-family: 'Cormorant Garamond', 'Georgia', serif;
-  font-size: 22px;
-  font-weight: 500;
+  font-size: 24px;
+  font-weight: 600;
   font-style: italic;
   
-  color: rgba(255, 255, 255, 0.95);
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  color: rgba(255, 255, 255, 0.98);
+  text-shadow: 
+    0 2px 12px rgba(0, 0, 0, 0.6),
+    0 0 20px rgba(0, 0, 0, 0.5),
+    0 1px 3px rgba(0, 0, 0, 0.8);
 }
 
 /* Decorative divider - delicate gold line */
@@ -200,6 +204,21 @@ body.vday-no-scroll {
   box-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
 }
 
+/* Golden ribbon decoration */
+.vday-ribbon {
+  display: inline-block;
+  margin: 8px auto 6px;
+  width: 80px;
+  height: 20px;
+  position: relative;
+}
+
+.vday-ribbon svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
+}
+
 /* Tag - refined */
 .vday-tag {
   margin: 0;
@@ -210,8 +229,10 @@ body.vday-no-scroll {
   letter-spacing: 0.15em;
   text-transform: uppercase;
   
-  color: rgba(255, 255, 255, 0.9);
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 
+    0 2px 10px rgba(0, 0, 0, 0.6),
+    0 1px 3px rgba(0, 0, 0, 0.8);
 }
 
 /* Buttons container - minimal spacing */
@@ -300,7 +321,7 @@ body.vday-no-scroll {
   }
   
   .vday-content {
-    padding: 120px 40px 30px;
+    padding: 100px 40px 30px;
   }
   
   .vday-close {
@@ -311,24 +332,27 @@ body.vday-no-scroll {
     font-size: 22px;
   }
   
-  /* Text positioned in upper empty area */
+  /* Text positioned in RIGHT empty area (not center) */
   .vday-text-block {
     position: absolute;
-    top: 120px;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 100px;
+    right: 60px;
+    left: auto;
+    transform: none;
+    text-align: right;
   }
   
   .vday-title {
-    font-size: clamp(64px, 7vw, 84px);
+    font-size: clamp(72px, 8vw, 96px);
   }
   
   .vday-subtitle {
-    font-size: 24px;
+    font-size: 26px;
   }
   
   .vday-divider {
-    width: 60px;
+    width: 70px;
+    margin: 12px 0 10px auto;
   }
   
   .vday-tag {
@@ -358,11 +382,12 @@ body.vday-no-scroll {
   }
   
   .vday-content {
-    padding: 140px 50px 36px;
+    padding: 100px 60px 36px;
   }
   
   .vday-text-block {
-    top: 140px;
+    top: 120px;
+    right: 80px;
   }
   
   .vday-btn {
