@@ -222,6 +222,26 @@
                 </div>
 
                 <div class="row">
+					<div class="form-group">
+						<label for="size">Mărime *</label>
+						<select id="size" name="size" required>
+							<option value="">Alege...</option>
+							<option value="XS">XS</option>
+							<option value="S">S</option>
+							<option value="M">M</option>
+							<option value="L">L</option>
+							<option value="XL">XL</option>
+							<option value="Event">Event</option>
+						</select>
+					</div>
+
+				<div class="form-group">
+					<label for="quantity">Cantitate *</label>
+					<input type="number" id="quantity" name="quantity" min="1" step="1" value="1" required>
+				</div>
+				</div>
+				
+				<div class="row">
                     <div class="form-group">
                         <label for="price">Preț (RON) *</label>
                         <input type="number" id="price" name="price" step="0.01" min="0" required>
@@ -321,16 +341,18 @@
             
             // Get form data
             const formData = {
-				secret: 'flormellow_secret_key_2025_xK9p',  // ADD THIS LINE (use your secret)
-                client_name: document.getElementById('clientName').value.trim(),
-                client_phone: document.getElementById('clientPhone').value.trim(),
-                product: document.getElementById('product').value,
-                price: parseFloat(document.getElementById('price').value),
-                delivery_date: document.getElementById('deliveryDate').value,
-                status: document.getElementById('status').value,
-                payment_status: document.getElementById('paymentStatus').value,
-                notes: document.getElementById('notes').value.trim()
-            };
+				secret: 'flormellow_secret_key_2025_xK9p',
+				client_name: document.getElementById('clientName').value.trim(),
+				client_phone: document.getElementById('clientPhone').value.trim(),
+				product: document.getElementById('product').value,
+				size: document.getElementById('size').value,
+				quantity: parseInt(document.getElementById('quantity').value, 10) || 1,
+				price: parseFloat(document.getElementById('price').value),
+				delivery_date: document.getElementById('deliveryDate').value,
+				status: document.getElementById('status').value,
+				payment_status: document.getElementById('paymentStatus').value,
+				comments: document.getElementById('notes').value.trim()
+			};
 
             try {
                 const response = await fetch(WEBHOOK_URL, {
