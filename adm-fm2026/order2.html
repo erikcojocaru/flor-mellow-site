@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FlorMellow - Management Comenzi</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      max-width: 540px;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 26px 22px;
+      text-align: center;
+    }
+
+    .header h1 { font-size: 28px; margin-bottom: 8px; }
+    .header p { opacity: 0.9; font-size: 14px; }
+
+    .menu {
+      display: none;
+      gap: 10px;
+      justify-content: center;
+      padding: 12px;
+      background: #f6f6fb;
+      border-bottom: 1px solid #eee;
+    }
+
+    .form-container { padding: 24px; }
+    .login-container { padding: 40px; text-align: center; }
+
+    .form-group { margin-bottom: 18px; }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #333;
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: border-color 0.3s;
+      font-family: inherit;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    textarea { resize: vertical; min-height: 80px; }
+
+    .btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s, opacity .2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn:active { transform: translateY(0); }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
+
+    .btn.small { width: auto; padding: 10px 14px; font-size: 14px; }
+    .btn.tab { width: auto; padding: 10px 14px; font-size: 14px; }
+    .btn.danger { background: #dc3545; }
+
+    .message {
+      padding: 12px 14px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      text-align: center;
+      font-size: 14px;
+      display: none;
+    }
+    .message.success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+    .message.error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+
+    .hidden { display: none; }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    @media (max-width: 600px) { .row { grid-template-columns: 1fr; } }
+
+    .login-logo { font-size: 60px; margin-bottom: 20px; }
+
+    .manageHeader {
+      display:flex; justify-content:space-between; align-items:center;
+      gap:10px; margin-bottom: 10px;
+    }
+    .manageHeader h3 { margin:0; color:#333; }
+
+    .orderCard {
+      border: 1px solid #eee;
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 10px;
+    }
+    .orderTop {
+      display:flex; justify-content:space-between; gap:10px; align-items:flex-start;
+    }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    .muted { color:#777; font-size:12px; }
+    .title { font-weight: 700; color: #333; }
+    .sub { font-size: 13px; color: #555; margin-top: 4px; }
+    .spacer { height: 8px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🌸 FlorMellow</h1>
+      <p>Sistem de Management Comenzi</p>
+    </div>
+
+    <!-- Menu (only after login) -->
+    <div class="menu" id="menuBar">
+      <button type="button" class="btn tab" id="tabNew">➕ Comandă nouă</button>
+      <button type="button" class="btn tab" id="tabManage" style="opacity:.85;">📋 Comenzi în lucru</button>
+    </div>
+
+    <!-- Login -->
+    <div id="loginContainer" class="login-container">
+      <div class="login-logo">🔒</div>
+      <h2 style="margin-bottom: 20px; color: #333;">Autentificare</h2>
+      <div class="message error" id="loginError"></div>
+      <form id="loginForm">
+        <div class="form-group">
+          <input type="text" id="loginUsername" placeholder="Utilizator" required>
+        </div>
+        <div class="form-group">
+          <input type="password" id="loginPassword" placeholder="Parolă" required>
+        </div>
+        <button type="submit" class="btn">Intră în Cont</button>
+      </form>
+    </div>
+
+    <!-- Main container after login -->
+    <div id="orderContainer" class="form-container hidden">
+      <div class="message success" id="successMessage"></div>
+      <div class="message error" id="errorMessage"></div>
+
+      <!-- Manage tab -->
+      <div id="manageContainer" class="hidden">
+        <div class="manageHeader">
+          <h3>Comenzi în lucru</h3>
+          <button type="button" class="btn small" id="refreshOrdersBtn">↻ Refresh</button>
+        </div>
+        <div id="ordersList"></div>
+
+        <div class="spacer"></div>
+        <button type="button" class="btn danger small" id="logoutBtnTop">Deconectare</button>
+      </div>
+
+      <!-- New order tab -->
+      <form id="orderForm">
+        <div class="form-group">
+          <label for="clientName">Nume Client *</label>
+          <input type="text" id="clientName" name="client_name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="clientPhone">Telefon Client *</label>
+          <input type="tel" id="clientPhone" name="client_phone" placeholder="0712345678" required>
+        </div>
+
+        <div class="form-group">
+          <label for="product">Produs *</label>
+          <select id="product" name="product" required>
+            <option value="">Selectează produsul...</option>
+            <option value="Buchet Trandafiri">Buchet Trandafiri</option>
+            <option value="Buchet Lalele">Buchet Lalele</option>
+            <option value="Buchet Mixt">Buchet Mixt</option>
+            <option value="Aranjament Floral">Aranjament Floral</option>
+            <option value="Coș Cadou">Coș Cadou</option>
+            <option value="Cutie Ciocolată">Cutie Ciocolată</option>
+            <option value="Altele">Altele</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <div class="form-group">
+            <label for="size">Mărime *</label>
+            <select id="size" name="size" required>
+              <option value="">Alege...</option>
+              <option value="XS">XS</option>
+              <option value="S">S</option>
+              <option value="M">M</option>
+              <option value="L">L</option>
+              <option value="XL">XL</option>
+              <option value="Event">Event</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="quantity">Cantitate *</label>
+            <input type="number" id="quantity" name="quantity" min="1" step="1" value="1" required>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group">
+            <label for="price">Preț (RON) *</label>
+            <input type="number" id="price" name="price" step="0.01" min="0" required>
+          </div>
+
+          <div class="form-group">
+            <label for="deliveryDate">Data Livrării *</label>
+            <input type="date" id="deliveryDate" name="delivery_date" required>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group">
+            <label for="status">Status *</label>
+            <select id="status" name="status" required>
+              <option value="pending">În Așteptare</option>
+              <option value="confirmed">Confirmat</option>
+              <option value="preparing">În Pregătire</option>
+              <option value="delivered">Livrat</option>
+              <option value="cancelled">Anulat</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="paymentStatus">Plată *</label>
+            <select id="paymentStatus" name="payment_status" required>
+              <option value="unpaid">Neplătit</option>
+              <option value="paid">Plătit</option>
+              <option value="partial">Parțial</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="notes">Notițe (opțional)</label>
+          <textarea id="notes" name="notes" placeholder="Detalii suplimentare despre comandă..."></textarea>
+        </div>
+
+        <button type="submit" class="btn" id="submitBtn">Adaugă Comandă</button>
+        <button type="button" class="btn danger small" id="logoutBtn" style="margin-top:12px;">Deconectare</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // --- CONFIG (edit here) ---
+    const CREDENTIALS = {
+      'admin': 'iloveyou2026!',
+      'irina': 'irina2026!'
+    };
+
+    // n8n endpoints (you must create these workflows)
+    const NEW_ORDER_URL   = 'https://api.flormellow.ro/webhook/new-order';
+    const ORDERS_LIST_URL = 'https://api.flormellow.ro/webhook/orders-list';
+    const ORDER_UPDATE_URL= 'https://api.flormellow.ro/webhook/order-update';
+
+    // shared secret (matches your n8n IF condition)
+    const FM_SECRET = 'flormellow_secret_key_2025_xK9p';
+
+    // --- SESSION ---
+    let currentUser = sessionStorage.getItem('flormellow_user');
+
+    const menuBar = document.getElementById('menuBar');
+    const loginContainer = document.getElementById('loginContainer');
+    const orderContainer = document.getElementById('orderContainer');
+
+    // tabs
+    const tabNew = document.getElementById('tabNew');
+    const tabManage = document.getElementById('tabManage');
+    const orderForm = document.getElementById('orderForm');
+    const manageContainer = document.getElementById('manageContainer');
+
+    function showLoginForm() {
+      menuBar.style.display = 'none';
+      loginContainer.classList.remove('hidden');
+      orderContainer.classList.add('hidden');
+    }
+
+    function showApp() {
+      menuBar.style.display = 'flex';
+      loginContainer.classList.add('hidden');
+      orderContainer.classList.remove('hidden');
+      showNewTab();
+    }
+
+    function showNewTab() {
+      orderForm.classList.remove('hidden');
+      manageContainer.classList.add('hidden');
+      tabNew.style.opacity = '1';
+      tabManage.style.opacity = '.85';
+    }
+
+    function showManageTab() {
+      orderForm.classList.add('hidden');
+      manageContainer.classList.remove('hidden');
+      tabNew.style.opacity = '.85';
+      tabManage.style.opacity = '1';
+      loadOrders();
+    }
+
+    tabNew.addEventListener('click', showNewTab);
+    tabManage.addEventListener('click', showManageTab);
+
+    // init
+    if (currentUser && CREDENTIALS[currentUser]) showApp();
+    else showLoginForm();
+
+    // login
+    document.getElementById('loginForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const u = document.getElementById('loginUsername').value.trim();
+      const p = document.getElementById('loginPassword').value;
+
+      if (CREDENTIALS[u] && CREDENTIALS[u] === p) {
+        sessionStorage.setItem('flormellow_user', u);
+        currentUser = u;
+        showApp();
+        showMessage('success', `Bun venit, ${u}!`);
+      } else {
+        showLoginError('Utilizator sau parolă incorectă!');
+      }
+    });
+
+    // logout (both buttons)
+    function doLogout() {
+      sessionStorage.removeItem('flormellow_user');
+      currentUser = null;
+      document.getElementById('orderForm').reset();
+      showLoginForm();
+    }
+    document.getElementById('logoutBtn').addEventListener('click', doLogout);
+    document.getElementById('logoutBtnTop').addEventListener('click', doLogout);
+
+    // order submit
+    document.getElementById('orderForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Se trimite...';
+
+      const formData = {
+        secret: FM_SECRET,
+        client_name: document.getElementById('clientName').value.trim(),
+        client_phone: document.getElementById('clientPhone').value.trim(),
+        product: document.getElementById('product').value,
+        size: document.getElementById('size').value,
+        quantity: parseInt(document.getElementById('quantity').value, 10) || 1,
+        price: parseFloat(document.getElementById('price').value),
+        delivery_date: document.getElementById('deliveryDate').value,
+        status: document.getElementById('status').value,
+        payment_status: document.getElementById('paymentStatus').value,
+        comments: document.getElementById('notes').value.trim()
+      };
+
+      try {
+        const response = await fetch(NEW_ORDER_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
+
+        if (!response.ok) throw new Error('Eroare la trimiterea comenzii');
+
+        showMessage('success', '✅ Comanda a fost adăugată cu succes!');
+        document.getElementById('orderForm').reset();
+
+        // defaults
+        document.getElementById('status').value = 'pending';
+        document.getElementById('paymentStatus').value = 'unpaid';
+        document.getElementById('quantity').value = '1';
+        document.getElementById('size').value = '';
+        document.getElementById('deliveryDate').value = todayISO();
+
+      } catch (err) {
+        showMessage('error', '❌ Eroare: ' + err.message);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Adaugă Comandă';
+      }
+    });
+
+    // phone formatting
+    document.getElementById('clientPhone').addEventListener('input', (e) => {
+      let value = e.target.value.replace(/\D/g, '');
+      if (value.length > 0 && value[0] !== '0') value = '0' + value;
+      if (value.length > 10) value = value.substring(0, 10);
+      e.target.value = value;
+    });
+
+    function todayISO() {
+      return new Date().toISOString().split('T')[0];
+    }
+    document.getElementById('deliveryDate').setAttribute('min', todayISO());
+    document.getElementById('deliveryDate').value = todayISO();
+
+    // messages
+    function showMessage(type, text) {
+      const messageId = type === 'success' ? 'successMessage' : 'errorMessage';
+      const el = document.getElementById(messageId);
+      el.textContent = text;
+      el.style.display = 'block';
+      setTimeout(() => { el.style.display = 'none'; }, 4500);
+    }
+    function showLoginError(text) {
+      const el = document.getElementById('loginError');
+      el.textContent = text;
+      el.style.display = 'block';
+      setTimeout(() => { el.style.display = 'none'; }, 3000);
+    }
+
+    // --- MANAGE TAB: list + update ---
+    document.getElementById('refreshOrdersBtn').addEventListener('click', loadOrders);
+
+    async function loadOrders() {
+      const listEl = document.getElementById('ordersList');
+      listEl.innerHTML = '<div class="muted">Se încarcă...</div>';
+
+      try {
+        const res = await fetch(ORDERS_LIST_URL, { method: 'GET' });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+        const data = await res.json();
+        const orders = data.orders || [];
+
+        if (!orders.length) {
+          listEl.innerHTML = '<div class="muted">Nicio comandă în lucru.</div>';
+          return;
+        }
+
+        listEl.innerHTML = orders.map(o => orderCard(o)).join('');
+
+        document.querySelectorAll('.saveBtn').forEach(btn => {
+          btn.addEventListener('click', () => saveOrder(btn.getAttribute('data-oid')));
+        });
+
+      } catch (e) {
+        listEl.innerHTML = `<div class="muted" style="color:#b00020;">Eroare la încărcare: ${e.message}</div>`;
+      }
+    }
+
+    function orderCard(o) {
+      const safe = (v) => String(v ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      return `
+        <div class="orderCard">
+          <div class="orderTop">
+            <div>
+              <div class="title">${safe(o.client_name)} (${safe(o.client_phone)})</div>
+              <div class="sub">${safe(o.product)}${o.size ? ' | ' + safe(o.size) : ''} x${safe(o.quantity)} — ${safe(o.price)} RON</div>
+              <div class="muted">Livrare: <strong>${safe(o.delivery_date)}</strong> • ID: <span class="mono">${safe(o.order_id)}</span></div>
+            </div>
+          </div>
+
+          <div class="spacer"></div>
+
+          <div class="row">
+            <div class="form-group" style="margin-bottom:0;">
+              <label style="font-size:12px;">Status</label>
+              <select class="statusSel" data-oid="${safe(o.order_id)}">
+                <option value="pending" ${o.status==='pending'?'selected':''}>În Așteptare</option>
+                <option value="confirmed" ${o.status==='confirmed'?'selected':''}>Confirmat</option>
+                <option value="preparing" ${o.status==='preparing'?'selected':''}>În Pregătire</option>
+                <option value="delivered" ${o.status==='delivered'?'selected':''}>Livrat</option>
+                <option value="cancelled" ${o.status==='cancelled'?'selected':''}>Anulat</option>
+              </select>
+            </div>
+
+            <div class="form-group" style="margin-bottom:0;">
+              <label style="font-size:12px;">Plată</label>
+              <select class="paySel" data-oid="${safe(o.order_id)}">
+                <option value="unpaid" ${o.payment_status==='unpaid'?'selected':''}>Neplătit</option>
+                <option value="paid" ${o.payment_status==='paid'?'selected':''}>Plătit</option>
+                <option value="partial" ${o.payment_status==='partial'?'selected':''}>Parțial</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top:10px;">
+            <label style="font-size:12px;">Comentarii</label>
+            <input type="text" class="commentInp" data-oid="${safe(o.order_id)}" value="${safe(o.comments || '')}">
+          </div>
+
+          <div style="display:flex;justify-content:flex-end;">
+            <button type="button" class="btn small saveBtn" data-oid="${safe(o.order_id)}">Salvează</button>
+          </div>
+        </div>
+      `;
+    }
+
+    async function saveOrder(orderId) {
+      const status = document.querySelector(`.statusSel[data-oid="${cssEscape(orderId)}"]`).value;
+      const payment_status = document.querySelector(`.paySel[data-oid="${cssEscape(orderId)}"]`).value;
+      const comments = document.querySelector(`.commentInp[data-oid="${cssEscape(orderId)}"]`).value.trim();
+
+      try {
+        const res = await fetch(ORDER_UPDATE_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ secret: FM_SECRET, order_id: orderId, status, payment_status, comments })
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+        showMessage('success', '✅ Actualizat!');
+      } catch (e) {
+        showMessage('error', '❌ Update eșuat: ' + e.message);
+      }
+    }
+
+    // small helper for querySelector with arbitrary ids
+    function cssEscape(v) {
+      return String(v).replace(/"/g, '\\"').replace(/\\/g, '\\\\');
+    }
+  </script>
+</body>
+</html>
