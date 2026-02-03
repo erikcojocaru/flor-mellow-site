@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlorMellow - Adaugă Comandă</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .form-container {
+            padding: 30px;
+        }
+
+        .login-container {
+            padding: 40px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+            font-family: inherit;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .message {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 14px;
+            display: none;
+        }
+
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .logout-btn {
+            background: #dc3545;
+            padding: 8px 16px;
+            font-size: 14px;
+            margin-top: 15px;
+            width: auto;
+            display: inline-block;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .login-logo {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌸 FlorMellow</h1>
+            <p>Sistem de Management Comenzi</p>
+        </div>
+
+        <!-- Login Form -->
+        <div id="loginContainer" class="login-container">
+            <div class="login-logo">🔒</div>
+            <h2 style="margin-bottom: 20px; color: #333;">Autentificare</h2>
+            <div class="message error" id="loginError"></div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <input type="text" id="loginUsername" placeholder="Utilizator" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="loginPassword" placeholder="Parolă" required>
+                </div>
+                <button type="submit" class="btn">Intră în Cont</button>
+            </form>
+        </div>
+
+        <!-- Order Form -->
+        <div id="orderContainer" class="form-container hidden">
+            <div class="message success" id="successMessage"></div>
+            <div class="message error" id="errorMessage"></div>
+
+            <form id="orderForm">
+                <div class="form-group">
+                    <label for="clientName">Nume Client *</label>
+                    <input type="text" id="clientName" name="client_name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="clientPhone">Telefon Client *</label>
+                    <input type="tel" id="clientPhone" name="client_phone" placeholder="0712345678" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="product">Produs *</label>
+                    <select id="product" name="product" required>
+                        <option value="">Selectează produsul...</option>
+                        <option value="Buchet Trandafiri">Buchet Trandafiri</option>
+                        <option value="Buchet Lalele">Buchet Lalele</option>
+                        <option value="Buchet Mixt">Buchet Mixt</option>
+                        <option value="Aranjament Floral">Aranjament Floral</option>
+                        <option value="Coș Cadou">Coș Cadou</option>
+                        <option value="Cutie Ciocolată">Cutie Ciocolată</option>
+                        <option value="Altele">Altele</option>
+                    </select>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <label for="price">Preț (RON) *</label>
+                        <input type="number" id="price" name="price" step="0.01" min="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="deliveryDate">Data Livrării *</label>
+                        <input type="date" id="deliveryDate" name="delivery_date" required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <label for="status">Status *</label>
+                        <select id="status" name="status" required>
+                            <option value="pending">În Așteptare</option>
+                            <option value="confirmed">Confirmat</option>
+                            <option value="preparing">În Pregătire</option>
+                            <option value="delivered">Livrat</option>
+                            <option value="cancelled">Anulat</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="paymentStatus">Plată *</label>
+                        <select id="paymentStatus" name="payment_status" required>
+                            <option value="unpaid">Neplătit</option>
+                            <option value="paid">Plătit</option>
+                            <option value="partial">Parțial</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="notes">Notițe (opțional)</label>
+                    <textarea id="notes" name="notes" placeholder="Detalii suplimentare despre comandă..."></textarea>
+                </div>
+
+                <button type="submit" class="btn" id="submitBtn">Adaugă Comandă</button>
+                <button type="button" class="btn logout-btn" id="logoutBtn">Deconectare</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // IMPORTANT: Change these credentials and the webhook URL!
+        const CREDENTIALS = {
+            'admin': 'iloveyou2026!',  // Change this password!
+            'irina': 'irina2026!'         // Change this password!
+        };
+
+        // IMPORTANT: Replace with your actual n8n webhook URL
+        const WEBHOOK_URL = 'https://api.flormellow.ro/webhook-test/new-order';
+
+        // Session management
+        let currentUser = sessionStorage.getItem('flormellow_user');
+
+        // Initialize
+        if (currentUser && CREDENTIALS[currentUser]) {
+            showOrderForm();
+        } else {
+            showLoginForm();
+        }
+
+        // Login form handling
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            
+            if (CREDENTIALS[username] && CREDENTIALS[username] === password) {
+                sessionStorage.setItem('flormellow_user', username);
+                currentUser = username;
+                showOrderForm();
+                showMessage('success', `Bun venit, ${username}!`);
+            } else {
+                showLoginError('Utilizator sau parolă incorectă!');
+            }
+        });
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            sessionStorage.removeItem('flormellow_user');
+            currentUser = null;
+            showLoginForm();
+            document.getElementById('orderForm').reset();
+        });
+
+        // Order form handling
+        document.getElementById('orderForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Se trimite...';
+            
+            // Get form data
+            const formData = {
+				secret: 'flormellow_secret_key_2025_xK9p',  // ADD THIS LINE (use your secret)
+                client_name: document.getElementById('clientName').value.trim(),
+                client_phone: document.getElementById('clientPhone').value.trim(),
+                product: document.getElementById('product').value,
+                price: parseFloat(document.getElementById('price').value),
+                delivery_date: document.getElementById('deliveryDate').value,
+                status: document.getElementById('status').value,
+                payment_status: document.getElementById('paymentStatus').value,
+                notes: document.getElementById('notes').value.trim()
+            };
+
+            try {
+                const response = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                    showMessage('success', '✅ Comanda a fost adăugată cu succes!');
+                    document.getElementById('orderForm').reset();
+                    
+                    // Set default values
+                    document.getElementById('status').value = 'pending';
+                    document.getElementById('paymentStatus').value = 'unpaid';
+                } else {
+                    throw new Error('Eroare la trimiterea comenzii');
+                }
+            } catch (error) {
+                showMessage('error', '❌ Eroare: ' + error.message);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Adaugă Comandă';
+            }
+        });
+
+        // Phone number formatting
+        document.getElementById('clientPhone').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            
+            // Ensure it starts with 0 for Romanian numbers
+            if (value.length > 0 && value[0] !== '0') {
+                value = '0' + value;
+            }
+            
+            // Limit to 10 digits
+            if (value.length > 10) {
+                value = value.substring(0, 10);
+            }
+            
+            e.target.value = value;
+        });
+
+        // Set minimum date to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('deliveryDate').setAttribute('min', today);
+        document.getElementById('deliveryDate').value = today;
+
+        // Helper functions
+        function showLoginForm() {
+            document.getElementById('loginContainer').classList.remove('hidden');
+            document.getElementById('orderContainer').classList.add('hidden');
+        }
+
+        function showOrderForm() {
+            document.getElementById('loginContainer').classList.add('hidden');
+            document.getElementById('orderContainer').classList.remove('hidden');
+        }
+
+        function showMessage(type, text) {
+            const messageId = type === 'success' ? 'successMessage' : 'errorMessage';
+            const messageEl = document.getElementById(messageId);
+            messageEl.textContent = text;
+            messageEl.style.display = 'block';
+            
+            setTimeout(() => {
+                messageEl.style.display = 'none';
+            }, 5000);
+        }
+
+        function showLoginError(text) {
+            const errorEl = document.getElementById('loginError');
+            errorEl.textContent = text;
+            errorEl.style.display = 'block';
+            
+            setTimeout(() => {
+                errorEl.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
