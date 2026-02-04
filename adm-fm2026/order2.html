@@ -165,9 +165,6 @@
       <div class="message error" id="loginError"></div>
       <form id="loginForm">
         <div class="form-group">
-          <input type="text" id="loginUsername" placeholder="Utilizator" required>
-        </div>
-        <div class="form-group">
           <input type="password" id="loginPassword" placeholder="Parolă" required>
         </div>
         <button type="submit" class="btn">Intră în Cont</button>
@@ -284,10 +281,9 @@
 
   <script>
     // --- CONFIG (edit here) ---
-    const CREDENTIALS = {
-      'admin': 'iloveyou2026!',
-      'irina': 'irina2026!'
-    };
+    // Login is done via a shared password hash (SHA-256). No plaintext passwords in repo.
+    const PASSWORD_HASH = "9a6e960876084d975bdfae1fc4e34c22d0bc51adfa5443383b8c4e67f2af831";
+    const AUTH_KEY = "flormellow_auth";
 
     // n8n endpoints (you must create these workflows)
     const NEW_ORDER_URL   = 'https://api.flormellow.ro/webhook/new-order';
@@ -298,7 +294,7 @@
     const FM_SECRET = 'flormellow_secret_key_2025_xK9p';
 
     // --- SESSION ---
-    let currentUser = sessionStorage.getItem('flormellow_user');
+    let currentUser = null; // legacy var (kept to avoid touching other code)
 
     const menuBar = document.getElementById('menuBar');
     const loginContainer = document.getElementById('loginContainer');
@@ -342,29 +338,33 @@
     tabManage.addEventListener('click', showManageTab);
 
     // init
-    if (currentUser && CREDENTIALS[currentUser]) showApp();
+    if (sessionStorage.getItem(AUTH_KEY) === '1') showApp();
     else showLoginForm();
 
-    // login
-    document.getElementById('loginForm').addEventListener('submit', (e) => {
+    async function sha256Hex(str) {
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+      return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    // login (single admin password)
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const u = document.getElementById('loginUsername').value.trim();
       const p = document.getElementById('loginPassword').value;
 
-      if (CREDENTIALS[u] && CREDENTIALS[u] === p) {
-        sessionStorage.setItem('flormellow_user', u);
-        currentUser = u;
+      const hash = await sha256Hex(p);
+      if (hash === PASSWORD_HASH) {
+        sessionStorage.setItem(AUTH_KEY, '1');
         showApp();
-        showMessage('success', `Bun venit, ${u}!`);
+        showMessage('success', 'Bun venit!');
+        document.getElementById('loginPassword').value = '';
       } else {
-        showLoginError('Utilizator sau parolă incorectă!');
+        showLoginError('Parolă incorectă!');
       }
     });
 
     // logout (both buttons)
     function doLogout() {
-      sessionStorage.removeItem('flormellow_user');
-      currentUser = null;
+      sessionStorage.removeItem(AUTH_KEY);
       document.getElementById('orderForm').reset();
       showLoginForm();
     }
