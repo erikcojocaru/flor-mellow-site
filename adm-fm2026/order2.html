@@ -1,148 +1,100 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>FlorMellow - Management Comenzi</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{
+      font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+      background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+      min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;
     }
-
-    .container {
-      background: white;
-      border-radius: 20px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-      max-width: 540px;
-      width: 100%;
-      overflow: hidden;
+    .container{
+      background:#fff;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.3);
+      max-width:560px;width:100%;overflow:hidden;
     }
-
-    .header {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      padding: 26px 22px;
-      text-align: center;
+    .header{
+      background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+      color:#fff;padding:26px 24px;text-align:center;
     }
-
-    .header h1 { font-size: 28px; margin-bottom: 8px; }
-    .header p { opacity: 0.9; font-size: 14px; }
-
-    .menu {
-      display: none;
-      gap: 10px;
-      justify-content: center;
-      padding: 12px;
-      background: #f6f6fb;
-      border-bottom: 1px solid #eee;
+    .header h1{font-size:28px;margin-bottom:6px}
+    .header p{opacity:.9;font-size:13px}
+    .tabs{
+      display:flex;gap:10px;justify-content:center;padding:12px;background:#f6f6fb;border-bottom:1px solid #eee;
     }
-
-    .form-container { padding: 24px; }
-    .login-container { padding: 40px; text-align: center; }
-
-    .form-group { margin-bottom: 18px; }
-
-    label {
-      display: block;
-      margin-bottom: 8px;
-      color: #333;
-      font-weight: 500;
-      font-size: 14px;
+    .tabBtn{
+      border:none;border-radius:10px;
+      background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+      color:#fff;cursor:pointer;
+      padding:10px 14px;font-size:14px;font-weight:600;
+      box-shadow:0 8px 20px rgba(102,126,234,.25);
+      transition:transform .15s,opacity .15s;
+      width:auto;
     }
-
-    input, select, textarea {
-      width: 100%;
-      padding: 12px 15px;
-      border: 2px solid #e0e0e0;
-      border-radius: 8px;
-      font-size: 14px;
-      transition: border-color 0.3s;
-      font-family: inherit;
+    .tabBtn:hover{transform:translateY(-1px)}
+    .tabBtn.dim{opacity:.82}
+    .form-container{padding:22px 24px 26px}
+    .login-container{padding:34px 24px;text-align:center}
+    .login-logo{font-size:56px;margin-bottom:12px}
+    h2{color:#333;margin-bottom:16px}
+    .form-group{margin-bottom:16px}
+    label{display:block;margin-bottom:7px;color:#333;font-weight:600;font-size:13px}
+    input,select,textarea{
+      width:100%;padding:12px 14px;border:2px solid #e0e0e0;border-radius:10px;
+      font-size:14px;transition:border-color .2s;font-family:inherit;
     }
-
-    input:focus, select:focus, textarea:focus {
-      outline: none;
-      border-color: #667eea;
+    input:focus,select:focus,textarea:focus{outline:none;border-color:#667eea}
+    textarea{resize:vertical;min-height:78px}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media(max-width:600px){.row{grid-template-columns:1fr}}
+    .btn{
+      width:100%;padding:13px 14px;border:none;border-radius:10px;
+      background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+      color:#fff;font-size:15px;font-weight:700;cursor:pointer;
+      transition:transform .15s,box-shadow .15s;
     }
-
-    textarea { resize: vertical; min-height: 80px; }
-
-    .btn {
-      width: 100%;
-      padding: 14px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s, opacity .2s;
+    .btn:hover{transform:translateY(-1px);box-shadow:0 12px 24px rgba(102,126,234,.26)}
+    .btn:disabled{opacity:.6;cursor:not-allowed;transform:none;box-shadow:none}
+    .logout-btn{background:#dc3545;width:auto;padding:9px 14px;font-size:13px;margin-top:12px}
+    .message{padding:12px;border-radius:10px;margin-bottom:14px;text-align:center;font-size:13px;display:none}
+    .message.success{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+    .message.error{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+    .hidden{display:none}
+    .muted{color:#666;font-size:13px;padding:10px 0}
+    .manageHeader{
+      display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;
     }
-
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+    .manageHeader h3{margin:0;color:#333}
+    .miniBtn{
+      width:auto;padding:10px 12px;font-size:13px;font-weight:700;border-radius:10px;
+      background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+      color:#fff;border:none;cursor:pointer;
     }
-
-    .btn:active { transform: translateY(0); }
-    .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
-
-    .btn.small { width: auto; padding: 10px 14px; font-size: 14px; }
-    .btn.tab { width: auto; padding: 10px 14px; font-size: 14px; }
-    .btn.danger { background: #dc3545; }
-
-    .message {
-      padding: 12px 14px;
-      border-radius: 8px;
-      margin-bottom: 16px;
-      text-align: center;
-      font-size: 14px;
-      display: none;
+    .orderCard{
+      border:1px solid #eee;border-radius:14px;padding:12px;margin:10px 0;background:#fafafe;
     }
-    .message.success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-    .message.error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
-
-    .hidden { display: none; }
-
-    .row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
+    .orderTop{
+      display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:8px;
     }
-
-    @media (max-width: 600px) { .row { grid-template-columns: 1fr; } }
-
-    .login-logo { font-size: 60px; margin-bottom: 20px; }
-
-    .manageHeader {
-      display:flex; justify-content:space-between; align-items:center;
-      gap:10px; margin-bottom: 10px;
+    .oid{font-weight:800;color:#333;font-size:13px}
+    .meta{color:#666;font-size:12px;margin-top:2px;line-height:1.35}
+    .pill{
+      display:inline-block;padding:4px 8px;border-radius:999px;
+      background:#eef; color:#334; font-size:11px; font-weight:700;
+      margin-top:6px;
     }
-    .manageHeader h3 { margin:0; color:#333; }
-
-    .orderCard {
-      border: 1px solid #eee;
-      border-radius: 12px;
-      padding: 12px;
-      margin-bottom: 10px;
+    .cardRow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+    .saveRow{display:flex;gap:10px;align-items:center;margin-top:10px}
+    .saveBtn{
+      flex:1;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+      border:none;border-radius:10px;color:#fff;font-weight:800;padding:10px;cursor:pointer;
     }
-    .orderTop {
-      display:flex; justify-content:space-between; gap:10px; align-items:flex-start;
-    }
-    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
-    .muted { color:#777; font-size:12px; }
-    .title { font-weight: 700; color: #333; }
-    .sub { font-size: 13px; color: #555; margin-top: 4px; }
-    .spacer { height: 8px; }
+    .saveBtn:disabled{opacity:.6;cursor:not-allowed}
+    .smallInput{padding:10px 12px;font-size:13px}
+    #productPreview{display:none;margin-top:-6px;margin-bottom:14px;padding:10px;border:1px solid #eee;border-radius:12px;background:#fafafe}
+    #productPreviewImg{width:64px;height:64px;object-fit:cover;border-radius:10px;border:1px solid #eee;background:#fff}
   </style>
 </head>
 <body>
@@ -152,74 +104,70 @@
       <p>Sistem de Management Comenzi</p>
     </div>
 
-    <!-- Menu (only after login) -->
-    <div class="menu" id="menuBar">
-      <button type="button" class="btn tab" id="tabNew">➕ Comandă nouă</button>
-      <button type="button" class="btn tab" id="tabManage" style="opacity:.85;">📋 Comenzi în lucru</button>
+    <div class="tabs">
+      <button type="button" class="tabBtn" id="tabNew">➕ Comandă nouă</button>
+      <button type="button" class="tabBtn dim" id="tabManage">📋 Comenzi în lucru</button>
     </div>
 
-    <!-- Login -->
     <div id="loginContainer" class="login-container">
       <div class="login-logo">🔒</div>
-      <h2 style="margin-bottom: 20px; color: #333;">Autentificare</h2>
+      <h2>Autentificare</h2>
       <div class="message error" id="loginError"></div>
       <form id="loginForm">
         <div class="form-group">
-          <input type="password" id="loginPassword" placeholder="Parolă" required>
+          <input type="password" id="loginPassword" placeholder="Parolă" required />
         </div>
-        <button type="submit" class="btn">Intră în Cont</button>
+        <button class="btn" type="submit">Intră</button>
       </form>
+      <p class="muted" style="margin-top:10px;">(Un singur password. Nu există username.)</p>
     </div>
 
-    <!-- Main container after login -->
-    <div id="orderContainer" class="form-container hidden">
+    <div id="appContainer" class="form-container hidden">
       <div class="message success" id="successMessage"></div>
       <div class="message error" id="errorMessage"></div>
 
-      <!-- Manage tab -->
       <div id="manageContainer" class="hidden">
         <div class="manageHeader">
           <h3>Comenzi în lucru</h3>
-          <button type="button" class="btn small" id="refreshOrdersBtn">↻ Refresh</button>
+          <button type="button" class="miniBtn" id="refreshOrdersBtn">↻ Refresh</button>
         </div>
-        
+
         <div class="row" style="margin-bottom:10px;">
           <div class="form-group" style="margin-bottom:0;">
             <label style="font-size:12px;">Caută</label>
-            <input type="text" id="searchBox" placeholder="telefon / nume / produs / order_id">
+            <input class="smallInput" type="text" id="searchBox" placeholder="telefon / nume / produs / order_id">
           </div>
           <div class="form-group" style="margin-bottom:0;">
             <label style="font-size:12px;">Status</label>
-            <select id="statusFilter">
+            <select class="smallInput" id="statusFilter">
               <option value="">Toate (în lucru)</option>
               <option value="pending">În Așteptare</option>
               <option value="confirmed">Confirmat</option>
               <option value="preparing">În Pregătire</option>
+              <option value="delivered">Livrat</option>
+              <option value="cancelled">Anulat</option>
             </select>
           </div>
         </div>
 
         <div id="ordersList"></div>
-
-        <div class="spacer"></div>
-        <button type="button" class="btn danger small" id="logoutBtnTop">Deconectare</button>
+        <button type="button" class="btn logout-btn" id="logoutBtn2">Deconectare</button>
       </div>
 
-      <!-- New order tab -->
       <form id="orderForm">
         <div class="form-group">
           <label for="clientName">Nume Client *</label>
-          <input type="text" id="clientName" name="client_name" required>
+          <input type="text" id="clientName" required />
         </div>
 
         <div class="form-group">
           <label for="clientPhone">Telefon Client *</label>
-          <input type="tel" id="clientPhone" name="client_phone" placeholder="0712345678" required>
+          <input type="tel" id="clientPhone" placeholder="0712345678" required />
         </div>
 
         <div class="form-group">
           <label for="product">Produs *</label>
-          <select id="product" name="product" required>
+          <select id="product" required>
             <option value="">Selectează produsul...</option>
             <option value="Buchet Trandafiri">Buchet Trandafiri</option>
             <option value="Buchet Lalele">Buchet Lalele</option>
@@ -230,21 +178,21 @@
             <option value="Altele">Altele</option>
           </select>
         </div>
-                <div id="productPreview" style="display:none;margin-top:-6px;margin-bottom:14px;padding:10px;border:1px solid #eee;border-radius:12px;background:#fafafe;">
-                  <div style="display:flex;gap:10px;align-items:center;">
-                    <img id="productPreviewImg" src="" alt="" style="width:64px;height:64px;object-fit:cover;border-radius:10px;border:1px solid #eee;background:#fff;">
-                    <div style="flex:1;">
-                      <div id="productPreviewName" style="font-weight:600;color:#333;font-size:14px;line-height:1.2;"></div>
-                      <div id="productPreviewMeta" style="margin-top:4px;color:#666;font-size:12px;"></div>
-                    </div>
-                  </div>
-                </div>
 
+        <div id="productPreview">
+          <div style="display:flex;gap:10px;align-items:center;">
+            <img id="productPreviewImg" src="" alt="">
+            <div style="flex:1;">
+              <div id="productPreviewName" style="font-weight:700;color:#333;font-size:14px;line-height:1.2;"></div>
+              <div id="productPreviewMeta" style="margin-top:4px;color:#666;font-size:12px;"></div>
+            </div>
+          </div>
+        </div>
 
         <div class="row">
           <div class="form-group">
             <label for="size">Mărime *</label>
-            <select id="size" name="size" required>
+            <select id="size" required>
               <option value="">Alege...</option>
               <option value="XS">XS</option>
               <option value="S">S</option>
@@ -257,26 +205,26 @@
 
           <div class="form-group">
             <label for="quantity">Cantitate *</label>
-            <input type="number" id="quantity" name="quantity" min="1" step="1" value="1" required>
+            <input type="number" id="quantity" min="1" step="1" value="1" required />
           </div>
         </div>
 
         <div class="row">
           <div class="form-group">
             <label for="price">Preț (RON) *</label>
-            <input type="number" id="price" name="price" step="0.01" min="0" required>
+            <input type="number" id="price" step="0.01" min="0" required />
           </div>
 
           <div class="form-group">
             <label for="deliveryDate">Data Livrării *</label>
-            <input type="date" id="deliveryDate" name="delivery_date" required>
+            <input type="date" id="deliveryDate" required />
           </div>
         </div>
 
         <div class="row">
           <div class="form-group">
             <label for="status">Status *</label>
-            <select id="status" name="status" required>
+            <select id="status" required>
               <option value="pending">În Așteptare</option>
               <option value="confirmed">Confirmat</option>
               <option value="preparing">În Pregătire</option>
@@ -287,7 +235,7 @@
 
           <div class="form-group">
             <label for="paymentStatus">Plată *</label>
-            <select id="paymentStatus" name="payment_status" required>
+            <select id="paymentStatus" required>
               <option value="unpaid">Neplătit</option>
               <option value="paid">Plătit</option>
               <option value="partial">Parțial</option>
@@ -296,424 +244,393 @@
         </div>
 
         <div class="form-group">
-          <label for="notes">Notițe (opțional)</label>
-          <textarea id="notes" name="notes" placeholder="Detalii suplimentare despre comandă..."></textarea>
+          <label for="comments">Notițe (opțional)</label>
+          <textarea id="comments" placeholder="Detalii suplimentare..."></textarea>
         </div>
 
         <button type="submit" class="btn" id="submitBtn">Adaugă Comandă</button>
-        <button type="button" class="btn danger small" id="logoutBtn" style="margin-top:12px;">Deconectare</button>
+        <button type="button" class="btn logout-btn" id="logoutBtn">Deconectare</button>
       </form>
     </div>
   </div>
 
   <script>
-    // --- CONFIG (edit here) ---
-    // Login is done via a shared password hash (SHA-256). No plaintext passwords in repo.
     const PASSWORD_HASH = "9a6e960876084d975bdfae1fc4e34c22db0bc51adfa5443383b8c4e67f2af831";
-    const AUTH_KEY = "flormellow_auth";
+    const API_SECRET = "flormellow_secret_key_2025_xK9p";
 
-    // n8n endpoints (you must create these workflows)
-    const NEW_ORDER_URL   = 'https://api.flormellow.ro/webhook/new-order';
-    const ORDERS_LIST_URL = 'https://api.flormellow.ro/webhook/orders-list';
-    const ORDER_UPDATE_URL= 'https://api.flormellow.ro/webhook/order-update';
+    const WEBHOOK_NEW_ORDER    = "https://api.flormellow.ro/webhook/new-order";
+    const WEBHOOK_ORDERS_LIST  = "https://api.flormellow.ro/webhook/orders-list";
+    const WEBHOOK_ORDER_UPDATE = "https://api.flormellow.ro/webhook/order-update";
 
-    // shared secret (matches your n8n IF condition)
-    const FM_SECRET = 'flormellow_secret_key_2025_xK9p';
+    const CATALOG_URL = "../catalog.html";
 
-    // --- SESSION ---
-    let currentUser = null; // legacy var (kept to avoid touching other code)
+    const AUTH_KEY = "flormellow_auth_v1";
+    function isAuthed(){ return sessionStorage.getItem(AUTH_KEY) === "1"; }
+    function setAuthed(v){ sessionStorage.setItem(AUTH_KEY, v ? "1" : "0"); }
 
-    const menuBar = document.getElementById('menuBar');
-    const loginContainer = document.getElementById('loginContainer');
-    const orderContainer = document.getElementById('orderContainer');
+    const loginContainer = document.getElementById("loginContainer");
+    const appContainer = document.getElementById("appContainer");
 
-    // tabs
-    const tabNew = document.getElementById('tabNew');
-    const tabManage = document.getElementById('tabManage');
-    const orderForm = 
-        // --- PRODUCT CATALOG INTEGRATION (from catalog.html) ---
-        // Builds a map: product name -> { img, size, price }
-        let CATALOG_PRODUCTS = {};
+    function showLogin(){
+      loginContainer.classList.remove("hidden");
+      appContainer.classList.add("hidden");
+    }
+    function showApp(){
+      loginContainer.classList.add("hidden");
+      appContainer.classList.remove("hidden");
+    }
+    if (isAuthed()) showApp(); else showLogin();
 
-        async function loadCatalogProducts() {
-            try {
-                const res = await fetch(CATALOG_URL, { cache: 'no-store' });
-                if (!res.ok) throw new Error('Cannot load catalog');
-
-                const text = await res.text();
-                const doc = new DOMParser().parseFromString(text, 'text/html');
-
-                const cards = Array.from(doc.querySelectorAll('article.product-card'));
-                const items = [];
-
-                for (const card of cards) {
-                    const name = (card.getAttribute('data-title') || card.dataset.title || (card.querySelector('.product-name')?.textContent || '')).trim();
-                    if (!name) continue;
-
-                    const img = (card.getAttribute('data-img') || card.dataset.img || (card.querySelector('img')?.getAttribute('src') || '')).trim();
-                    const size = (card.getAttribute('data-size') || card.dataset.size || '').trim();
-                    const price = (card.getAttribute('data-price') || card.dataset.price || '').trim();
-
-                    if (!CATALOG_PRODUCTS[name]) {
-                        CATALOG_PRODUCTS[name] = { img, size, price };
-                        items.push(name);
-                    }
-                }
-
-                const sel = document.getElementById('product');
-                const current = sel.value;
-
-                // preserve placeholder option
-                let placeholder = sel.querySelector('option[value=""]');
-                if (!placeholder) {
-                    placeholder = document.createElement('option');
-                    placeholder.value = '';
-                    placeholder.textContent = 'Selectează produsul...';
-                }
-
-                sel.innerHTML = '';
-                sel.appendChild(placeholder);
-
-                items.sort((a,b) => a.localeCompare(b, 'ro', { sensitivity: 'base' }));
-                for (const name of items) {
-                    const opt = document.createElement('option');
-                    opt.value = name;
-                    opt.textContent = name;
-                    sel.appendChild(opt);
-                }
-
-                const optOther = document.createElement('option');
-                optOther.value = 'Altele';
-                optOther.textContent = 'Altele';
-                sel.appendChild(optOther);
-
-                if (current) sel.value = current;
-
-            } catch (e) {
-                console.warn('Catalog integration disabled:', e);
-            }
-        }
-
-        function updateProductPreview() {
-            const name = document.getElementById('product').value;
-            const box = document.getElementById('productPreview');
-            const imgEl = document.getElementById('productPreviewImg');
-            const nameEl = document.getElementById('productPreviewName');
-            const metaEl = document.getElementById('productPreviewMeta');
-
-            if (!name || name === 'Altele' || !CATALOG_PRODUCTS[name]) {
-                box.style.display = 'none';
-                imgEl.src = '';
-                imgEl.alt = '';
-                nameEl.textContent = '';
-                metaEl.textContent = '';
-                return;
-            }
-
-            const p = CATALOG_PRODUCTS[name];
-            const imgPath = p.img || '';
-
-            // Make image path work from /adm-fm2026/ (../)
-            const normalized = imgPath.startsWith('http') ? imgPath : ('../' + imgPath.replace(/^\/+/, ''));
-            imgEl.src = normalized;
-            imgEl.alt = name;
-            nameEl.textContent = name;
-
-            const bits = [];
-            if (p.size) bits.push('Mărime catalog: ' + p.size);
-            if (p.price) bits.push('Preț catalog: ' + p.price + ' RON');
-            metaEl.textContent = bits.join(' • ');
-
-            box.style.display = 'block';
-        }
-
-        // init
-        loadCatalogProducts().then(() => updateProductPreview());
-        document.getElementById('product').addEventListener('change', updateProductPreview);
-
-
-        document.getElementById('orderForm');
-    const manageContainer = document.getElementById('manageContainer');
-
-    function showLoginForm() {
-      menuBar.style.display = 'none';
-      loginContainer.classList.remove('hidden');
-      orderContainer.classList.add('hidden');
+    function showMessage(type, text){
+      const el = document.getElementById(type === "success" ? "successMessage" : "errorMessage");
+      el.textContent = text;
+      el.style.display = "block";
+      setTimeout(()=>{ el.style.display="none"; }, 4500);
+    }
+    function showLoginError(text){
+      const el = document.getElementById("loginError");
+      el.textContent = text;
+      el.style.display = "block";
+      setTimeout(()=>{ el.style.display="none"; }, 3200);
+    }
+    async function sha256hex(str){
+      const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
+      return [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,"0")).join("");
     }
 
-    function showApp() {
-      menuBar.style.display = 'flex';
-      loginContainer.classList.add('hidden');
-      orderContainer.classList.remove('hidden');
-      showNewTab();
-    }
+    document.getElementById("loginForm").addEventListener("submit", async (e)=>{
+      e.preventDefault();
+      const p = document.getElementById("loginPassword").value;
+      const hex = await sha256hex(p);
+      if (hex === PASSWORD_HASH){
+        setAuthed(true);
+        document.getElementById("loginPassword").value = "";
+        showApp();
+        showMessage("success","✅ Autentificat.");
+      } else {
+        showLoginError("Parolă incorectă!");
+      }
+    });
 
-    function showNewTab() {
-      orderForm.classList.remove('hidden');
-      manageContainer.classList.add('hidden');
-      tabNew.style.opacity = '1';
-      tabManage.style.opacity = '.85';
+    function doLogout(){
+      setAuthed(false);
+      showLogin();
+      document.getElementById("orderForm").reset();
     }
+    document.getElementById("logoutBtn").addEventListener("click", doLogout);
+    document.getElementById("logoutBtn2").addEventListener("click", doLogout);
 
-    function showManageTab() {
-      orderForm.classList.add('hidden');
-      manageContainer.classList.remove('hidden');
-      tabNew.style.opacity = '.85';
-      tabManage.style.opacity = '1';
+    // Tabs
+    const tabNew = document.getElementById("tabNew");
+    const tabManage = document.getElementById("tabManage");
+    const manageContainer = document.getElementById("manageContainer");
+    const orderForm = document.getElementById("orderForm");
+
+    function showNewTab(){
+      orderForm.classList.remove("hidden");
+      manageContainer.classList.add("hidden");
+      tabNew.classList.remove("dim");
+      tabManage.classList.add("dim");
+    }
+    function showManageTab(){
+      orderForm.classList.add("hidden");
+      manageContainer.classList.remove("hidden");
+      tabNew.classList.add("dim");
+      tabManage.classList.remove("dim");
       loadOrders();
     }
+    tabNew.addEventListener("click", showNewTab);
+    tabManage.addEventListener("click", showManageTab);
+    showNewTab();
 
-    tabNew.addEventListener('click', showNewTab);
-    tabManage.addEventListener('click', showManageTab);
-
-    // init
-    if (sessionStorage.getItem(AUTH_KEY) === '1') showApp();
-    else showLoginForm();
-
-    async function sha256Hex(str) {
-      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
-      return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
-    }
-
-    // login (single admin password)
-    document.getElementById('loginForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const p = document.getElementById('loginPassword').value;
-
-      const hash = await sha256Hex(p);
-      if (hash === PASSWORD_HASH) {
-        sessionStorage.setItem(AUTH_KEY, '1');
-        showApp();
-        showMessage('success', 'Bun venit!');
-        document.getElementById('loginPassword').value = '';
-      } else {
-        showLoginError('Parolă incorectă!');
-      }
+    // Phone formatting
+    document.getElementById("clientPhone").addEventListener("input",(e)=>{
+      let v = e.target.value.replace(/\D/g,'');
+      if (v.length>0 && v[0]!=='0') v='0'+v;
+      if (v.length>10) v=v.slice(0,10);
+      e.target.value=v;
     });
 
-    // logout (both buttons)
-    function doLogout() {
-      sessionStorage.removeItem(AUTH_KEY);
-      document.getElementById('orderForm').reset();
-      showLoginForm();
-    }
-    document.getElementById('logoutBtn').addEventListener('click', doLogout);
-    document.getElementById('logoutBtnTop').addEventListener('click', doLogout);
+    // Date defaults
+    const today = new Date().toISOString().split("T")[0];
+    const dd = document.getElementById("deliveryDate");
+    dd.setAttribute("min", today);
+    dd.value = today;
 
-    // order submit
-    document.getElementById('orderForm').addEventListener('submit', async (e) => {
+    // New order submit
+    document.getElementById("orderForm").addEventListener("submit", async (e)=>{
       e.preventDefault();
-
-      const submitBtn = document.getElementById('submitBtn');
+      const submitBtn = document.getElementById("submitBtn");
       submitBtn.disabled = true;
-      submitBtn.textContent = 'Se trimite...';
+      submitBtn.textContent = "Se trimite...";
 
-      const formData = {
-        secret: FM_SECRET,
-        client_name: document.getElementById('clientName').value.trim(),
-        client_phone: document.getElementById('clientPhone').value.trim(),
-        product: document.getElementById('product').value,
-        size: document.getElementById('size').value,
-        quantity: parseInt(document.getElementById('quantity').value, 10) || 1,
-        price: parseFloat(document.getElementById('price').value),
-        delivery_date: document.getElementById('deliveryDate').value,
-        status: document.getElementById('status').value,
-        payment_status: document.getElementById('paymentStatus').value,
-        comments: document.getElementById('notes').value.trim()
+      const payload = {
+        secret: API_SECRET,
+        client_name: document.getElementById("clientName").value.trim(),
+        client_phone: document.getElementById("clientPhone").value.trim(),
+        product: document.getElementById("product").value,
+        size: document.getElementById("size").value,
+        quantity: parseInt(document.getElementById("quantity").value, 10) || 1,
+        price: parseFloat(document.getElementById("price").value),
+        delivery_date: document.getElementById("deliveryDate").value,
+        status: document.getElementById("status").value,
+        payment_status: document.getElementById("paymentStatus").value,
+        comments: document.getElementById("comments").value.trim()
       };
 
-      try {
-        const response = await fetch(NEW_ORDER_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData)
+      try{
+        const res = await fetch(WEBHOOK_NEW_ORDER, {
+          method:"POST",
+          headers:{ "Content-Type":"application/json" },
+          body: JSON.stringify(payload)
         });
-
-        if (!response.ok) throw new Error('Eroare la trimiterea comenzii');
-
-        showMessage('success', '✅ Comanda a fost adăugată cu succes!');
-        document.getElementById('orderForm').reset();
-
-        // defaults
-        document.getElementById('status').value = 'pending';
-        document.getElementById('paymentStatus').value = 'unpaid';
-        document.getElementById('quantity').value = '1';
-        document.getElementById('size').value = '';
-        document.getElementById('deliveryDate').value = todayISO();
-
-      } catch (err) {
-        showMessage('error', '❌ Eroare: ' + err.message);
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Adaugă Comandă';
+        if (!res.ok) throw new Error("Eroare la trimitere");
+        showMessage("success","✅ Comanda a fost adăugată!");
+        document.getElementById("orderForm").reset();
+        document.getElementById("status").value="pending";
+        document.getElementById("paymentStatus").value="unpaid";
+        dd.value = today;
+      }catch(err){
+        showMessage("error","❌ " + (err?.message || "Failed to fetch"));
+      }finally{
+        submitBtn.disabled=false;
+        submitBtn.textContent="Adaugă Comandă";
       }
     });
 
-    // phone formatting
-    document.getElementById('clientPhone').addEventListener('input', (e) => {
-      let value = e.target.value.replace(/\D/g, '');
-      if (value.length > 0 && value[0] !== '0') value = '0' + value;
-      if (value.length > 10) value = value.substring(0, 10);
-      e.target.value = value;
-    });
-
-    function todayISO() {
-      return new Date().toISOString().split('T')[0];
-    }
-    document.getElementById('deliveryDate').setAttribute('min', todayISO());
-    document.getElementById('deliveryDate').value = todayISO();
-
-    // messages
-    function showMessage(type, text) {
-      const messageId = type === 'success' ? 'successMessage' : 'errorMessage';
-      const el = document.getElementById(messageId);
-      el.textContent = text;
-      el.style.display = 'block';
-      setTimeout(() => { el.style.display = 'none'; }, 4500);
-    }
-    function showLoginError(text) {
-      const el = document.getElementById('loginError');
-      el.textContent = text;
-      el.style.display = 'block';
-      setTimeout(() => { el.style.display = 'none'; }, 3000);
-    }
-
-    // --- MANAGE TAB: list + update ---
-    
+    // Manage list/update
     let cachedOrders = [];
-document.getElementById('refreshOrdersBtn').addEventListener('click', loadOrders);
 
-    async function loadOrders() {
-      const listEl = document.getElementById('ordersList');
-      listEl.innerHTML = '<div class="muted">Se încarcă...</div>';
+    function orderCard(o){
+      const safe = (x)=> (x===null||x===undefined) ? "" : String(x);
+      const meta = [
+        safe(o.client_name) + " • " + safe(o.client_phone),
+        safe(o.product) + (o.size ? " ("+safe(o.size)+")" : "") + (o.quantity ? " ×"+safe(o.quantity) : ""),
+        "Livrare: " + safe(o.delivery_date),
+        "Preț: " + safe(o.price)
+      ].join("<br>");
 
-      try {
-        const res = await fetch(ORDERS_LIST_URL, { method: 'GET' });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const statusOptions = [
+        ["pending","În Așteptare"],
+        ["confirmed","Confirmat"],
+        ["preparing","În Pregătire"],
+        ["delivered","Livrat"],
+        ["cancelled","Anulat"],
+      ].map(([v,txt])=> `<option value="${v}" ${safe(o.status)===v?"selected":""}>${txt}</option>`).join("");
 
-        const data = await res.json();
-        cachedOrders = (data.orders || []);
+      const payOptions = [
+        ["unpaid","Neplătit"],
+        ["paid","Plătit"],
+        ["partial","Parțial"],
+      ].map(([v,txt])=> `<option value="${v}" ${safe(o.payment_status)===v?"selected":""}>${txt}</option>`).join("");
 
-        if (!cachedOrders.length) {
-          listEl.innerHTML = '<div class="muted">Nicio comandă în lucru.</div>';
-          return;
-        }
+      return `
+        <div class="orderCard" data-oid="${safe(o.order_id)}">
+          <div class="orderTop">
+            <div>
+              <div class="oid">${safe(o.order_id)}</div>
+              <div class="meta">${meta}</div>
+              <span class="pill">${safe(o.status)}</span>
+            </div>
+          </div>
 
-        applyFilters();} catch (e) {
-        listEl.innerHTML = `<div class="muted" style="color:#b00020;">Eroare la încărcare: ${e.message}</div>`;
-      }
+          <div class="cardRow">
+            <div class="form-group" style="margin-bottom:0;">
+              <label style="font-size:12px;">Status</label>
+              <select class="smallInput" id="st_${safe(o.order_id)}">${statusOptions}</select>
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label style="font-size:12px;">Plată</label>
+              <select class="smallInput" id="pay_${safe(o.order_id)}">${payOptions}</select>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top:10px;margin-bottom:0;">
+            <label style="font-size:12px;">Comentarii</label>
+            <input class="smallInput" id="cmt_${safe(o.order_id)}" value="${safe(o.comments).replace(/"/g,'&quot;')}" />
+          </div>
+
+          <div class="saveRow">
+            <button class="saveBtn" data-oid="${safe(o.order_id)}">💾 Salvează</button>
+          </div>
+        </div>
+      `;
     }
 
-
-    function renderOrders(orders) {
-      const listEl = document.getElementById('ordersList');
-
-      if (!orders.length) {
-        listEl.innerHTML = '<div class="muted">Nicio comandă în lucru.</div>';
+    function renderOrders(orders){
+      const listEl = document.getElementById("ordersList");
+      if (!orders.length){
+        listEl.innerHTML = '<div class="muted">Nicio comandă găsită.</div>';
         return;
       }
+      listEl.innerHTML = orders.map(orderCard).join("");
 
-      listEl.innerHTML = orders.map(o => orderCard(o)).join('');
-
-      document.querySelectorAll('.saveBtn').forEach(btn => {
-        btn.addEventListener('click', () => saveOrder(btn.getAttribute('data-oid')));
+      document.querySelectorAll(".saveBtn").forEach(btn=>{
+        btn.addEventListener("click", ()=> saveOrder(btn.getAttribute("data-oid")));
       });
     }
 
-    function applyFilters() {
-      const q = (document.getElementById('searchBox').value || '').trim().toLowerCase();
-      const st = document.getElementById('statusFilter').value;
+    function applyFilters(){
+      const q = (document.getElementById("searchBox").value || "").trim().toLowerCase();
+      const st = document.getElementById("statusFilter").value;
 
-      const filtered = cachedOrders.filter(o => {
-        if (st && String(o.status) !== st) return false;
+      const filtered = cachedOrders.filter(o=>{
+        if (!st){
+          if (!["pending","confirmed","preparing"].includes(String(o.status))) return false;
+        } else {
+          if (String(o.status) !== st) return false;
+        }
         if (!q) return true;
-
-        const hay = [
-          o.order_id, o.client_name, o.client_phone,
-          o.product, o.size, o.comments
-        ].join(' ').toLowerCase();
-
+        const hay = [o.order_id,o.client_name,o.client_phone,o.product,o.size,o.comments].join(" ").toLowerCase();
         return hay.includes(q);
       });
 
       renderOrders(filtered);
     }
 
-    // filter listeners (once)
-    document.getElementById('searchBox').addEventListener('input', applyFilters);
-    document.getElementById('statusFilter').addEventListener('change', applyFilters);
+    document.getElementById("searchBox").addEventListener("input", applyFilters);
+    document.getElementById("statusFilter").addEventListener("change", applyFilters);
 
-function orderCard(o) {
-      const safe = (v) => String(v ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-      return `
-        <div class="orderCard">
-          <div class="orderTop">
-            <div>
-              <div class="title">${safe(o.client_name)} (${safe(o.client_phone)})</div>
-              <div class="sub">${safe(o.product)}${o.size ? ' | ' + safe(o.size) : ''} x${safe(o.quantity)} — ${safe(o.price)} RON</div>
-              <div class="muted">Livrare: <strong>${safe(o.delivery_date)}</strong> • ID: <span class="mono">${safe(o.order_id)}</span></div>
-            </div>
-          </div>
+    async function loadOrders(){
+      const listEl = document.getElementById("ordersList");
+      listEl.innerHTML = '<div class="muted">Se încarcă...</div>';
 
-          <div class="spacer"></div>
+      try{
+        const url = WEBHOOK_ORDERS_LIST + "?secret=" + encodeURIComponent(API_SECRET);
+        const res = await fetch(url, { method:"GET" });
+        if (!res.ok) throw new Error("Failed to fetch");
 
-          <div class="row">
-            <div class="form-group" style="margin-bottom:0;">
-              <label style="font-size:12px;">Status</label>
-              <select class="statusSel" data-oid="${safe(o.order_id)}">
-                <option value="pending" ${o.status==='pending'?'selected':''}>În Așteptare</option>
-                <option value="confirmed" ${o.status==='confirmed'?'selected':''}>Confirmat</option>
-                <option value="preparing" ${o.status==='preparing'?'selected':''}>În Pregătire</option>
-                <option value="delivered" ${o.status==='delivered'?'selected':''}>Livrat</option>
-                <option value="cancelled" ${o.status==='cancelled'?'selected':''}>Anulat</option>
-              </select>
-            </div>
-
-            <div class="form-group" style="margin-bottom:0;">
-              <label style="font-size:12px;">Plată</label>
-              <select class="paySel" data-oid="${safe(o.order_id)}">
-                <option value="unpaid" ${o.payment_status==='unpaid'?'selected':''}>Neplătit</option>
-                <option value="paid" ${o.payment_status==='paid'?'selected':''}>Plătit</option>
-                <option value="partial" ${o.payment_status==='partial'?'selected':''}>Parțial</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-group" style="margin-top:10px;">
-            <label style="font-size:12px;">Comentarii</label>
-            <input type="text" class="commentInp" data-oid="${safe(o.order_id)}" value="${safe(o.comments || '')}">
-          </div>
-
-          <div style="display:flex;justify-content:flex-end;">
-            <button type="button" class="btn small saveBtn" data-oid="${safe(o.order_id)}">Salvează</button>
-          </div>
-        </div>
-      `;
-    }
-
-    async function saveOrder(orderId) {
-      const status = document.querySelector(`.statusSel[data-oid="${cssEscape(orderId)}"]`).value;
-      const payment_status = document.querySelector(`.paySel[data-oid="${cssEscape(orderId)}"]`).value;
-      const comments = document.querySelector(`.commentInp[data-oid="${cssEscape(orderId)}"]`).value.trim();
-
-      try {
-        const res = await fetch(ORDER_UPDATE_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ secret: FM_SECRET, order_id: orderId, status, payment_status, comments })
-        });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
-        showMessage('success', '✅ Actualizat!');
-      } catch (e) {
-        showMessage('error', '❌ Update eșuat: ' + e.message);
+        const data = await res.json();
+        cachedOrders = (data.orders || []);
+        applyFilters();
+      }catch(err){
+        listEl.innerHTML = '<div class="message error" style="display:block;">Eroare la încărcare: ' + (err?.message || "Failed to fetch") + '</div>';
       }
     }
 
-    // small helper for querySelector with arbitrary ids
-    function cssEscape(v) {
-      return String(v).replace(/"/g, '\\"').replace(/\\/g, '\\\\');
+    async function saveOrder(orderId){
+      const btn = document.querySelector(`.saveBtn[data-oid="${orderId}"]`);
+      if (!btn) return;
+
+      btn.disabled = true;
+      btn.textContent = "Se salvează...";
+
+      const payload = {
+        secret: API_SECRET,
+        order_id: orderId,
+        status: document.getElementById(`st_${orderId}`)?.value,
+        payment_status: document.getElementById(`pay_${orderId}`)?.value,
+        comments: document.getElementById(`cmt_${orderId}`)?.value ?? ""
+      };
+
+      try{
+        const res = await fetch(WEBHOOK_ORDER_UPDATE, {
+          method:"POST",
+          headers:{ "Content-Type":"application/json" },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json().catch(()=> ({}));
+        if (!res.ok || data.ok === false) throw new Error(data.message || "Update failed");
+
+        showMessage("success","✅ Salvat " + orderId);
+        await loadOrders();
+      }catch(err){
+        showMessage("error","❌ " + (err?.message || "Update failed"));
+      }finally{
+        btn.disabled = false;
+        btn.textContent = "💾 Salvează";
+      }
     }
+
+    document.getElementById("refreshOrdersBtn").addEventListener("click", loadOrders);
+
+    // Catalog integration
+    let CATALOG_PRODUCTS = {};
+
+    async function loadCatalogProducts(){
+      try{
+        const res = await fetch(CATALOG_URL, { cache:"no-store" });
+        if (!res.ok) throw new Error("Cannot load catalog");
+        const text = await res.text();
+        const doc = new DOMParser().parseFromString(text, "text/html");
+        const cards = Array.from(doc.querySelectorAll("article.product-card"));
+
+        const items = [];
+        for (const card of cards){
+          const name = (card.getAttribute("data-title") || card.dataset.title || "").trim();
+          if (!name) continue;
+          const img = (card.getAttribute("data-img") || card.dataset.img || (card.querySelector("img")?.getAttribute("src") || "")).trim();
+          const size = (card.getAttribute("data-size") || card.dataset.size || "").trim();
+          const price = (card.getAttribute("data-price") || card.dataset.price || "").trim();
+          if (!CATALOG_PRODUCTS[name]){
+            CATALOG_PRODUCTS[name] = { img, size, price };
+            items.push(name);
+          }
+        }
+
+        const sel = document.getElementById("product");
+        const current = sel.value;
+
+        let placeholder = sel.querySelector('option[value=""]');
+        if (!placeholder){
+          placeholder = document.createElement("option");
+          placeholder.value = "";
+          placeholder.textContent = "Selectează produsul...";
+        }
+
+        sel.innerHTML = "";
+        sel.appendChild(placeholder);
+
+        items.sort((a,b)=>a.localeCompare(b, "ro", {sensitivity:"base"}));
+        for (const name of items){
+          const opt = document.createElement("option");
+          opt.value = name;
+          opt.textContent = name;
+          sel.appendChild(opt);
+        }
+
+        const optOther = document.createElement("option");
+        optOther.value = "Altele";
+        optOther.textContent = "Altele";
+        sel.appendChild(optOther);
+
+        if (current) sel.value = current;
+
+      }catch(e){
+        console.warn("Catalog integration disabled:", e);
+      }
+    }
+
+    function updateProductPreview(){
+      const name = document.getElementById("product").value;
+      const box = document.getElementById("productPreview");
+      const imgEl = document.getElementById("productPreviewImg");
+      const nameEl = document.getElementById("productPreviewName");
+      const metaEl = document.getElementById("productPreviewMeta");
+
+      if (!name || name === "Altele" || !CATALOG_PRODUCTS[name]){
+        box.style.display="none";
+        imgEl.src=""; imgEl.alt="";
+        nameEl.textContent=""; metaEl.textContent="";
+        return;
+      }
+
+      const p = CATALOG_PRODUCTS[name];
+      const imgPath = p.img || "";
+      const normalized = imgPath.startsWith("http") ? imgPath : ("../" + imgPath.replace(/^\/+/, ""));
+      imgEl.src = normalized;
+      imgEl.alt = name;
+      nameEl.textContent = name;
+
+      const bits = [];
+      if (p.size) bits.push("Mărime catalog: " + p.size);
+      if (p.price) bits.push("Preț catalog: " + p.price + " RON");
+      metaEl.textContent = bits.join(" • ");
+      box.style.display="block";
+    }
+
+    document.getElementById("product").addEventListener("change", updateProductPreview);
+    loadCatalogProducts().then(updateProductPreview);
   </script>
 </body>
 </html>
