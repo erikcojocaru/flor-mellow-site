@@ -230,6 +230,16 @@
             <option value="Altele">Altele</option>
           </select>
         </div>
+                <div id="productPreview" style="display:none;margin-top:-6px;margin-bottom:14px;padding:10px;border:1px solid #eee;border-radius:12px;background:#fafafe;">
+                  <div style="display:flex;gap:10px;align-items:center;">
+                    <img id="productPreviewImg" src="" alt="" style="width:64px;height:64px;object-fit:cover;border-radius:10px;border:1px solid #eee;background:#fff;">
+                    <div style="flex:1;">
+                      <div id="productPreviewName" style="font-weight:600;color:#333;font-size:14px;line-height:1.2;"></div>
+                      <div id="productPreviewMeta" style="margin-top:4px;color:#666;font-size:12px;"></div>
+                    </div>
+                  </div>
+                </div>
+
 
         <div class="row">
           <div class="form-group">
@@ -320,7 +330,109 @@
     // tabs
     const tabNew = document.getElementById('tabNew');
     const tabManage = document.getElementById('tabManage');
-    const orderForm = document.getElementById('orderForm');
+    const orderForm = 
+        // --- PRODUCT CATALOG INTEGRATION (from catalog.html) ---
+        // Builds a map: product name -> { img, size, price }
+        let CATALOG_PRODUCTS = {};
+
+        async function loadCatalogProducts() {
+            try {
+                const res = await fetch(CATALOG_URL, { cache: 'no-store' });
+                if (!res.ok) throw new Error('Cannot load catalog');
+
+                const text = await res.text();
+                const doc = new DOMParser().parseFromString(text, 'text/html');
+
+                const cards = Array.from(doc.querySelectorAll('article.product-card'));
+                const items = [];
+
+                for (const card of cards) {
+                    const name = (card.getAttribute('data-title') || card.dataset.title || (card.querySelector('.product-name')?.textContent || '')).trim();
+                    if (!name) continue;
+
+                    const img = (card.getAttribute('data-img') || card.dataset.img || (card.querySelector('img')?.getAttribute('src') || '')).trim();
+                    const size = (card.getAttribute('data-size') || card.dataset.size || '').trim();
+                    const price = (card.getAttribute('data-price') || card.dataset.price || '').trim();
+
+                    if (!CATALOG_PRODUCTS[name]) {
+                        CATALOG_PRODUCTS[name] = { img, size, price };
+                        items.push(name);
+                    }
+                }
+
+                const sel = document.getElementById('product');
+                const current = sel.value;
+
+                // preserve placeholder option
+                let placeholder = sel.querySelector('option[value=""]');
+                if (!placeholder) {
+                    placeholder = document.createElement('option');
+                    placeholder.value = '';
+                    placeholder.textContent = 'Selectează produsul...';
+                }
+
+                sel.innerHTML = '';
+                sel.appendChild(placeholder);
+
+                items.sort((a,b) => a.localeCompare(b, 'ro', { sensitivity: 'base' }));
+                for (const name of items) {
+                    const opt = document.createElement('option');
+                    opt.value = name;
+                    opt.textContent = name;
+                    sel.appendChild(opt);
+                }
+
+                const optOther = document.createElement('option');
+                optOther.value = 'Altele';
+                optOther.textContent = 'Altele';
+                sel.appendChild(optOther);
+
+                if (current) sel.value = current;
+
+            } catch (e) {
+                console.warn('Catalog integration disabled:', e);
+            }
+        }
+
+        function updateProductPreview() {
+            const name = document.getElementById('product').value;
+            const box = document.getElementById('productPreview');
+            const imgEl = document.getElementById('productPreviewImg');
+            const nameEl = document.getElementById('productPreviewName');
+            const metaEl = document.getElementById('productPreviewMeta');
+
+            if (!name || name === 'Altele' || !CATALOG_PRODUCTS[name]) {
+                box.style.display = 'none';
+                imgEl.src = '';
+                imgEl.alt = '';
+                nameEl.textContent = '';
+                metaEl.textContent = '';
+                return;
+            }
+
+            const p = CATALOG_PRODUCTS[name];
+            const imgPath = p.img || '';
+
+            // Make image path work from /adm-fm2026/ (../)
+            const normalized = imgPath.startsWith('http') ? imgPath : ('../' + imgPath.replace(/^\/+/, ''));
+            imgEl.src = normalized;
+            imgEl.alt = name;
+            nameEl.textContent = name;
+
+            const bits = [];
+            if (p.size) bits.push('Mărime catalog: ' + p.size);
+            if (p.price) bits.push('Preț catalog: ' + p.price + ' RON');
+            metaEl.textContent = bits.join(' • ');
+
+            box.style.display = 'block';
+        }
+
+        // init
+        loadCatalogProducts().then(() => updateProductPreview());
+        document.getElementById('product').addEventListener('change', updateProductPreview);
+
+
+        document.getElementById('orderForm');
     const manageContainer = document.getElementById('manageContainer');
 
     function showLoginForm() {
