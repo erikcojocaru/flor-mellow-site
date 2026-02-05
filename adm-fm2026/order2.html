@@ -165,6 +165,9 @@
       <div class="message error" id="loginError"></div>
       <form id="loginForm">
         <div class="form-group">
+          <input type="text" id="loginUsername" placeholder="Utilizator" required>
+        </div>
+        <div class="form-group">
           <input type="password" id="loginPassword" placeholder="Parolă" required>
         </div>
         <button type="submit" class="btn">Intră în Cont</button>
@@ -182,6 +185,23 @@
           <h3>Comenzi în lucru</h3>
           <button type="button" class="btn small" id="refreshOrdersBtn">↻ Refresh</button>
         </div>
+        
+        <div class="row" style="margin-bottom:10px;">
+          <div class="form-group" style="margin-bottom:0;">
+            <label style="font-size:12px;">Caută</label>
+            <input type="text" id="searchBox" placeholder="telefon / nume / produs / order_id">
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label style="font-size:12px;">Status</label>
+            <select id="statusFilter">
+              <option value="">Toate (în lucru)</option>
+              <option value="pending">În Așteptare</option>
+              <option value="confirmed">Confirmat</option>
+              <option value="preparing">În Pregătire</option>
+            </select>
+          </div>
+        </div>
+
         <div id="ordersList"></div>
 
         <div class="spacer"></div>
@@ -281,10 +301,10 @@
 
   <script>
     // --- CONFIG (edit here) ---
-    // Login is done via a shared password hash (SHA-256). No plaintext passwords in repo.
-    const PASSWORD_HASH = "9a6e960876084d975bdfae1fc4e34c22db0bc51adfa5443383b8c4e67f2af831";
-						
-    const AUTH_KEY = "flormellow_auth";
+    const CREDENTIALS = {
+      'admin': 'iloveyou2026!',
+      'irina': 'irina2026!'
+    };
 
     // n8n endpoints (you must create these workflows)
     const NEW_ORDER_URL   = 'https://api.flormellow.ro/webhook/new-order';
@@ -295,7 +315,7 @@
     const FM_SECRET = 'flormellow_secret_key_2025_xK9p';
 
     // --- SESSION ---
-    let currentUser = null; // legacy var (kept to avoid touching other code)
+    let currentUser = sessionStorage.getItem('flormellow_user');
 
     const menuBar = document.getElementById('menuBar');
     const loginContainer = document.getElementById('loginContainer');
@@ -339,33 +359,29 @@
     tabManage.addEventListener('click', showManageTab);
 
     // init
-    if (sessionStorage.getItem(AUTH_KEY) === '1') showApp();
+    if (currentUser && CREDENTIALS[currentUser]) showApp();
     else showLoginForm();
 
-    async function sha256Hex(str) {
-      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
-      return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
-    }
-
-    // login (single admin password)
-    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    // login
+    document.getElementById('loginForm').addEventListener('submit', (e) => {
       e.preventDefault();
+      const u = document.getElementById('loginUsername').value.trim();
       const p = document.getElementById('loginPassword').value;
 
-      const hash = await sha256Hex(p);
-      if (hash === PASSWORD_HASH) {
-        sessionStorage.setItem(AUTH_KEY, '1');
+      if (CREDENTIALS[u] && CREDENTIALS[u] === p) {
+        sessionStorage.setItem('flormellow_user', u);
+        currentUser = u;
         showApp();
-        showMessage('success', 'Bun venit!');
-        document.getElementById('loginPassword').value = '';
+        showMessage('success', `Bun venit, ${u}!`);
       } else {
-        showLoginError('Parolă incorectă!');
+        showLoginError('Utilizator sau parolă incorectă!');
       }
     });
 
     // logout (both buttons)
     function doLogout() {
-      sessionStorage.removeItem(AUTH_KEY);
+      sessionStorage.removeItem('flormellow_user');
+      currentUser = null;
       document.getElementById('orderForm').reset();
       showLoginForm();
     }
@@ -451,7 +467,9 @@
     }
 
     // --- MANAGE TAB: list + update ---
-    document.getElementById('refreshOrdersBtn').addEventListener('click', loadOrders);
+    
+    let cachedOrders = [];
+document.getElementById('refreshOrdersBtn').addEventListener('click', loadOrders);
 
     async function loadOrders() {
       const listEl = document.getElementById('ordersList');
@@ -462,25 +480,58 @@
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
         const data = await res.json();
-        const orders = data.orders || [];
+        cachedOrders = (data.orders || []);
 
-        if (!orders.length) {
+        if (!cachedOrders.length) {
           listEl.innerHTML = '<div class="muted">Nicio comandă în lucru.</div>';
           return;
         }
 
-        listEl.innerHTML = orders.map(o => orderCard(o)).join('');
-
-        document.querySelectorAll('.saveBtn').forEach(btn => {
-          btn.addEventListener('click', () => saveOrder(btn.getAttribute('data-oid')));
-        });
-
-      } catch (e) {
+        applyFilters();} catch (e) {
         listEl.innerHTML = `<div class="muted" style="color:#b00020;">Eroare la încărcare: ${e.message}</div>`;
       }
     }
 
-    function orderCard(o) {
+
+    function renderOrders(orders) {
+      const listEl = document.getElementById('ordersList');
+
+      if (!orders.length) {
+        listEl.innerHTML = '<div class="muted">Nicio comandă în lucru.</div>';
+        return;
+      }
+
+      listEl.innerHTML = orders.map(o => orderCard(o)).join('');
+
+      document.querySelectorAll('.saveBtn').forEach(btn => {
+        btn.addEventListener('click', () => saveOrder(btn.getAttribute('data-oid')));
+      });
+    }
+
+    function applyFilters() {
+      const q = (document.getElementById('searchBox').value || '').trim().toLowerCase();
+      const st = document.getElementById('statusFilter').value;
+
+      const filtered = cachedOrders.filter(o => {
+        if (st && String(o.status) !== st) return false;
+        if (!q) return true;
+
+        const hay = [
+          o.order_id, o.client_name, o.client_phone,
+          o.product, o.size, o.comments
+        ].join(' ').toLowerCase();
+
+        return hay.includes(q);
+      });
+
+      renderOrders(filtered);
+    }
+
+    // filter listeners (once)
+    document.getElementById('searchBox').addEventListener('input', applyFilters);
+    document.getElementById('statusFilter').addEventListener('change', applyFilters);
+
+function orderCard(o) {
       const safe = (v) => String(v ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
       return `
         <div class="orderCard">
