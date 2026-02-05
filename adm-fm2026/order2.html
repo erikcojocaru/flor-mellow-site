@@ -104,7 +104,7 @@
       <p>Sistem de Management Comenzi</p>
     </div>
 
-    <div class="tabs">
+    <div class="tabs hidden" id="tabsBar">
       <button type="button" class="tabBtn" id="tabNew">➕ Comandă nouă</button>
       <button type="button" class="tabBtn dim" id="tabManage">📋 Comenzi în lucru</button>
     </div>
@@ -265,6 +265,7 @@
     const CATALOG_URL = "../catalog.html";
 
     const AUTH_KEY = "flormellow_auth_v1";
+	const tabsBar = document.getElementById("tabsBar");
     function isAuthed(){ return sessionStorage.getItem(AUTH_KEY) === "1"; }
     function setAuthed(v){ sessionStorage.setItem(AUTH_KEY, v ? "1" : "0"); }
 
@@ -274,10 +275,12 @@
     function showLogin(){
       loginContainer.classList.remove("hidden");
       appContainer.classList.add("hidden");
+	  tabsBar.classList.add("hidden");
     }
     function showApp(){
       loginContainer.classList.add("hidden");
       appContainer.classList.remove("hidden");
+	  tabsBar.classList.remove("hidden");
     }
     if (isAuthed()) showApp(); else showLogin();
 
