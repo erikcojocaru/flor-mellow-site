@@ -404,6 +404,17 @@
     // Manage list/update
     let cachedOrders = [];
 
+    
+    function getCatalogImageUrl(productName){
+      if (!productName) return "";
+      const p = CATALOG_PRODUCTS[productName];
+      if (!p || !p.img) return "";
+      const imgPath = String(p.img || "").trim();
+      if (!imgPath) return "";
+      // Keep same normalization logic as product preview (order2.html lives in adm-fm2026/)
+      return imgPath.startsWith("http") ? imgPath : ("../" + imgPath.replace(/^\/+/, ""));
+    }
+
     function orderCard(o){
       const safe = (x)=> (x===null||x===undefined) ? "" : String(x);
       const meta = [
@@ -427,13 +438,23 @@
         ["partial","Parțial"],
       ].map(([v,txt])=> `<option value="${v}" ${safe(o.payment_status)===v?"selected":""}>${txt}</option>`).join("");
 
+      const imgUrl = getCatalogImageUrl(safe(o.product));
+      const thumb = imgUrl
+        ? `<img src="${imgUrl}" alt="" style="width:64px;height:64px;object-fit:cover;border-radius:12px;border:1px solid #eee;background:#fff;flex:0 0 auto;">`
+        : "";
+
       return `
         <div class="orderCard" data-oid="${safe(o.order_id)}">
-          <div class="orderTop">
-            <div>
-              <div class="oid">${safe(o.order_id)}</div>
-              <div class="meta">${meta}</div>
-              <span class="pill">${safe(o.status)}</span>
+          <div style="display:flex;gap:12px;align-items:flex-start;">
+            ${thumb}
+            <div style="flex:1;min-width:0;">
+              <div class="orderTop">
+                <div>
+                  <div class="oid">${safe(o.order_id)}</div>
+                  <div class="meta">${meta}</div>
+                  <span class="pill">${safe(o.status)}</span>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -598,6 +619,9 @@
         sel.appendChild(optOther);
 
         if (current) sel.value = current;
+
+        // If we're already in Manage view, re-render so thumbnails appear
+        try { if (!manageContainer.classList.contains('hidden') && Array.isArray(cachedOrders)) applyFilters(); } catch (e) {}
 
       }catch(e){
         console.warn("Catalog integration disabled:", e);
