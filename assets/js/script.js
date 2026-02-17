@@ -1,7 +1,7 @@
 // ======================
 // WhatsApp helper
 // ======================
-const WA_NUMBER = "40738841225";
+const WA_NUMBER = "40732342204";
 
 window.openWhatsApp = function (message) {
     const text = encodeURIComponent(message);
