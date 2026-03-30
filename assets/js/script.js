@@ -152,10 +152,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
         renderModalImage();
         modal.style.display = "flex";
+
+        const slug = card.dataset.slug || card.id;
+        if (slug) history.pushState(null, "", "#" + slug);
     }
 
     window.closeModal = function () {
         if (modal) modal.style.display = "none";
+        history.pushState(null, "", location.pathname + location.search);
     };
 
     if (modal) {
@@ -198,6 +202,13 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
     });
+
+    // Auto-open modal din URL hash (ex: catalog.html#blush-teddy-buchet-bezele-cluj)
+    const _initHash = window.location.hash.slice(1);
+    if (_initHash) {
+        const _hashCard = document.querySelector('[data-slug="' + _initHash + '"]') || document.getElementById(_initHash);
+        if (_hashCard && _hashCard.classList.contains("product-card")) openModalFromCard(_hashCard);
+    }
 
     // ======================
     // Randomizare produse (index + catalog)
