@@ -151,14 +151,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         renderModalImage();
-        modal.style.display = "flex";
+        requestAnimationFrame(() => requestAnimationFrame(() => modal.classList.add("is-open")));
 
         const slug = card.dataset.slug || card.id;
         if (slug) history.pushState(null, "", "#" + slug);
     }
 
     window.closeModal = function () {
-        if (modal) modal.style.display = "none";
+        if (!modal) return;
+        modal.classList.remove("is-open");
         history.pushState(null, "", location.pathname + location.search);
     };
 
@@ -228,6 +229,25 @@ document.addEventListener("DOMContentLoaded", () => {
             // reatașăm în DOM în noua ordine
             shuffled.forEach((card) => grid.appendChild(card));
         });
+    })();
+
+    // ======================
+    // Product grid stagger
+    // ======================
+    (function initStagger() {
+        const grids = document.querySelectorAll(".product-grid");
+        const staggerObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                const cards = entry.target.querySelectorAll(".product-card");
+                cards.forEach((card, i) => {
+                    card.style.animationDelay = Math.min(i * 55, 400) + "ms";
+                });
+                entry.target.classList.add("stagger-ready");
+                staggerObserver.unobserve(entry.target);
+            });
+        }, { threshold: 0.05 });
+        grids.forEach((g) => staggerObserver.observe(g));
     })();
 
     // ======================
@@ -588,4 +608,41 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // PORNIM autoplay (desktop + mobil)
     startAuto();
+
+    // ======================
+    // Custom cursor (desktop)
+    // ======================
+    (function initCursor() {
+        if (!window.matchMedia("(pointer: fine)").matches) return;
+        const dot = document.getElementById("cursorDot");
+        const ring = document.getElementById("cursorRing");
+        if (!dot || !ring) return;
+
+        const hoverTargets = "a, button, .product-card, [role='button'], label";
+        let ringX = 0, ringY = 0;
+        let dotX = 0, dotY = 0;
+
+        document.addEventListener("mousemove", (e) => {
+            dotX = e.clientX;
+            dotY = e.clientY;
+            dot.style.left = dotX + "px";
+            dot.style.top = dotY + "px";
+        });
+
+        function animateRing() {
+            ringX += (dotX - ringX) * 0.15;
+            ringY += (dotY - ringY) * 0.15;
+            ring.style.left = ringX + "px";
+            ring.style.top = ringY + "px";
+            requestAnimationFrame(animateRing);
+        }
+        animateRing();
+
+        document.addEventListener("mouseover", (e) => {
+            if (e.target.closest(hoverTargets)) ring.classList.add("is-hovering");
+        });
+        document.addEventListener("mouseout", (e) => {
+            if (e.target.closest(hoverTargets)) ring.classList.remove("is-hovering");
+        });
+    })();
 });
