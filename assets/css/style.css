@@ -1072,6 +1072,12 @@ footer {
     animation-play-state: running;
 }
 
+/* Fallback: dacă stagger-ready nu se adaugă, cardurile rămân vizibile */
+.catalog-grid .product-card {
+    opacity: 1;
+    animation: none;
+}
+
 /* MODAL PRODUSE */
 .modal {
     position: fixed;
