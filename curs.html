@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buchete de Zefir — De la Zero | Flor Mellow</title>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body style="margin:0;padding:0;">
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useState } = React;
+
+    const COURSE_DATA = {
+      title: "Buchete de Zefir — De la Zero",
+      subtitle: "Un curs complet pentru a crea buchete artizanale din marshmallow",
+      instructor: "Flor Mellow",
+      totalChapters: 4,
+      chapters: [
+        {
+          id: 1,
+          title: "Introducere & Materiale",
+          duration: "6 min",
+          videoId: "dQw4w9WgXcQ",
+          description: "Descoperă tot ce ai nevoie pentru a începe: echipament, ingrediente și spațiu de lucru.",
+          unlocked: true,
+          quiz: [
+            {
+              question: "Ce instrument este esențial pentru modelarea zefirului?",
+              options: ["Spatulă metalică", "Betișoare de bambus", "Cuțit de bucătărie", "Pensulă de patiserie"],
+              correct: 1,
+            },
+            {
+              question: "La ce temperatură se lucrează optim cu zefir?",
+              options: ["Temperatura frigiderului", "Temperatura camerei", "Ușor încălzit", "Nu contează"],
+              correct: 1,
+            },
+          ],
+          pdf: "Ghid_Materiale.pdf",
+        },
+        {
+          id: 2,
+          title: "Tehnica de Bază — Petala",
+          duration: "9 min",
+          videoId: "dQw4w9WgXcQ",
+          description: "Stăpânești tehnica fundamentală: modelarea petalei perfecte, presiune și unghi.",
+          unlocked: false,
+          quiz: [
+            {
+              question: "Care este unghiul corect pentru petala standard?",
+              options: ["30°", "45°", "60°", "90°"],
+              correct: 1,
+            },
+            {
+              question: "Cum știi că petala are consistența corectă?",
+              options: ["E strălucitoare", "Ține forma fără suport", "E translucidă", "Miroase a vanilie"],
+              correct: 1,
+            },
+          ],
+          pdf: "Tehnica_Petala.pdf",
+        },
+        {
+          id: 3,
+          title: "Asamblarea Buchetului",
+          duration: "12 min",
+          videoId: "dQw4w9WgXcQ",
+          description: "Compui primul tău buchet complet: structură, echilibru vizual și fixare.",
+          unlocked: false,
+          quiz: [
+            {
+              question: "De unde începi asamblarea unui buchet?",
+              options: ["Din exterior spre interior", "Din centru spre exterior", "Aleatoriu", "De jos în sus"],
+              correct: 1,
+            },
+          ],
+          pdf: "Ghid_Asamblare.pdf",
+        },
+        {
+          id: 4,
+          title: "Finisare & Prezentare",
+          duration: "8 min",
+          videoId: "dQw4w9WgXcQ",
+          description: "Ultimele detalii care transformă un buchet bun într-unul memorabil.",
+          unlocked: false,
+          quiz: [
+            {
+              question: "Cum protejezi buchetul pentru transport?",
+              options: ["Folie alimentară strânsă", "Cutie cu hârtie tissue", "Pungă de plastic", "Nu necesită protecție"],
+              correct: 1,
+            },
+          ],
+          pdf: "Ghid_Prezentare.pdf",
+        },
+      ],
+    };
+
+    const fonts = `
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap');
+    `;
+
+    function FlorMellowCourse() {
+      const [activeChapter, setActiveChapter] = useState(0);
+      const [completedChapters, setCompletedChapters] = useState([]);
+      const [unlockedChapters, setUnlockedChapters] = useState([0]);
+      const [showQuiz, setShowQuiz] = useState(false);
+      const [quizAnswers, setQuizAnswers] = useState({});
+      const [quizSubmitted, setQuizSubmitted] = useState(false);
+      const [quizPassed, setQuizPassed] = useState(false);
+      const [accessGranted, setAccessGranted] = useState(false);
+      const [accessCode, setAccessCode] = useState("");
+      const [accessError, setAccessError] = useState(false);
+      const [sidebarOpen, setSidebarOpen] = useState(true);
+
+      const VALID_CODE = "FLORMD2026";
+
+      const chapter = COURSE_DATA.chapters[activeChapter];
+      const progress = Math.round((completedChapters.length / COURSE_DATA.totalChapters) * 100);
+
+      const handleAccess = () => {
+        if (accessCode.toUpperCase() === VALID_CODE) {
+          setAccessGranted(true);
+        } else {
+          setAccessError(true);
+          setTimeout(() => setAccessError(false), 2000);
+        }
+      };
+
+      const handleSelectChapter = (index) => {
+        if (unlockedChapters.includes(index)) {
+          setActiveChapter(index);
+          setShowQuiz(false);
+          setQuizAnswers({});
+          setQuizSubmitted(false);
+        }
+      };
+
+      const handleAnswer = (qIndex, aIndex) => {
+        if (!quizSubmitted) {
+          setQuizAnswers((prev) => ({ ...prev, [qIndex]: aIndex }));
+        }
+      };
+
+      const handleSubmitQuiz = () => {
+        const allCorrect = chapter.quiz.every((q, i) => quizAnswers[i] === q.correct);
+        setQuizSubmitted(true);
+        setQuizPassed(allCorrect);
+        if (allCorrect) {
+          if (!completedChapters.includes(activeChapter)) {
+            setCompletedChapters((prev) => [...prev, activeChapter]);
+          }
+          const next = activeChapter + 1;
+          if (next < COURSE_DATA.chapters.length && !unlockedChapters.includes(next)) {
+            setUnlockedChapters((prev) => [...prev, next]);
+          }
+        }
+      };
+
+      const handleNextChapter = () => {
+        const next = activeChapter + 1;
+        if (next < COURSE_DATA.chapters.length) {
+          setActiveChapter(next);
+          setShowQuiz(false);
+          setQuizAnswers({});
+          setQuizSubmitted(false);
+        }
+      };
+
+      const styles = `
+        ${fonts}
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Jost', sans-serif; }
+
+        .gate {
+          min-height: 100vh;
+          background: linear-gradient(135deg, #fdf6f0 0%, #f9ede4 40%, #f5e0d3 100%);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+          overflow: hidden;
+        }
+        .gate::before {
+          content: '';
+          position: absolute;
+          width: 600px; height: 600px;
+          border-radius: 50%;
+          background: radial-gradient(circle, rgba(212,160,120,0.12) 0%, transparent 70%);
+          top: -100px; right: -100px;
+        }
+        .gate::after {
+          content: '';
+          position: absolute;
+          width: 400px; height: 400px;
+          border-radius: 50%;
+          background: radial-gradient(circle, rgba(232,190,160,0.15) 0%, transparent 70%);
+          bottom: -80px; left: -80px;
+        }
+        .gate-card {
+          background: rgba(255,255,255,0.85);
+          backdrop-filter: blur(20px);
+          border: 1px solid rgba(212,160,120,0.2);
+          border-radius: 24px;
+          padding: 56px 48px;
+          max-width: 440px;
+          width: 90%;
+          text-align: center;
+          position: relative;
+          z-index: 1;
+          box-shadow: 0 20px 60px rgba(180,120,80,0.12);
+        }
+        .gate-flower {
+          font-size: 48px;
+          margin-bottom: 20px;
+          display: block;
+          animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+          0%,100% { transform: translateY(0); }
+          50% { transform: translateY(-8px); }
+        }
+        .gate-title {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 32px;
+          font-weight: 300;
+          color: #3d2314;
+          line-height: 1.2;
+          margin-bottom: 8px;
+        }
+        .gate-sub {
+          font-size: 13px;
+          color: #9b7060;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          margin-bottom: 36px;
+        }
+        .gate-label {
+          font-size: 11px;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: #b08060;
+          margin-bottom: 10px;
+          text-align: left;
+        }
+        .gate-input {
+          width: 100%;
+          padding: 14px 18px;
+          border: 1.5px solid rgba(212,160,120,0.4);
+          border-radius: 12px;
+          font-family: 'Jost', sans-serif;
+          font-size: 15px;
+          color: #3d2314;
+          background: rgba(253,246,240,0.6);
+          outline: none;
+          transition: all 0.2s;
+          letter-spacing: 0.05em;
+          margin-bottom: 16px;
+        }
+        .gate-input:focus {
+          border-color: #c8906a;
+          background: white;
+          box-shadow: 0 0 0 3px rgba(200,144,106,0.12);
+        }
+        .gate-input.error {
+          border-color: #e07070;
+          animation: shake 0.3s;
+        }
+        @keyframes shake {
+          0%,100% { transform: translateX(0); }
+          25% { transform: translateX(-6px); }
+          75% { transform: translateX(6px); }
+        }
+        .gate-btn {
+          width: 100%;
+          padding: 15px;
+          background: linear-gradient(135deg, #c8906a, #b07050);
+          border: none;
+          border-radius: 12px;
+          color: white;
+          font-family: 'Jost', sans-serif;
+          font-size: 13px;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+        .gate-btn:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 8px 24px rgba(180,110,70,0.3);
+        }
+        .gate-hint {
+          margin-top: 20px;
+          font-size: 12px;
+          color: #b09080;
+        }
+        .gate-hint span {
+          color: #c8906a;
+          font-weight: 500;
+        }
+
+        .app {
+          min-height: 100vh;
+          background: #fdf6f0;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .header {
+          background: rgba(255,255,255,0.95);
+          backdrop-filter: blur(10px);
+          border-bottom: 1px solid rgba(212,160,120,0.15);
+          padding: 0 32px;
+          height: 64px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          position: sticky;
+          top: 0;
+          z-index: 100;
+        }
+        .header-brand {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 22px;
+          font-weight: 400;
+          color: #3d2314;
+          letter-spacing: 0.02em;
+        }
+        .header-brand span {
+          color: #c8906a;
+          font-style: italic;
+        }
+        .progress-wrap {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+        }
+        .progress-bar {
+          width: 160px;
+          height: 4px;
+          background: rgba(212,160,120,0.2);
+          border-radius: 2px;
+          overflow: hidden;
+        }
+        .progress-fill {
+          height: 100%;
+          background: linear-gradient(90deg, #c8906a, #d4a880);
+          border-radius: 2px;
+          transition: width 0.6s ease;
+        }
+        .progress-text {
+          font-size: 12px;
+          color: #9b7060;
+          letter-spacing: 0.05em;
+        }
+        .toggle-btn {
+          background: none;
+          border: 1.5px solid rgba(212,160,120,0.3);
+          border-radius: 8px;
+          padding: 6px 10px;
+          cursor: pointer;
+          color: #9b7060;
+          font-size: 16px;
+          transition: all 0.2s;
+        }
+        .toggle-btn:hover {
+          border-color: #c8906a;
+          color: #c8906a;
+        }
+
+        .body {
+          display: flex;
+          flex: 1;
+        }
+
+        .sidebar {
+          width: 300px;
+          min-width: 300px;
+          background: white;
+          border-right: 1px solid rgba(212,160,120,0.12);
+          padding: 28px 0;
+          transition: all 0.3s ease;
+          overflow: hidden;
+        }
+        .sidebar.closed {
+          width: 0;
+          min-width: 0;
+          padding: 0;
+        }
+        .sidebar-title {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 13px;
+          font-weight: 500;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          color: #b08060;
+          padding: 0 24px;
+          margin-bottom: 16px;
+        }
+        .chapter-item {
+          padding: 14px 24px;
+          cursor: pointer;
+          transition: all 0.2s;
+          border-left: 3px solid transparent;
+          position: relative;
+        }
+        .chapter-item.active {
+          background: linear-gradient(90deg, rgba(200,144,106,0.08), transparent);
+          border-left-color: #c8906a;
+        }
+        .chapter-item.locked {
+          opacity: 0.45;
+          cursor: not-allowed;
+        }
+        .chapter-item:not(.locked):not(.active):hover {
+          background: rgba(200,144,106,0.05);
+        }
+        .ch-header {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin-bottom: 4px;
+        }
+        .ch-num {
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 10px;
+          font-weight: 500;
+          flex-shrink: 0;
+        }
+        .ch-num.done { background: #c8906a; color: white; }
+        .ch-num.active { background: rgba(200,144,106,0.15); color: #c8906a; border: 1.5px solid #c8906a; }
+        .ch-num.locked { background: #f0e8e0; color: #c0a090; }
+        .ch-num.open { background: #f0e8e0; color: #906050; }
+        .ch-title {
+          font-size: 14px;
+          color: #3d2314;
+          font-weight: 400;
+          line-height: 1.3;
+        }
+        .ch-meta {
+          font-size: 11px;
+          color: #b09080;
+          letter-spacing: 0.04em;
+          padding-left: 34px;
+        }
+
+        .main {
+          flex: 1;
+          padding: 40px 48px;
+          max-width: 860px;
+        }
+        .video-wrap {
+          background: #1a0f0a;
+          border-radius: 16px;
+          aspect-ratio: 16/9;
+          overflow: hidden;
+          position: relative;
+          margin-bottom: 28px;
+          box-shadow: 0 16px 48px rgba(60,20,0,0.2);
+        }
+        .video-wrap iframe {
+          width: 100%; height: 100%;
+          border: none;
+        }
+        .video-overlay {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(135deg, rgba(61,35,20,0.85), rgba(100,60,30,0.7));
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 16px;
+        }
+        .lock-icon { font-size: 40px; opacity: 0.6; }
+        .lock-text {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 22px;
+          color: rgba(255,240,220,0.9);
+          font-style: italic;
+        }
+        .lock-sub {
+          font-size: 13px;
+          color: rgba(255,220,180,0.6);
+          letter-spacing: 0.06em;
+        }
+
+        .ch-info-title {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 30px;
+          font-weight: 300;
+          color: #3d2314;
+          margin-bottom: 8px;
+        }
+        .ch-info-desc {
+          font-size: 14px;
+          color: #7a5040;
+          line-height: 1.7;
+          margin-bottom: 28px;
+          max-width: 580px;
+        }
+
+        .actions {
+          display: flex;
+          gap: 12px;
+          flex-wrap: wrap;
+          margin-bottom: 32px;
+        }
+        .btn-primary {
+          padding: 12px 28px;
+          background: linear-gradient(135deg, #c8906a, #b07050);
+          border: none;
+          border-radius: 10px;
+          color: white;
+          font-family: 'Jost', sans-serif;
+          font-size: 12px;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+        .btn-primary:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 6px 20px rgba(180,110,70,0.3);
+        }
+        .btn-secondary {
+          padding: 12px 24px;
+          background: transparent;
+          border: 1.5px solid rgba(200,144,106,0.4);
+          border-radius: 10px;
+          color: #c8906a;
+          font-family: 'Jost', sans-serif;
+          font-size: 12px;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+        .btn-secondary:hover {
+          border-color: #c8906a;
+          background: rgba(200,144,106,0.06);
+        }
+
+        .quiz-section {
+          background: white;
+          border-radius: 16px;
+          padding: 36px;
+          border: 1px solid rgba(212,160,120,0.15);
+          box-shadow: 0 4px 20px rgba(180,120,80,0.06);
+        }
+        .quiz-header {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 24px;
+          font-weight: 300;
+          color: #3d2314;
+          margin-bottom: 6px;
+        }
+        .quiz-subheader {
+          font-size: 13px;
+          color: #9b7060;
+          margin-bottom: 32px;
+        }
+        .question-block {
+          margin-bottom: 28px;
+        }
+        .question-text {
+          font-size: 15px;
+          color: #3d2314;
+          margin-bottom: 14px;
+          font-weight: 400;
+          line-height: 1.5;
+        }
+        .q-num {
+          display: inline-block;
+          width: 22px;
+          height: 22px;
+          background: rgba(200,144,106,0.15);
+          color: #c8906a;
+          border-radius: 50%;
+          font-size: 11px;
+          text-align: center;
+          line-height: 22px;
+          margin-right: 8px;
+          font-weight: 500;
+        }
+        .options {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+        .option {
+          padding: 12px 16px;
+          border: 1.5px solid rgba(212,160,120,0.2);
+          border-radius: 10px;
+          cursor: pointer;
+          font-size: 14px;
+          color: #5a3828;
+          transition: all 0.15s;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+        .option:hover:not(.disabled) {
+          border-color: rgba(200,144,106,0.5);
+          background: rgba(200,144,106,0.04);
+        }
+        .option.selected {
+          border-color: #c8906a;
+          background: rgba(200,144,106,0.08);
+        }
+        .option.correct {
+          border-color: #7ab87a;
+          background: rgba(120,184,120,0.08);
+          color: #3a6a3a;
+        }
+        .option.wrong {
+          border-color: #e07070;
+          background: rgba(224,112,112,0.06);
+          color: #8a3a3a;
+        }
+        .option.disabled { cursor: default; }
+        .option-dot {
+          width: 16px;
+          height: 16px;
+          border-radius: 50%;
+          border: 1.5px solid currentColor;
+          flex-shrink: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 8px;
+        }
+        .quiz-result {
+          margin-top: 24px;
+          padding: 20px 24px;
+          border-radius: 12px;
+          display: flex;
+          align-items: center;
+          gap: 16px;
+        }
+        .quiz-result.pass {
+          background: rgba(120,184,120,0.1);
+          border: 1px solid rgba(120,184,120,0.3);
+        }
+        .quiz-result.fail {
+          background: rgba(224,112,112,0.08);
+          border: 1px solid rgba(224,112,112,0.25);
+        }
+        .result-icon { font-size: 28px; }
+        .result-title {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 20px;
+          font-weight: 400;
+          color: #3d2314;
+        }
+        .result-sub {
+          font-size: 13px;
+          color: #7a5040;
+          margin-top: 2px;
+        }
+        .quiz-actions {
+          margin-top: 24px;
+          display: flex;
+          gap: 12px;
+        }
+
+        .completion {
+          background: linear-gradient(135deg, #fdf6f0, #f9ede4);
+          border: 1px solid rgba(212,160,120,0.2);
+          border-radius: 16px;
+          padding: 48px;
+          text-align: center;
+        }
+        .completion-icon { font-size: 56px; margin-bottom: 20px; display: block; }
+        .completion-title {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 36px;
+          font-weight: 300;
+          color: #3d2314;
+          margin-bottom: 12px;
+        }
+        .completion-text {
+          font-size: 15px;
+          color: #7a5040;
+          max-width: 400px;
+          margin: 0 auto 28px;
+          line-height: 1.7;
+        }
+
+        @media (max-width: 768px) {
+          .sidebar { display: none; }
+          .main { padding: 24px 20px; }
+          .header { padding: 0 20px; }
+          .progress-bar { width: 100px; }
+        }
+      `;
+
+      const isLocked = !unlockedChapters.includes(activeChapter);
+      const isDone = completedChapters.includes(activeChapter);
+      const allDone = completedChapters.length === COURSE_DATA.totalChapters;
+
+      const getChNumClass = (i) => {
+        if (completedChapters.includes(i)) return "done";
+        if (i === activeChapter) return "active";
+        if (!unlockedChapters.includes(i)) return "locked";
+        return "open";
+      };
+
+      if (!accessGranted) {
+        return (
+          <>
+            <style>{styles}</style>
+            <div className="gate">
+              <div className="gate-card">
+                <span className="gate-flower">🌸</span>
+                <div className="gate-title">Flor Mellow<br />Cursuri Artizanale</div>
+                <div className="gate-sub">Acces privat · Conținut exclusiv</div>
+                <div className="gate-label">Cod de acces</div>
+                <input
+                  className={`gate-input${accessError ? " error" : ""}`}
+                  type="text"
+                  placeholder="Introdu codul tău..."
+                  value={accessCode}
+                  onChange={(e) => setAccessCode(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && handleAccess()}
+                />
+                <button className="gate-btn" onClick={handleAccess}>
+                  Intră în curs
+                </button>
+                <div className="gate-hint">
+                  Demo: codul este <span>FLORMD2026</span>
+                </div>
+              </div>
+            </div>
+          </>
+        );
+      }
+
+      return (
+        <>
+          <style>{styles}</style>
+          <div className="app">
+            <div className="header">
+              <div className="header-brand">Flor <span>Mellow</span> · Cursuri</div>
+              <div className="progress-wrap">
+                <div className="progress-bar">
+                  <div className="progress-fill" style={{ width: `${progress}%` }} />
+                </div>
+                <span className="progress-text">{progress}% completat</span>
+                <button className="toggle-btn" onClick={() => setSidebarOpen(!sidebarOpen)}>
+                  {sidebarOpen ? "◀" : "▶"}
+                </button>
+              </div>
+            </div>
+
+            <div className="body">
+              <div className={`sidebar${sidebarOpen ? "" : " closed"}`}>
+                <div className="sidebar-title">Lecții</div>
+                {COURSE_DATA.chapters.map((ch, i) => (
+                  <div
+                    key={ch.id}
+                    className={`chapter-item${i === activeChapter ? " active" : ""}${!unlockedChapters.includes(i) ? " locked" : ""}`}
+                    onClick={() => handleSelectChapter(i)}
+                  >
+                    <div className="ch-header">
+                      <div className={`ch-num ${getChNumClass(i)}`}>
+                        {completedChapters.includes(i) ? "✓" : i + 1}
+                      </div>
+                      <div className="ch-title">{ch.title}</div>
+                    </div>
+                    <div className="ch-meta">
+                      {!unlockedChapters.includes(i) ? "🔒 Blocat" : `▶ ${ch.duration}`}
+                      {completedChapters.includes(i) && " · Finalizat"}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="main">
+                {allDone ? (
+                  <div className="completion">
+                    <span className="completion-icon">🌸</span>
+                    <div className="completion-title">Felicitări!</div>
+                    <div className="completion-text">
+                      Ai finalizat cursul complet. Ești gata să creezi buchete de zefir cu adevărat memorabile.
+                    </div>
+                    <button className="btn-primary">📄 Descarcă Certificatul</button>
+                  </div>
+                ) : (
+                  <>
+                    <div className="video-wrap">
+                      {isLocked ? (
+                        <div className="video-overlay">
+                          <div className="lock-icon">🔒</div>
+                          <div className="lock-text">Lecție blocată</div>
+                          <div className="lock-sub">Finalizează lecția anterioară pentru a debloca</div>
+                        </div>
+                      ) : (
+                        <iframe
+                          src={`https://www.youtube.com/embed/${chapter.videoId}?rel=0&modestbranding=1`}
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope"
+                          allowFullScreen
+                        />
+                      )}
+                    </div>
+
+                    <div className="ch-info-title">
+                      <span style={{ color: "#c8906a", fontStyle: "italic", marginRight: 8 }}>
+                        {activeChapter + 1}.
+                      </span>
+                      {chapter.title}
+                    </div>
+                    <div className="ch-info-desc">{chapter.description}</div>
+
+                    {!isLocked && (
+                      <div className="actions">
+                        {!isDone && !showQuiz && (
+                          <button className="btn-primary" onClick={() => setShowQuiz(true)}>
+                            ✏️ Testează-ți cunoștințele
+                          </button>
+                        )}
+                        <button className="btn-secondary">
+                          📄 Descarcă {chapter.pdf}
+                        </button>
+                        {isDone && activeChapter < COURSE_DATA.chapters.length - 1 && (
+                          <button className="btn-primary" onClick={handleNextChapter}>
+                            Lecția următoare →
+                          </button>
+                        )}
+                      </div>
+                    )}
+
+                    {showQuiz && !isLocked && (
+                      <div className="quiz-section">
+                        <div className="quiz-header">Quiz — {chapter.title}</div>
+                        <div className="quiz-subheader">
+                          Răspunde corect la toate întrebările pentru a debloca lecția următoare.
+                        </div>
+
+                        {chapter.quiz.map((q, qi) => (
+                          <div className="question-block" key={qi}>
+                            <div className="question-text">
+                              <span className="q-num">{qi + 1}</span>
+                              {q.question}
+                            </div>
+                            <div className="options">
+                              {q.options.map((opt, oi) => {
+                                let cls = "option";
+                                if (quizSubmitted) {
+                                  cls += " disabled";
+                                  if (oi === q.correct) cls += " correct";
+                                  else if (quizAnswers[qi] === oi) cls += " wrong";
+                                } else if (quizAnswers[qi] === oi) {
+                                  cls += " selected";
+                                }
+                                return (
+                                  <div key={oi} className={cls} onClick={() => handleAnswer(qi, oi)}>
+                                    <div className="option-dot">
+                                      {quizAnswers[qi] === oi && !quizSubmitted ? "●" : ""}
+                                      {quizSubmitted && oi === q.correct ? "✓" : ""}
+                                      {quizSubmitted && quizAnswers[qi] === oi && oi !== q.correct ? "✗" : ""}
+                                    </div>
+                                    {opt}
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        ))}
+
+                        {!quizSubmitted ? (
+                          <div className="quiz-actions">
+                            <button
+                              className="btn-primary"
+                              onClick={handleSubmitQuiz}
+                              disabled={Object.keys(quizAnswers).length < chapter.quiz.length}
+                            >
+                              Trimite răspunsurile
+                            </button>
+                            <button className="btn-secondary" onClick={() => setShowQuiz(false)}>
+                              Anulează
+                            </button>
+                          </div>
+                        ) : (
+                          <>
+                            <div className={`quiz-result ${quizPassed ? "pass" : "fail"}`}>
+                              <span className="result-icon">{quizPassed ? "🌸" : "🌿"}</span>
+                              <div>
+                                <div className="result-title">
+                                  {quizPassed ? "Excelent! Lecție finalizată." : "Mai încearcă o dată"}
+                                </div>
+                                <div className="result-sub">
+                                  {quizPassed
+                                    ? "Lecția următoare este acum deblocată."
+                                    : "Revizuiește videoul și încearcă din nou."}
+                                </div>
+                              </div>
+                            </div>
+                            <div className="quiz-actions">
+                              {quizPassed && activeChapter < COURSE_DATA.chapters.length - 1 && (
+                                <button className="btn-primary" onClick={handleNextChapter}>
+                                  Lecția următoare →
+                                </button>
+                              )}
+                              {!quizPassed && (
+                                <button
+                                  className="btn-secondary"
+                                  onClick={() => {
+                                    setQuizAnswers({});
+                                    setQuizSubmitted(false);
+                                  }}
+                                >
+                                  Încearcă din nou
+                                </button>
+                              )}
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+        </>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<FlorMellowCourse />);
+  </script>
+</body>
+</html>
