@@ -1599,16 +1599,17 @@ footer {
    Custom Cursor — desktop only
    =========================== */
 @media (pointer: fine) {
-    body, a, button, .product-card, [role="button"] {
+    body, a, button, .product-card, [role="button"], summary, label {
         cursor: none;
     }
 
     .cursor-dot {
         position: fixed;
         top: 0; left: 0;
-        width: 6px; height: 6px;
+        width: 8px; height: 8px;
         border-radius: 50%;
-        background: var(--primary-dark);
+        background: #c6416f;
+        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.9);
         pointer-events: none;
         z-index: 99999;
         transform: translate(-50%, -50%);
@@ -1620,13 +1621,12 @@ footer {
         top: 0; left: 0;
         width: 28px; height: 28px;
         border-radius: 50%;
-        border: 1.5px solid rgba(226, 122, 155, 0.45);
+        border: 2px solid rgba(198, 65, 111, 0.8);
+        box-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
         pointer-events: none;
         z-index: 99998;
         transform: translate(-50%, -50%);
         transition:
-            left 0.1s ease-out,
-            top 0.1s ease-out,
             width 0.2s ease-out,
             height 0.2s ease-out,
             border-color 0.2s;
@@ -1635,7 +1635,7 @@ footer {
     .cursor-ring.is-hovering {
         width: 44px;
         height: 44px;
-        border-color: rgba(226, 122, 155, 0.25);
+        border-color: rgba(198, 65, 111, 0.5);
     }
 }
 
