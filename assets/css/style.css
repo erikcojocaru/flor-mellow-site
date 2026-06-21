@@ -1182,6 +1182,51 @@ footer {
     gap: 8px;
 }
 
+.modal-sizes {
+    display: none;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 10px 0 12px;
+}
+
+.modal-size {
+    min-width: 40px;
+    padding: 6px 13px;
+    border-radius: 999px;
+    border: 1.5px solid rgba(226, 122, 155, 0.4);
+    background: #fff;
+    color: var(--primary-dark);
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background 0.18s ease-out, border-color 0.18s ease-out, color 0.18s ease-out;
+}
+
+.modal-size:hover {
+    border-color: var(--primary-dark);
+}
+
+.modal-size.active {
+    background: var(--primary-dark);
+    border-color: var(--primary-dark);
+    color: #fff;
+}
+
+.modal-spec {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--primary-dark);
+    margin: 6px 0 4px;
+}
+
+.modal-note {
+    font-size: 0.72rem;
+    font-style: italic;
+    color: #999;
+    line-height: 1.45;
+    margin-top: 10px;
+}
+
 .modal-nav {
     position: absolute;
     top: 50%;

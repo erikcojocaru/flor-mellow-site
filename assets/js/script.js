@@ -50,6 +50,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const modalWhatsAppBtn = document.getElementById("modalWhatsAppBtn");
     const modalDots = document.getElementById("modalDots");
     const modalMedia = document.getElementById("modalMedia");
+    const modalSizes = document.getElementById("modalSizes");
+    const modalSpec = document.getElementById("modalSpec");
+    const modalNote = document.getElementById("modalNote");
 
     let modalImages = [];
     let modalImageIndex = 0;
@@ -119,38 +122,88 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!modal) return;
 
         const title = card.dataset.title || card.querySelector(".product-name")?.textContent || "Buchet Flor Mellow";
-        const priceRaw = card.dataset.price || card.querySelector(".product-price")?.textContent || "";
-        const oldPriceRaw = card.dataset.oldPrice || card.dataset.oldPrice || card.getAttribute("data-old-price") || "";
-        const price = formatPriceForDisplay(priceRaw);
         const desc = card.dataset.desc || card.querySelector(".product-desc")?.textContent || "";
+        const note = card.dataset.note || "";
 
-        const imagesAttr = card.dataset.images;
-        const fallbackImg = card.dataset.img || card.querySelector("img")?.src || "";
+        if (modalTitle) modalTitle.textContent = title;
+        if (modalNote) {
+            modalNote.textContent = note;
+            modalNote.style.display = note ? "block" : "none";
+        }
 
-        if (imagesAttr) {
-            modalImages = imagesAttr
+        let variants = null;
+        if (card.dataset.variants) {
+            try { variants = JSON.parse(card.dataset.variants); } catch (e) { variants = null; }
+        }
+
+        function applyVariant(v, key) {
+            modalImages = String(v.images || v.img || "")
                 .split("|")
                 .map((s) => s.trim())
                 .filter(Boolean);
-        } else if (fallbackImg) {
-            modalImages = [fallbackImg];
+            modalImageIndex = 0;
+            if (modalPrice) modalPrice.innerHTML = renderPriceHTML(v.price, v.old);
+            if (modalDesc) modalDesc.textContent = v.desc || desc;
+            if (modalSpec) {
+                modalSpec.textContent = v.spec || "";
+                modalSpec.style.display = v.spec ? "block" : "none";
+            }
+            if (modalSizes) {
+                modalSizes.querySelectorAll(".modal-size").forEach((b) => {
+                    b.classList.toggle("active", b.dataset.size === key);
+                });
+            }
+            if (modalWhatsAppBtn) {
+                modalWhatsAppBtn.onclick = () => {
+                    window.openWhatsApp(`Bună, mă interesează „${title}” mărimea ${key} (${formatPriceForDisplay(v.price)} RON). Putem discuta detaliile?`);
+                };
+            }
+            renderModalImage();
+        }
+
+        if (variants && modalSizes && Object.keys(variants).length) {
+            const keys = Object.keys(variants);
+            modalSizes.innerHTML = "";
+            modalSizes.style.display = "flex";
+            keys.forEach((key) => {
+                const btn = document.createElement("button");
+                btn.type = "button";
+                btn.className = "modal-size";
+                btn.dataset.size = key;
+                btn.textContent = key;
+                btn.onclick = () => applyVariant(variants[key], key);
+                modalSizes.appendChild(btn);
+            });
+            const defaultKey = (card.dataset.size && variants[card.dataset.size]) ? card.dataset.size : keys[0];
+            applyVariant(variants[defaultKey], defaultKey);
         } else {
-            modalImages = [];
+            if (modalSizes) modalSizes.style.display = "none";
+            if (modalSpec) modalSpec.style.display = "none";
+
+            const priceRaw = card.dataset.price || card.querySelector(".product-price")?.textContent || "";
+            const oldPriceRaw = card.dataset.oldPrice || card.getAttribute("data-old-price") || "";
+            const imagesAttr = card.dataset.images;
+            const fallbackImg = card.dataset.img || card.querySelector("img")?.src || "";
+
+            if (imagesAttr) {
+                modalImages = imagesAttr.split("|").map((s) => s.trim()).filter(Boolean);
+            } else if (fallbackImg) {
+                modalImages = [fallbackImg];
+            } else {
+                modalImages = [];
+            }
+            modalImageIndex = 0;
+
+            if (modalPrice) modalPrice.innerHTML = renderPriceHTML(priceRaw, oldPriceRaw);
+            if (modalDesc) modalDesc.textContent = desc;
+            if (modalWhatsAppBtn) {
+                modalWhatsAppBtn.onclick = () => {
+                    window.openWhatsApp(`Bună, mă interesează produsul „${title}” (${formatPriceForDisplay(priceRaw)} RON). Putem discuta detaliile?`);
+                };
+            }
+            renderModalImage();
         }
 
-        modalImageIndex = 0;
-
-        if (modalTitle) modalTitle.textContent = title;
-        if (modalPrice) modalPrice.innerHTML = renderPriceHTML(priceRaw, oldPriceRaw);
-        if (modalDesc) modalDesc.textContent = desc;
-
-        if (modalWhatsAppBtn) {
-            modalWhatsAppBtn.onclick = () => {
-                window.openWhatsApp(`Bună, mă interesează produsul „${title}” (${price} RON). Putem discuta detaliile?`);
-            };
-        }
-
-        renderModalImage();
         requestAnimationFrame(() => requestAnimationFrame(() => modal.classList.add("is-open")));
 
         const slug = card.dataset.slug || card.id;
