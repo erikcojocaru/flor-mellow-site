@@ -661,7 +661,10 @@ section {
     font-size: 0.98rem;
 }
 
+/* Size pill hidden on grid cards — sizes are shown only in the modal
+   (every product can be made in any size). */
 .size-pill {
+    display: none;
     padding: 4px 9px;
     border-radius: 999px;
     border: 1px solid var(--border-soft);
