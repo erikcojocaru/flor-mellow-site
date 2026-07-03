@@ -160,6 +160,7 @@
                 color: var(--text-soft);
                 cursor: pointer;
                 white-space: nowrap;
+                flex-shrink: 0;
                 box-shadow: 0 2px 8px rgba(0,0,0,0.04);
                 transition: all 0.2s ease-out;
                 backdrop-filter: blur(6px);
@@ -269,6 +270,16 @@
                 font-variant-numeric: tabular-nums;
                 font-weight: 600;
                 color: var(--text);
+            }
+            .catalog-empty {
+                margin: 28px 4px;
+                padding: 22px 18px;
+                text-align: center;
+                font-size: 0.9rem;
+                color: var(--text-soft);
+                background: rgba(255, 255, 255, 0.7);
+                border: 1px dashed rgba(226, 122, 155, 0.35);
+                border-radius: 16px;
             }
             .product-grid {
                 display: grid;
@@ -546,15 +557,10 @@ Ediții de sezon
 <div class="catalog-filters-row">
 <select class="catalog-select" id="sizeFilter">
 <option value="all">Mărime: toate</option>
+<option value="XS">Mărime: XS</option>
 <option value="S">Mărime: S</option>
 <option value="M">Mărime: M</option>
 <option value="L">Mărime: L</option>
-<option value="XL">Mărime: XL</option>
-<option value="Box">Mărime: Box</option>
-<option value="Set">Mărime: Set</option>
-<option value="Limited">Mărime: Limited</option>
-<option value="Holiday">Mărime: Holiday</option>
-<option value="Seasonal">Mărime: Seasonal</option>
 </select>
 <select class="catalog-select" id="sortSelect">
 <option value="none">Fără sortare</option>
@@ -571,6 +577,7 @@ Ediții de sezon
 </div>
 <p class="catalog-count"><span id="catalogCount">12</span> produs(e) afișate în catalog.</p>
 </div>
+<p class="catalog-empty" id="catalogEmpty" style="display:none;">Momentan nu am găsit produse pentru filtrele selectate. Încearcă altă combinație de filtre sau resetează căutarea.</p>
 <!-- GRID PRODUSE -->
 <div class="catalog-grid product-grid" id="catalogGrid">
 <!-- Buchete -->
@@ -740,7 +747,7 @@ Ediții de sezon
 </div>
 </article>
 -->
-<article class="product-card" data-category="box" data-desc="Cutie cadou premium cu flori din bezea și prosecco, ideală pentru aniversări și momente festive." data-images="Flor-Mellow/Box size 35x25 Prosecco/Box size 35x25 Prosecco-1.jpeg|Flor-Mellow/Box size 35x25 Prosecco/Box size 35x25 Prosecco-2.jpeg|Flor-Mellow/Box size 35x25 Prosecco/Box size 35x25 Prosecco-3.jpeg|Flor-Mellow/Box size 35x25 Prosecco/Box size 35x25 Prosecco-4.jpeg|Flor-Mellow/Box size 35x25 Prosecco/Box size 35x25 Prosecco-5.jpeg" data-img="Flor-Mellow/Box size 35x25 Prosecco/Box size 35x25 Prosecco-3.jpeg" data-price="349" data-old-price="449" data-size="35x25" data-slug="golden-toast-bloom-box-prosecco" data-title="Golden Toast Bloom Box" id="golden-toast-bloom-box-prosecco">
+<article class="product-card" data-category="cutii" data-desc="Cutie cadou premium cu flori din bezea și prosecco, ideală pentru aniversări și momente festive." data-images="Flor-Mellow/Box size 35x25 Prosecco/Box size 35x25 Prosecco-1.jpeg|Flor-Mellow/Box size 35x25 Prosecco/Box size 35x25 Prosecco-2.jpeg|Flor-Mellow/Box size 35x25 Prosecco/Box size 35x25 Prosecco-3.jpeg|Flor-Mellow/Box size 35x25 Prosecco/Box size 35x25 Prosecco-4.jpeg|Flor-Mellow/Box size 35x25 Prosecco/Box size 35x25 Prosecco-5.jpeg" data-img="Flor-Mellow/Box size 35x25 Prosecco/Box size 35x25 Prosecco-3.jpeg" data-price="349" data-old-price="449" data-size="35x25" data-slug="golden-toast-bloom-box-prosecco" data-title="Golden Toast Bloom Box" id="golden-toast-bloom-box-prosecco">
 <div class="product-img-wrap">
 <img alt="Golden Toast Bloom Box cu prosecco" src="Flor-Mellow/Box size 35x25 Prosecco/Box size 35x25 Prosecco-3.jpeg"/>
 </div>
@@ -782,7 +789,7 @@ Ediții de sezon
 </div>
 </article>
 -->
-<article class="product-card" data-category="box" data-desc="Cutie cadou elegantă cu flori din bezea și sticlă de Moët, perfectă pentru celebrări exclusiviste." data-images="Flor-Mellow/Box 25x25 Moet/Box 25x25 Moet - 1.jpeg|Flor-Mellow/Box 25x25 Moet/Box 25x25 Moet - 2.jpeg" data-img="Flor-Mellow/Box 25x25 Moet/Box 25x25 Moet - 1.jpeg" data-price="299" data-old-price="389" data-size="25x25" data-slug="moet-rose-celebration-box" data-title="Moët Rosé Celebration Box" id="moet-rose-celebration-box">
+<article class="product-card" data-category="cutii" data-desc="Cutie cadou elegantă cu flori din bezea și sticlă de Moët, perfectă pentru celebrări exclusiviste." data-images="Flor-Mellow/Box 25x25 Moet/Box 25x25 Moet - 1.jpeg|Flor-Mellow/Box 25x25 Moet/Box 25x25 Moet - 2.jpeg" data-img="Flor-Mellow/Box 25x25 Moet/Box 25x25 Moet - 1.jpeg" data-price="299" data-old-price="389" data-size="25x25" data-slug="moet-rose-celebration-box" data-title="Moët Rosé Celebration Box" id="moet-rose-celebration-box">
 <div class="product-img-wrap">
 <img alt="Moët Rosé Celebration Box cu flori din bezea și șampanie" src="Flor-Mellow/Box 25x25 Moet/Box 25x25 Moet - 1.jpeg"/>
 </div>
@@ -2503,6 +2510,9 @@ Ediții de sezon
                         const n = visible.length;
                         countEl.textContent = n.toString().padStart(2, "0");
                     }
+
+                    const emptyEl = document.getElementById("catalogEmpty");
+                    if (emptyEl) emptyEl.style.display = visible.length ? "none" : "block";
                 }
 
                 // apply once la load
