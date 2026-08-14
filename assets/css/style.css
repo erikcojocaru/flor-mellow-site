@@ -661,10 +661,13 @@ section {
     font-size: 0.98rem;
 }
 
-/* Size pill hidden on grid cards — sizes are shown only in the modal
-   (every product can be made in any size). */
+/* Size pill shown on grid cards, right of the product name. Multi-size
+   products show a range (e.g. XS–L); every product can still be made in
+   any size on request. */
 .size-pill {
-    display: none;
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
     padding: 4px 9px;
     border-radius: 999px;
     border: 1px solid var(--border-soft);
