@@ -126,6 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const note = card.dataset.note || "";
 
         if (modalTitle) modalTitle.textContent = title;
+        modal.classList.toggle("is-soldout", card.classList.contains("is-soldout"));
         if (modalNote) {
             modalNote.textContent = note;
             modalNote.style.display = note ? "block" : "none";

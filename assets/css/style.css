@@ -621,6 +621,10 @@ section {
     color: #1c8c5f;
 }
 
+.product-badge--soldout {
+    color: #c1121f;
+}
+
 /* Catalog – imagini simple, full, fără rame încărcate */
 .product-img-wrap {
     border-radius: 16px;
@@ -708,6 +712,29 @@ section {
 .price-new {
     color: #c1121f;
     font-weight: 700;
+}
+
+/* Stoc epuizat (card + modal) */
+/* poza estompată (opacity < 1) s-ar desena peste badge */
+.product-card.is-soldout .product-badge {
+    z-index: 2;
+}
+
+.product-card.is-soldout .product-img-wrap img {
+    filter: grayscale(0.45);
+    opacity: 0.75;
+}
+
+.product-card.is-soldout .price-old,
+.modal.is-soldout .price-old {
+    display: none;
+}
+
+.product-card.is-soldout .price-new,
+.modal.is-soldout .price-new {
+    text-decoration: line-through;
+    text-decoration-color: #c1121f;
+    text-decoration-thickness: 2px;
 }
 
 .product-btn {
