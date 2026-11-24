@@ -1,0 +1,219 @@
+/* =====================================================================
+   Flor Mellow – Crăciun 2026
+   Butonul „Crăciun” din catalog + secțiunea „Colecția de sărbători”
+   de pe prima pagină (construite de christmas.js, oprire automată
+   după 4 ianuarie 2027).
+   ===================================================================== */
+
+/* ---------- buton „Crăciun” în filtrele catalogului ---------- */
+.catalog-chip.xmas-chip {
+    border-color: rgba(164, 22, 26, 0.22);
+    color: #8f1d2c;
+    background: #fffaf6;
+}
+
+.catalog-chip.xmas-chip:hover {
+    border-color: rgba(164, 22, 26, 0.45);
+    box-shadow: 0 6px 18px rgba(164, 22, 26, 0.14);
+    color: #8f1d2c;
+}
+
+.catalog-chip.xmas-chip.active {
+    background: linear-gradient(135deg, #a4161a, #c8553d);
+    border-color: transparent;
+    color: #fff;
+    box-shadow: 0 6px 22px rgba(164, 22, 26, 0.35);
+}
+
+/* ---------- secțiunea „Colecția de sărbători” (prima pagină) ---------- */
+.xmas-collection {
+    padding: 34px 0 10px;
+}
+
+.xmas-collection-box {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 28px 0 24px;
+    border-radius: 30px;
+    background:
+        radial-gradient(ellipse 420px 220px at 100% 0%, rgba(201, 162, 74, 0.16), transparent 70%),
+        linear-gradient(160deg, #fffaf3 0%, #f8e9e2 100%);
+    border: 1px solid rgba(164, 22, 26, 0.1);
+    box-shadow: 0 18px 44px rgba(110, 20, 30, 0.08);
+    overflow: hidden;
+}
+
+.xmas-collection-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding: 0 28px 18px;
+}
+
+.xmas-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #a4161a;
+    margin-bottom: 6px;
+}
+
+.xmas-title {
+    font-family: Fraunces, serif;
+    font-size: clamp(1.35rem, 3vw, 1.75rem);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: normal;
+    color: #3b1d1f;
+    margin: 0 0 6px;
+}
+
+.xmas-title span {
+    color: #a4161a;
+}
+
+.xmas-text {
+    font-size: 0.9rem;
+    color: var(--text-soft);
+    max-width: 520px;
+    margin: 0;
+}
+
+.xmas-countdown {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: #fff;
+    border: 1px solid rgba(164, 22, 26, 0.15);
+    font-size: 0.82rem;
+    color: var(--text-soft);
+    white-space: nowrap;
+}
+
+.xmas-countdown strong {
+    font-family: Fraunces, serif;
+    font-size: 1.2rem;
+    color: #a4161a;
+}
+
+.xmas-strip {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    padding: 4px 28px 14px;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 0 28px;
+    scrollbar-width: none;
+}
+
+.xmas-strip::-webkit-scrollbar {
+    display: none;
+}
+
+.xmas-mini {
+    flex: 0 0 190px;
+    scroll-snap-align: start;
+    background: #fff;
+    border-radius: 20px;
+    padding: 8px 8px 12px;
+    box-shadow: 0 10px 24px rgba(80, 20, 25, 0.08);
+    cursor: pointer;
+    transition: transform 0.18s ease-out, box-shadow 0.18s ease-out;
+    text-align: left;
+    border: 0;
+    font: inherit;
+    color: inherit;
+}
+
+.xmas-mini:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 30px rgba(80, 20, 25, 0.14);
+}
+
+.xmas-mini:focus-visible {
+    outline: 2px solid #a4161a;
+    outline-offset: 2px;
+}
+
+.xmas-mini img {
+    display: block;
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 14px;
+    margin-bottom: 10px;
+    background: #f6ece8;
+}
+
+.xmas-mini-name {
+    display: block;
+    font-weight: 600;
+    font-size: 0.86rem;
+    color: #3b1d1f;
+    padding: 0 4px;
+    line-height: 1.3;
+}
+
+.xmas-mini-price {
+    display: block;
+    font-size: 0.8rem;
+    color: #a4161a;
+    font-weight: 600;
+    padding: 2px 4px 0;
+}
+
+.xmas-collection-foot {
+    padding: 6px 28px 0;
+    font-size: 0.82rem;
+    color: var(--text-soft);
+}
+
+.xmas-collection-foot a {
+    color: #8f1d2c;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+    .xmas-collection {
+        padding: 26px 0 4px;
+    }
+    .xmas-collection-box {
+        padding: 22px 0 20px;
+        border-radius: 24px;
+    }
+    .xmas-collection-head,
+    .xmas-collection-foot {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    .xmas-strip {
+        gap: 12px;
+        padding: 4px 20px 12px;
+        scroll-padding: 0 20px;
+    }
+    .xmas-mini {
+        flex-basis: 158px;
+    }
+    .xmas-mini img {
+        height: 190px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .xmas-mini,
+    .xmas-mini:hover {
+        transition: none;
+        transform: none;
+    }
+}

@@ -25,6 +25,9 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
 <!-- CSS comun -->
 <link href="assets/css/style.css?v=10" rel="stylesheet"/>
+<!-- CRĂCIUN 2026: buton „Crăciun” în catalog + „Colecția de sărbători” pe prima pagină (se oprește singur după 4 ianuarie; după sărbători șterge aceste 3 rânduri) -->
+<link href="assets/campaigns/christmas-2026/christmas.css?v=1" rel="stylesheet"/>
+<script defer="" src="assets/campaigns/christmas-2026/christmas.js?v=1"></script>
 <!-- CSS specific catalog -->
 <style>
             /* wrapper general catalog */
@@ -3153,7 +3156,9 @@ Ediții de sezon
 
                         let ok = true;
 
-                        if (activeCategory !== "all" && cardCat !== activeCategory) ok = false;
+                        // un buton poate filtra și după o colecție (ex. data-collections="craciun"), nu doar după categorie
+                        const cardCols = (card.dataset.collections || "").split(",");
+                        if (activeCategory !== "all" && cardCat !== activeCategory && !cardCols.includes(activeCategory)) ok = false;
                         if (sizeVal !== "all" && !cardSizes.includes(sizeVal)) ok = false;
                         if (term && !name.includes(term) && !desc.includes(term)) ok = false;
 
