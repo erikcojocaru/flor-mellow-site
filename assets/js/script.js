@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             if (modalWhatsAppBtn) {
                 modalWhatsAppBtn.onclick = () => {
-                    window.openWhatsApp(`Bună, mă interesează „${title}” mărimea ${key} (${formatPriceForDisplay(v.price)} RON). Putem discuta detaliile?`);
+                    window.openWhatsApp(`Bună, mă interesează „${title}” ${card.dataset.variantLabel || "mărimea"} ${key} (${formatPriceForDisplay(v.price)} RON). Putem discuta detaliile?`);
                 };
             }
             renderModalImage();
