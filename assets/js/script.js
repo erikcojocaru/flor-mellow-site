@@ -118,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return "";
     }
 
-    function openModalFromCard(card) {
+    function openModalFromCard(card, preferredSize) {
         if (!modal) return;
 
         const title = card.dataset.title || card.querySelector(".product-name")?.textContent || "Buchet Flor Mellow";
@@ -175,7 +175,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 btn.onclick = () => applyVariant(variants[key], key);
                 modalSizes.appendChild(btn);
             });
-            const defaultKey = (card.dataset.size && variants[card.dataset.size]) ? card.dataset.size : keys[0];
+            const defaultKey = (preferredSize && variants[preferredSize]) ? preferredSize
+                : (card.dataset.size && variants[card.dataset.size]) ? card.dataset.size : keys[0];
             applyVariant(variants[defaultKey], defaultKey);
         } else {
             if (modalSizes) modalSizes.style.display = "none";
@@ -261,8 +262,21 @@ document.addEventListener("DOMContentLoaded", () => {
     // Auto-open modal din URL hash (ex: catalog.html#blush-teddy-buchet-bezele-cluj)
     const _initHash = window.location.hash.slice(1);
     if (_initHash) {
-        const _hashCard = document.querySelector('[data-slug="' + _initHash + '"]') || document.getElementById(_initHash);
-        if (_hashCard && _hashCard.classList.contains("product-card")) openModalFromCard(_hashCard);
+        let _hashCard = document.querySelector('[data-slug="' + _initHash + '"]') || document.getElementById(_initHash);
+        let _hashSize = null;
+        // link-uri vechi ale produselor comasate: data-slug-aliases="slug-vechi:MĂRIME,..."
+        if (!_hashCard) {
+            document.querySelectorAll(".product-card[data-slug-aliases]").forEach((c) => {
+                c.dataset.slugAliases.split(",").forEach((pair) => {
+                    const [slug, size] = pair.split(":").map((s) => s.trim());
+                    if (!_hashCard && slug === _initHash) {
+                        _hashCard = c;
+                        _hashSize = size || null;
+                    }
+                });
+            });
+        }
+        if (_hashCard && _hashCard.classList.contains("product-card")) openModalFromCard(_hashCard, _hashSize);
     }
 
     // ======================
