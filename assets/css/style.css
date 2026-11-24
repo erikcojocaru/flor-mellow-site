@@ -625,6 +625,10 @@ section {
     color: #c1121f;
 }
 
+.product-badge--xmas {
+    color: #a4161a;
+}
+
 /* Catalog – imagini simple, full, fără rame încărcate */
 .product-img-wrap {
     border-radius: 16px;
