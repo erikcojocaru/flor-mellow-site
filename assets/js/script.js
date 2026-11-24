@@ -274,11 +274,13 @@ document.addEventListener("DOMContentLoaded", () => {
             const cards = Array.from(grid.querySelectorAll(".product-card"));
             if (cards.length <= 1) return;
 
-            // shuffle simplu
-            const shuffled = cards
+            // shuffle doar produsele în stoc; cele cu stoc epuizat rămân mereu la final
+            const shuffle = (list) => list
                 .map((card) => ({ card, sort: Math.random() }))
                 .sort((a, b) => a.sort - b.sort)
                 .map((x) => x.card);
+            const isSoldOut = (card) => card.classList.contains("is-soldout");
+            const shuffled = shuffle(cards.filter((c) => !isSoldOut(c))).concat(shuffle(cards.filter(isSoldOut)));
 
             // reatașăm în DOM în noua ordine
             shuffled.forEach((card) => grid.appendChild(card));
